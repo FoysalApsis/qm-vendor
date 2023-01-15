@@ -24,7 +24,7 @@ const useLogin = () => {
 
   const getSession = async()=>{
     const result = await serverAPI
-      .post(`web/session/authenticate/`,data)
+      .post(`qm_vendor_api/`,data)
       .then((res) => {
         return res;
       })
