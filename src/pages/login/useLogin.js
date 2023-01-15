@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext,useEffect } from "react";
 import { useMutation } from "react-query";
 import * as Yup from "yup";
 import serverAPI from "../../config/serverAPI";
@@ -12,6 +12,34 @@ const useLogin = () => {
     email: "",
     password:""
   };
+
+  const data = {
+    jsonrpc:"2.0",
+    params:{
+      "db":process.env.REACT_APP_DB,
+      "login":process.env.REACT_APP_LOGIN,
+      "password":process.env.REACT_APP_PASSWORD,
+    }
+  }
+
+  const getSession = async()=>{
+    const result = await serverAPI
+      .post(`web/session/authenticate/`,data)
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+
+    if (result) {
+      console.log(result);
+    }
+  }
+
+  useEffect(()=>{
+    getSession()
+  },[])
 
   const SignInValidations = Yup.object().shape({
     email: Yup.string().required("Username is required!"),
