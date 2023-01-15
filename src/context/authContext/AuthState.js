@@ -5,6 +5,7 @@ import { SET_LOGIN, UNSET_LOGIN } from "../ActionTypes";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import setAuthToken from "../../utils/setAuthToken";
+import setCookie from "../../utils/setCookie";
 
 const AuthState = ({ children }) => {
   const InitialState = {
@@ -19,6 +20,7 @@ const AuthState = ({ children }) => {
 
   const Login = (data) => {
     setAuthToken(data.access_token);
+    // setCookie(data.session_id)
     localStorage.setItem("userObj", JSON.stringify(data?.userObj));
     localStorage.setItem("token", data?.access_token);
     dispatch({ type: SET_LOGIN, payload: data?.userObj });
