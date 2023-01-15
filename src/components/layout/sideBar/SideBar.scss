@@ -1,0 +1,40 @@
+.sidebar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  z-index: 4;
+  height: calc(100vh - 56px);
+  width: 310px;
+  background: var(--primary);
+  border-top-right-radius: 20px;
+  overflow-y: scroll;
+  overflow: -moz-scrollbars-none;
+  -ms-overflow-style: none;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+@media screen and (max-width: 900px) {
+  .sidebar {
+    width: 100vw;
+    border-top-right-radius: 0px;
+    height: calc(100vh - 59px);
+    top: 59px;
+  }
+}
+
+.active-sidenavbar {
+  background-color: rgba(0, 0, 0, 0.13) !important;
+  color: var(--primary) !important;
+  transition: all 0.5ms ease-in-out;
+}
+
+.css-cveggr-MuiListItemIcon-root {
+  min-width: 40px !important;
+}
+
+.css-1ma1114-MuiList-root {
+  margin-left: -18px !important;
+}

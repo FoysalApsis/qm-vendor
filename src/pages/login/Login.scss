@@ -1,0 +1,120 @@
+.login {
+  height: 100vh;
+  width: 100vw;
+
+  & .login-head {
+    height: 28%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+    & h3 {
+      color: #2f80ed;
+      font-size: 2em;
+      word-spacing: 0.2em;
+    }
+  }
+
+  & .login-section {
+    height: 72%;
+    width: 100%;
+    position: relative;
+
+    & .car-section {
+      height: 48%;
+      width: 100%;
+      padding: 1em 4em;
+      display: flex;
+      justify-content: start;
+      align-items: center;
+
+      & .parking-image {
+        height: 140px;
+        width: 140px;
+      }
+    }
+
+    & .form-section {
+      height: 52%;
+      width: 100%;
+      z-index: 10;
+      padding: 1em;
+      display: flex;
+      justify-content: end;
+      align-items: top;
+
+      & button {
+        width: 100%;
+      }
+    }
+
+    & .leaf-img {
+      position: absolute;
+      left: 80px;
+      bottom: 0px;
+      top: 20px;
+      height: 90%;
+      width: 550px;
+    }
+
+    & .login-footer {
+      position: absolute;
+      width: 100%;
+      height: 48px;
+      left: 0;
+      bottom: 0;
+      background: #f58220;
+      box-shadow: 0px -4px 4px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+@media screen and (max-width: 580px) {
+  .login {
+    & .login-section {
+      & .car-section {
+        justify-content: center;
+        padding: 0;
+      }
+
+      & .form-section {
+        justify-content: center;
+        padding: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .login {
+    & .login-head {
+      & img {
+        height: 40px;
+        width: 180px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .login {
+    & .login-section {
+      & .car-section {
+        background-image: url("../../images/mobileLogin.png");
+      }
+
+      & .leaf-img {
+        position: absolute;
+        object-fit: cover;
+        left: -20px;
+        top: 150px;
+        bottom: 0px;
+        height: 70%;
+        width: 105%;
+      }
+    }
+  }
+}

@@ -1,0 +1,10 @@
+.comment-container {
+  position: absolute;
+  bottom: -30px;
+  width: calc(100% - 3em);
+  max-height: 45vh;
+}
+
+.comment-data {
+  overflow-y: auto;
+}

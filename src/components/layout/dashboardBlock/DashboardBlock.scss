@@ -1,0 +1,79 @@
+.dashboardBlock {
+  height: 28vh;
+  // width: 7vw;
+  margin-bottom: 20px !important;
+  border-radius: 11.212px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 10px !important;
+  box-shadow: 6px 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.dashboardTitle {
+  height: 30%;
+  width: 100%;
+  font-size: 1.3rem;
+  padding-top: 1.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .dashboardBlock {
+    height: 25vh;
+  }
+
+  .dashboardTitle {
+    font-size: 1.2rem;
+    font-family: "FuturaBold", sans-serif !important;
+  }
+
+  .dashboardCounter {
+    font-size: 4rem !important;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .dashboardBlock {
+    height: 23vh;
+  }
+
+  .dashboardTitle {
+    font-size: 1rem;
+  }
+  .dashboardCounter {
+    font-size: 3.5rem !important;
+  }
+}
+
+.dashboardCounter {
+  height: 60%;
+  width: 100%;
+  font-size: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 1500px) {
+  .dashboard-title {
+    font-size: 1rem;
+  }
+
+  .dashboard-counter {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (min-width: 1700px) {
+  .dashboard-title {
+    font-size: 1.6rem;
+  }
+
+  .dashboard-counter {
+    font-size: 6rem;
+  }
+}

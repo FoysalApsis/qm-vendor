@@ -1,0 +1,29 @@
+.audit-accordion-header .accordion-button {
+  border: none !important;
+  background: #fff !important;
+  font-family: "FuturaLight";
+}
+
+.audit-accordion-header .accordion-button::before {
+  flex-shrink: 0;
+  width: 10px;
+  height: 14px;
+  margin-right: 10px;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='14' viewBox='0 0 10 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.70005 1.04925L8.94565 7L0.700051 12.9507L0.70005 1.04925Z' stroke='black'/%3E%3C/svg%3E%0A");
+  background-repeat: no-repeat;
+  background-size: 1.25 rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.audit-accordion-header .accordion-button:not(.collapsed)::before {
+  transform: rotate(90deg);
+}
+
+.audit-accordion-header .accordion-button::after {
+  display: none;
+}
+
+.audit-accordion .accordion-item {
+  margin-bottom: 0 !important;
+}

@@ -1,0 +1,24 @@
+.dashboard-block-container {
+  justify-content: center;
+}
+
+.dashboard-container {
+  height: calc(100vh - 145px);
+  width: calc(100vw - 310px);
+  margin: 130px 0px 0px 310px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 900px) {
+  .dashboard-container {
+    height: calc(100% - 130px);
+    width: 100vw;
+    margin: 130px 0px 0px 0px;
+    justify-content: start;
+  }
+  .dashboard-block-container {
+    margin-top: 2em;
+  }
+}

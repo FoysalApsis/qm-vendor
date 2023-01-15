@@ -1,0 +1,47 @@
+.pageHeader {
+  position: fixed;
+  z-index: 6;
+  left: 310px;
+  top: 56px;
+  border-bottom: 1px solid var(--dark);
+  width: calc(100% - 250px);
+  height: 55px;
+  background-color: #fff;
+  padding-right: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+@media screen and (max-width: 900px) {
+  .pageHeader {
+    left: 0;
+    top: 56px;
+    width: 100%;
+    padding-right: 0px;
+  }
+
+  .pageHeader::before {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .pageTitle {
+    font-size: 0.8rem;
+  }
+}
+
+.pageHeader {
+  justify-content: space-between;
+}
+
+.pageHeader::before {
+  content: "";
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  height: 4px;
+  width: calc(100% - 6px);
+  background: var(--primary);
+}
