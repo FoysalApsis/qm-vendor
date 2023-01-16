@@ -82,6 +82,13 @@ const SideBar = ({ handleClick, open }) => {
           open={open}
         />
         <CustomListItem
+          title="Vendor"
+          icon={DashboardIcon}
+          path="/vendor/1"
+          handleClick={handleClick}
+          open={open}
+        />
+        {/* <CustomListItem
           title="Reimbursement Requests"
           icon={RequestIcon}
           handleClick={handleClick}
@@ -93,7 +100,7 @@ const SideBar = ({ handleClick, open }) => {
               return item;
             }
           })}
-        />
+        /> */}
         {user?.IsAdmin && (
           <CustomListItem
             title="Audit Trails"
