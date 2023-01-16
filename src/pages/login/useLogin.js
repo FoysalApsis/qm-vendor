@@ -22,11 +22,14 @@ const useLogin = () => {
     }
   }
 
+  console.log(process.env.REACT_APP_DB);
+
   const getSession = async()=>{
     const result = await serverAPI
       .post(`web/session/authenticate/`,data)
       .then((res) => {
         return res;
+        
       })
       .catch((err) => {
         console.log(err.message);
