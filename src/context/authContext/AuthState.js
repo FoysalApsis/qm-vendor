@@ -23,6 +23,7 @@ const AuthState = ({ children }) => {
     // setCookie(data.session_id)
     localStorage.setItem("userObj", JSON.stringify(data?.userObj));
     localStorage.setItem("token", data?.access_token);
+    localStorage.setItem("user", JSON.stringify(data));
     dispatch({ type: SET_LOGIN, payload: data?.userObj });
     return true;
   };
@@ -33,6 +34,7 @@ const AuthState = ({ children }) => {
 
   const Logout = () => {
     setAuthToken(null);
+    
     dispatch({ type: UNSET_LOGIN });
     navigate("/sign-in");
     location.pathname = "/";

@@ -16,7 +16,7 @@ const Dashboard = ({ isTab, isMobile }) => {
     <>
       <PageLayout />
       <PageHeader title="Dashboard" />
-      <div className="dashboard-container">
+      {/* <div className="dashboard-container">
         {(delegated_users && Object.keys(delegated_users).length !== 0) ||
         delegated_to_me?.length > 0 ? (
           <Alert
@@ -105,7 +105,7 @@ const Dashboard = ({ isTab, isMobile }) => {
           />
         </Grid>
         {!isMobile && <span></span>}
-      </div>
+      </div> */}
     </>
   );
 };

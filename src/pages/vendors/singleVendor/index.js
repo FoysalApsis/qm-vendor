@@ -2,6 +2,7 @@ import { Button } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import PageHeader from "../../../components/layout/pageHeader";
 import PageLayout from "../../../components/layout/pageLayout";
+import serverAPI from "../../../config/serverAPI";
 import uploadlogo from "../../../images/upload.png";
 const iconStyles = {
   width: "30px",
@@ -27,6 +28,20 @@ const SingleVendor = () => {
       });
     }
   };
+
+  const handleSubmit = async(e)=>{
+    e.preventDefault();
+    await serverAPI
+        .put(`update-vendor`, data)
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+  }
+
+  console.log(data);
   return (
     <>
       {" "}
@@ -45,6 +60,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="name"
                   name="name"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -79,6 +95,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street"
                   name="street"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -93,6 +110,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="phone"
                   name="phone"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -104,6 +122,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street2"
                   name="street2"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -118,6 +137,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="mobile"
                   name="mobile"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -130,6 +150,7 @@ const SingleVendor = () => {
                   id="city"
                   name="city"
                   placeholder="City"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -139,6 +160,7 @@ const SingleVendor = () => {
                 name="state"
                 className="form-control"
                 placeholder="State"
+                onChange={handleChange}
               >
                 <option value="" selected disabled>
                   State
@@ -155,6 +177,7 @@ const SingleVendor = () => {
                   id="zip"
                   name="zip"
                   placeholder="ZIP"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -169,26 +192,28 @@ const SingleVendor = () => {
                   className="form-control"
                   id="email"
                   name="email"
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="col-1"></div>
             <div className="col-5 mt-2">
               <select
-                id="country"
-                name="country"
+                id="country_id"
+                name="country_id"
                 className="form-control"
-                placeholder="Country"
+                placeholder="country"
+                onChange={handleChange}
               >
                 <option value="" selected disabled>
                   Country
                 </option>
-                <option value="Bangladesh">Bangladesh</option>
-                <option value="India">India</option>
+                <option value="1">Bangladesh</option>
+                <option value="2">India</option>
               </select>
             </div>
             <div className="col-1 mt-2">
-              <label htmlFor="phone">Website Link:</label>
+              <label htmlFor="website">Website Link:</label>
             </div>
             <div className="col-5 mt-2">
               {" "}
@@ -199,20 +224,22 @@ const SingleVendor = () => {
                   id="website"
                   name="website"
                   placeholder="e.g. https://www.odoo.com"
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="col-1 mt-2">
-              <label htmlFor="tax">Tax ID:</label>
+              <label htmlFor="vat">Tax ID:</label>
             </div>
             <div className="col-5 mt-2">
               <div className="form-group">
                 <input
                   type="text"
                   className="form-control"
-                  id="tex"
-                  name="tax"
+                  id="vat"
+                  name="vat"
                   placeholder="e.g. BE0477472701"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -226,17 +253,19 @@ const SingleVendor = () => {
                   className="form-control"
                   id="fax"
                   name="fax"
+                  onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="col-1"></div>
+            <div className="col-1"><label htmlFor="contact_no">Customer Number:</label></div>
             <div className="col-5 mt-2">
               <div className="form-group">
                 <input
                   type="text"
                   className="form-control"
-                  id="customer_number"
-                  name="customer_number"
+                  id="contact_no"
+                  name="contact_no"
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -245,8 +274,8 @@ const SingleVendor = () => {
             </div>
             <div className="col-5 mt-2">
               <select
-                id="tags"
-                name="tags"
+                id="country_id"
+                name="country_id"
                 className="form-control"
                 placeholder="Tags"
               >
@@ -264,7 +293,7 @@ const SingleVendor = () => {
           <div></div>
           <div className="mt-4">
             {" "}
-            <Button type="submit" color="secondary" variant="contained">
+            <Button type="submit" color="secondary" variant="contained" onSubmit={handleSubmit}>
               Update
             </Button>
           </div>

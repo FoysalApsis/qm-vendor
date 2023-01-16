@@ -64,7 +64,7 @@ function App() {
             }
           />
           <Route
-            path="/vendor/:id"
+            path="/vendor"
             element={
                 <SingleVendor isTab={isTab} isMobile={isMobile} />
             }
