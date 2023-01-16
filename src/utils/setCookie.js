@@ -1,10 +1,9 @@
-import serverAPI from "../config/serverAPI";
-
 const setCookie = (id)=>{
+    console.log(id);
     if (id) {
-        serverAPI.defaults.headers.common["Cookie"] = `session_id ${id}`;
+        localStorage.setItem("session_id", id);
     }else{
-        delete serverAPI.defaults.headers.common["Cookie"];
+        localStorage.removeItem("session_id");
     }
 
 }

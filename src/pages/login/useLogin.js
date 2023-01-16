@@ -5,6 +5,9 @@ import serverAPI from "../../config/serverAPI";
 import AuthContext from "../../context/authContext/AuthContext";
 import errorHandle from "../../utils/errorHandle";
 import { useNavigate } from "react-router-dom";
+import setCookie from "../../utils/setCookie";
+import Cookies from 'js-cookie'
+
 const useLogin = () => {
   const { Login } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -22,12 +25,16 @@ const useLogin = () => {
     }
   }
 
-  console.log(process.env.REACT_APP_DB);
-
   const getSession = async()=>{
     const result = await serverAPI
-      .post(`qm_vendor_api/`,data)
+      .post(`qm_vendor_api/`,data,
+      {
+        headers: {
+          'Content-Type': 'application/json',
+      }
+      })
       .then((res) => {
+        console.log(res);
         return res;
         
       })
@@ -36,21 +43,31 @@ const useLogin = () => {
       });
 
     if (result) {
-      console.log(result);
+      // console.log(result?.data?.result?.session_id);
+      // setCookie(result?.data?.result?.session_id)
+      Cookies.set('sid', result?.data?.result?.session?.sid)
     }
   }
 
-  useEffect(()=>{
-    getSession()
-  },[])
+  // useEffect(()=>{
+  //   getSession()
+  // },[])
 
   const SignInValidations = Yup.object().shape({
     email: Yup.string().required("Username is required!"),
-    password: Yup.string().required("Password is required!"),
+    // password: Yup.string().required("Password is required!"),
   });
 
   const PostLogin = async (data) => {
-    return await serverAPI.post("/auth/login", data);
+    const res = {jsonrpc:"2.0",params:{...data}}
+    console.log({res});
+    await getSession();
+    return await serverAPI.post("/auth-vendor", res, {
+      headers: {
+          'Content-Type': 'application/json',
+          session_id: `${Cookies.get('sid')}`
+      }, withCredentials: true
+  });
   };
 
   // getHeader();

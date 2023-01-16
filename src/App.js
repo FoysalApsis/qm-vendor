@@ -13,6 +13,7 @@ import SettingsRoutes from "./pages/settings/SettingsRoutes";
 import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 import PageNotFound from "./components/layout/PageNotFound";
+import SingleVendor from "./pages/vendors/singleVendor";
 
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
@@ -60,6 +61,12 @@ function App() {
               <PrivateRoute>
                 <AuditTrailSingle isTab={isTab} isMobile={isMobile} />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/vendor/:id"
+            element={
+                <SingleVendor isTab={isTab} isMobile={isMobile} />
             }
           />
           <Route path="/settings/*" element={<SettingsRoutes />} />

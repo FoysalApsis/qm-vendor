@@ -20,6 +20,7 @@
     "dotenv": "^16.0.1",
     "formik": "^2.2.9",
     "formik-material-ui": "^4.0.0-alpha.2",
+    "js-cookie": "^3.0.1",
     "moment": "^2.29.3",
     "msal": "^1.4.17",
     "notistack": "^2.0.5",

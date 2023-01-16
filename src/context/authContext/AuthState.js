@@ -11,9 +11,9 @@ const AuthState = ({ children }) => {
   const InitialState = {
     isLogin: localStorage.getItem("token") ? true : false,
     token: localStorage.getItem("token") ? localStorage.getItem("token") : null,
-    user: localStorage.getItem("userObj")
-      ? JSON.parse(localStorage.getItem("userObj"))
-      : null,
+    // user: localStorage.getItem("userObj")
+    //   ? JSON.parse(localStorage.getItem("userObj"))
+    //   : null,
   };
 
   const [state, dispatch] = useReducer(AuthReducer, InitialState);
