@@ -64,9 +64,9 @@ const useLogin = () => {
     await getSession();
     return await serverAPI.post("/auth-vendor", res, {
       headers: {
-          'Content-Type': 'application/json',
-          session_id: `${Cookies.get('sid')}`
-      }, withCredentials: true
+          'Content-Type': 'application/json'
+          // session_id: `${Cookies.get('sid')}`
+      }
   });
   };
 
