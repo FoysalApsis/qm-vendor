@@ -3,6 +3,7 @@ import { Navbar, Row, Col } from "react-bootstrap";
 
 import DropDown from "./DropDown";
 import logo from "../../../images/MedelaLogo.png";
+import qmlogo from "../../../images/respond.png";
 import { Avatar, IconButton, Stack, useMediaQuery } from "@mui/material";
 import { GridMenuIcon } from "@mui/x-data-grid";
 import AuthContext from "../../../context/authContext/AuthContext";
@@ -37,9 +38,9 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
           {!sideBar && (
             <Navbar.Brand href="/">
               <img
-                src={logo}
-                width="55"
-                height="30"
+                src={qmlogo}
+                width="75"
+                height="36"
                 style={{ marginLeft: "10%", width: "auto" }}
                 className="d-inline-block align-top"
                 alt="Logo"
@@ -81,7 +82,7 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
                 textTransform: "uppercase",
               }}
             >
-              Medela AG – Lättich parking ticket reimbursement
+              QM Vendor Portal
             </h5>
           </Col>
         )}

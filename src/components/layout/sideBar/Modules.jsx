@@ -81,10 +81,10 @@ export const CustomListItem = ({
             sx={{ borderRadius: "6px !important", marginBottom: "10px" }}
             onClick={() => handleClick(title)}
           >
-            <ListItemIcon>
+            <ListItemIcon style={{color:"white"}}>
               <Icon />
             </ListItemIcon>
-            <ListItemText sx={sx} primary={title} />
+            <ListItemText sx={sx} primary={title} style={{ color: '#FFFFFF' }}/>
           </ListItemButton>
         </Link>
       ) : (
@@ -101,7 +101,7 @@ export const CustomListItem = ({
           <ListItemIcon>
             <Icon />
           </ListItemIcon>
-          <ListItemText sx={sx} primary={title} />
+          <ListItemText sx={sx} primary={title} style={{ color: '#FFFFFF' }}/>
           {subItemList && (
             <SidebarAccButton
               style={{
@@ -125,7 +125,7 @@ export const CustomListItem = ({
               sx={{ ml: 4 }}
               className={`border-3`}
             >
-              {subItemList.map((item, index) => {
+              {/* {subItemList.map((item, index) => {
                 return (
                   <Link
                     to={item.path}
@@ -141,7 +141,7 @@ export const CustomListItem = ({
                           : "",
                         borderRadius: "6px",
                         paddingY: "3px",
-                        color: "#000",
+                        color: "white",
                         fontFamily: "FuturaMedium",
                         marginBottom: "0.3rem",
                       }}
@@ -150,7 +150,7 @@ export const CustomListItem = ({
                     </ListItemButton>
                   </Link>
                 );
-              })}
+              })} */}
             </List>
           </Collapse>
         </>
