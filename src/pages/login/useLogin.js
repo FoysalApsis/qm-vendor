@@ -58,17 +58,33 @@ const useLogin = () => {
     // password: Yup.string().required("Password is required!"),
   });
 
-  const PostLogin = async (data) => {
+  const GetVendors = async (data) => {
     const res = {jsonrpc:"2.0",params:{...data}}
     console.log({res});
     await getSession();
-    return await serverAPI.post("/auth-vendor", res, {
+    return await serverAPI.post("/get-vendors", res, {
       headers: {
           'Content-Type': 'application/json'
           // session_id: `${Cookies.get('sid')}`
       }
   });
   };
+
+  const PostLogin = async (data) => {
+    const res = {jsonrpc:"2.0",params:{...data}}
+    console.log({res});
+    await getSession();
+    GetVendors();
+    return await serverAPI.post("/auth-vendor", res, {
+      headers: {
+          'Content-Type': 'application/json'
+          // session_id: `${Cookies.get('sid')}`
+      }
+  });
+  
+  };
+
+  
 
   // getHeader();
   const Mutation = useMutation(PostLogin, {
