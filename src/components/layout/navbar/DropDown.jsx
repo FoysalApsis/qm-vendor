@@ -43,7 +43,7 @@ const DropDown = ({ children }) => {
         PaperProps={{
           elevation: 0,
           sx: {
-            backgroundColor: "#fff2d8e6",
+            backgroundColor: "#f19fff",
             paddingTop: 0,
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
@@ -56,7 +56,7 @@ const DropDown = ({ children }) => {
               right: 23,
               width: 10,
               height: 10,
-              backgroundColor: "#fff2d8e6",
+              backgroundColor: "#f19fff",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
@@ -70,9 +70,10 @@ const DropDown = ({ children }) => {
             fontSize: 14,
             padding: "1px 8px",
             color: "#828282",
-            backgroundColor: "#fff2d8e6",
+            backgroundColor: "#f19fff",
             "&:hover": {
-              backgroundColor: "#F0D780",
+              backgroundColor: "#9c27b0",
+              color: "white"
             },
           }}
           onClick={Logout}

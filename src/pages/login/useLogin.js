@@ -23,35 +23,11 @@ const useLogin = () => {
       "password":process.env.REACT_APP_PASSWORD,
     }
   }
-
-  // const getSession = async()=>{
-  //   const result = await serverAPI
-  //     .post(`qm_vendor_api/`,data,
-  //     {
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //     }
-  //     })
-  //     .then((res) => {
-  //       return res;
-        
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-
-  //   if (result) {
-  //     // console.log(result?.data?.result?.session_id);
-  //     // setCookie(result?.data?.result?.session_id)
-  //     Cookies.set('sid', result?.data?.result?.session?.sid)
-  //     setUser(result?.data?.result)
-  //     navigate("/vendor");
-  //   }
-  // }
-
-  useEffect(()=>{
-    console.log(user);
-  },[user])
+  const login_params = {
+    "db": process.env.REACT_APP_DB,
+    "login": process.env.REACT_APP_LOGIN,
+    "password": process.env.REACT_APP_PASSWORD,
+  }
 
   const SignInValidations = Yup.object().shape({
     email: Yup.string().required("Username is required!"),
@@ -61,22 +37,12 @@ const useLogin = () => {
   const GetVendors = async (data) => {
     const res = {jsonrpc:"2.0",params:{...data}}
     console.log({res});
-    // await getSession();
     return await serverAPI.post("/auth-vendor", res);
   };
 
   const PostLogin = async (data) => {
-    const res = {jsonrpc:"2.0",params:{...data}}
-    console.log({res});
-    await getSession();
-    GetVendors();
-    return await serverAPI.post("/auth-vendor", res, {
-      headers: {
-          'Content-Type': 'application/json'
-          // session_id: `${Cookies.get('sid')}`
-      }
-  });
-  
+    const res = {jsonrpc:"2.0",params:{...data,login_params}}
+    return await serverAPI.post("/auth-vendor", res, {});  
   };
 
   
@@ -86,7 +52,6 @@ const useLogin = () => {
     onSuccess: (data) => {
       const LoggedIn = Login(data?.data?.result?.response);
       if (LoggedIn) {
-        // setAuthToken(data?.data?.data?.access_token);
         navigate("/");
       }
     },

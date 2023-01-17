@@ -12,8 +12,8 @@ const iconStyles = {
 };
 const SingleVendor = () => {
   const [data, setData] = useState(null);
-
-  //* handle Change Data
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem("userObj")));
+  console.log(user)
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     if (type == "file") {
@@ -41,12 +41,11 @@ const SingleVendor = () => {
         });
   }
 
-  console.log(data);
   return (
     <>
       {" "}
       <PageLayout />
-      <PageHeader title="Vendors"></PageHeader>
+      <PageHeader title="My Information"></PageHeader>
       <div className="main-container">
         <form>
           <div className="row">
@@ -60,6 +59,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="name"
                   name="name"
+                  value={user.name?user.name:""}
                   onChange={handleChange}
                 />
               </div>
@@ -95,6 +95,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street"
                   name="street"
+                  value={user.street?user.street:""}
                   onChange={handleChange}
                 />
               </div>
@@ -110,6 +111,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="phone"
                   name="phone"
+                  value={user.phone?user.phone:""}
                   onChange={handleChange}
                 />
               </div>
@@ -122,6 +124,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street2"
                   name="street2"
+                  value={user.street2?user.street2:''}
                   onChange={handleChange}
                 />
               </div>
@@ -137,6 +140,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="mobile"
                   name="mobile"
+                  value={user.mobile?user.mobile:''}
                   onChange={handleChange}
                 />
               </div>
@@ -149,6 +153,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="city"
                   name="city"
+                  value={user.city?user.city:''}
                   placeholder="City"
                   onChange={handleChange}
                 />
@@ -177,6 +182,7 @@ const SingleVendor = () => {
                   id="zip"
                   name="zip"
                   placeholder="ZIP"
+                  value={user.zip?user.zip:""}
                   onChange={handleChange}
                 />
               </div>
@@ -192,6 +198,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="email"
                   name="email"
+                  value={user.email?user.email:''}
                   onChange={handleChange}
                 />
               </div>
@@ -238,6 +245,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="vat"
                   name="vat"
+                  value={user.vat?user.vat:''}
                   placeholder="e.g. BE0477472701"
                   onChange={handleChange}
                 />
@@ -253,6 +261,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="fax"
                   name="fax"
+                  value={user.fax?user.fax:''}
                   onChange={handleChange}
                 />
               </div>
@@ -265,6 +274,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="contact_no"
                   name="contact_no"
+                  value={user.contact_no?user.contact_no:""}
                   onChange={handleChange}
                 />
               </div>

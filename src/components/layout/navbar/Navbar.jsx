@@ -11,8 +11,8 @@ import AuthContext from "../../../context/authContext/AuthContext";
 const NavbarContainer = ({ handleDrawerToggle }) => {
   const sideBar = useMediaQuery("(max-width: 900px)");
   const isTab = useMediaQuery("(max-width: 1100px)");
-  const { user } = useContext(AuthContext);
-
+  const user = JSON.parse(localStorage.getItem("userObj"));
+  
   return (
     <Navbar
       variant="light"
@@ -111,10 +111,10 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             }}
           >
             <p className="text-truncate m-0" style={{ maxWidth: "100%" }}>
-              {user?.displayName ? user.displayName : "Username"}
+              Welcome
             </p>
             <p className="text-truncate m-0" style={{ maxWidth: "100%" }}>
-              {user?.title ? user.title : "Designation"}
+            {user?.name ? user.name : "Username"}
             </p>
           </Stack>
           <DropDown>

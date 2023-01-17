@@ -21,9 +21,8 @@ const AuthState = ({ children }) => {
   const Login = (data) => {
     setAuthToken(data.access_token);
     // setCookie(data.session_id)
-    localStorage.setItem("userObj", JSON.stringify(data?.userObj));
+    localStorage.setItem("userObj", JSON.stringify(data[0]));
     localStorage.setItem("token", data?.access_token);
-    localStorage.setItem("user", JSON.stringify(data));
     dispatch({ type: SET_LOGIN, payload: data?.userObj });
     return true;
   };
