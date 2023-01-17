@@ -15,36 +15,34 @@ const useLogin = () => {
     password: "",
   };
 
-  const data = {
-    jsonrpc: "2.0",
-    params: {
-      db: process.env.REACT_APP_DB,
-      login: process.env.REACT_APP_LOGIN,
-      password: process.env.REACT_APP_PASSWORD,
-    },
-  };
-
-
+  // const data = {
+  //   jsonrpc:"2.0",
+  //   params:{
+  //     "db":process.env.REACT_APP_DB,
+  //     "login":process.env.REACT_APP_LOGIN,
+  //     "password":process.env.REACT_APP_PASSWORD,
+  //   }
+  // }
+  const login_params = {
+    "db": process.env.REACT_APP_DB,
+    "login": process.env.REACT_APP_LOGIN,
+    "password": process.env.REACT_APP_PASSWORD,
+  }
 
   const SignInValidations = Yup.object().shape({
     email: Yup.string().required("Username is required!"),
     // password: Yup.string().required("Password is required!"),
   });
 
-  const GetVendors = async (data) => {
-    const res = { jsonrpc: "2.0", params: { ...data } };
-    return await serverAPI.post("/auth-vendor", res);
-  };
+  // const GetVendors = async (data) => {
+  //   const res = {jsonrpc:"2.0",params:{...data}}
+  //   console.log({res});
+  //   return await serverAPI.post("/auth-vendor", res);
+  // };
 
   const PostLogin = async (data) => {
-    const res = { jsonrpc: "2.0", params: { ...data } };
-
-    GetVendors();
-    return await serverAPI.post("/auth-vendor", res, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = {jsonrpc:"2.0",params:{...data,login_params}}
+    return await serverAPI.post("/auth-vendor", res, {});  
   };
 
   // getHeader();
@@ -52,7 +50,6 @@ const useLogin = () => {
     onSuccess: (data) => {
       const LoggedIn = Login(data?.data?.result?.response);
       if (LoggedIn) {
-        // setAuthToken(data?.data?.data?.access_token);
         navigate("/");
       }
     },

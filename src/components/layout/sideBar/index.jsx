@@ -82,7 +82,7 @@ const SideBar = ({ handleClick, open }) => {
           open={open}
         />
         <CustomListItem
-          title="Vendor"
+          title="My Info"
           icon={RequestIcon}
           path="/vendor"
           handleClick={handleClick}
