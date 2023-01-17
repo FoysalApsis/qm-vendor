@@ -5,7 +5,6 @@ import { SET_LOGIN, UNSET_LOGIN } from "../ActionTypes";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useQueryClient } from "react-query";
 import setAuthToken from "../../utils/setAuthToken";
-import setCookie from "../../utils/setCookie";
 
 const AuthState = ({ children }) => {
   const InitialState = {
