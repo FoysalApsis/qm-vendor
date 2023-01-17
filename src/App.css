@@ -5,3 +5,11 @@ label{
 {
     display: none;
 }
+.css-1a4cg4j-MuiButtonBase-root-MuiTab-root.Mui-selected {
+    color: #9c27b0;
+    font-weight: 600 !important;
+}
+
+.css-vqmohf-MuiButtonBase-root-MuiRadio-root.Mui-checked {
+    color: #9c27b0 !important;
+}

@@ -1,9 +1,12 @@
 import { Button } from "@mui/material";
-import React, { useState, useEffect } from "react";
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
+import React, { useState } from "react";
 import PageHeader from "../../../components/layout/pageHeader";
 import PageLayout from "../../../components/layout/pageLayout";
 import serverAPI from "../../../config/serverAPI";
 import uploadlogo from "../../../images/upload.png";
+import VendorTabs from "./VendorTabs";
 const iconStyles = {
   width: "30px",
   height: "30px",
@@ -12,11 +15,10 @@ const iconStyles = {
 };
 const SingleVendor = () => {
   const [data, setData] = useState(null);
-  const [user, setUser] = useState(JSON.parse(localStorage.getItem("userObj")));
-  console.log(user)
+  const user = JSON.parse(localStorage.getItem("userObj"));
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    if (type == "file") {
+    if (type === "file") {
       setData({
         ...data,
         [name]: e.target.files[0],
@@ -24,22 +26,34 @@ const SingleVendor = () => {
     } else {
       setData({
         ...data,
-        [name]: type == "number" ? parseInt(value) : value,
+        [name]: type === "number" ? parseInt(value) : value,
       });
     }
   };
 
-  const handleSubmit = async(e)=>{
+  const handleSubmit = async (e) => {
     e.preventDefault();
     await serverAPI
-        .put(`update-vendor`, data)
-        .then((res) => {
-          console.log(res);
-        })
-        .catch((err) => {
-          console.log(err.message);
-        });
+      .put(`update-vendor`, data)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  const [tags, setTags] = useState(null);
+  const tagsOptions = [
+    { label: "Vendor", value: "vendor" },
+    { label: "Employees", value: "employees" },
+  ];
+
+  const handleTagChange = (event,values)=>{
+    console.log(values);
   }
+
+  // console.log(data);
 
   return (
     <>
@@ -59,7 +73,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="name"
                   name="name"
-                  value={user.name?user.name:""}
+                  value={user.name ? user.name : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -95,7 +109,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street"
                   name="street"
-                  value={user.street?user.street:""}
+                  value={user.street ? user.street : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -111,7 +125,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="phone"
                   name="phone"
-                  value={user.phone?user.phone:""}
+                  value={user.phone ? user.phone : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -124,7 +138,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street2"
                   name="street2"
-                  value={user.street2?user.street2:''}
+                  value={user.street2 ? user.street2 : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -140,7 +154,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="mobile"
                   name="mobile"
-                  value={user.mobile?user.mobile:''}
+                  value={user.mobile ? user.mobile : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -153,7 +167,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="city"
                   name="city"
-                  value={user.city?user.city:''}
+                  value={user.city ? user.city : ""}
                   placeholder="City"
                   onChange={handleChange}
                 />
@@ -182,7 +196,7 @@ const SingleVendor = () => {
                   id="zip"
                   name="zip"
                   placeholder="ZIP"
-                  value={user.zip?user.zip:""}
+                  value={user.zip ? user.zip : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -198,7 +212,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="email"
                   name="email"
-                  value={user.email?user.email:''}
+                  value={user.email ? user.email : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -245,7 +259,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="vat"
                   name="vat"
-                  value={user.vat?user.vat:''}
+                  value={user.vat ? user.vat : ""}
                   placeholder="e.g. BE0477472701"
                   onChange={handleChange}
                 />
@@ -261,12 +275,14 @@ const SingleVendor = () => {
                   className="form-control"
                   id="fax"
                   name="fax"
-                  value={user.fax?user.fax:''}
+                  value={user.fax ? user.fax : ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="col-1"><label htmlFor="contact_no">Customer Number:</label></div>
+            <div className="col-1">
+              <label htmlFor="contact_no">Customer Number:</label>
+            </div>
             <div className="col-5 mt-2">
               <div className="form-group">
                 <input
@@ -274,16 +290,16 @@ const SingleVendor = () => {
                   className="form-control"
                   id="contact_no"
                   name="contact_no"
-                  value={user.contact_no?user.contact_no:""}
+                  value={user.contact_no ? user.contact_no : ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
             <div className="col-1 mt-2">
-              <label htmlFor="tags">tags:</label>
+              <label htmlFor="tags">Tags:</label>
             </div>
             <div className="col-5 mt-2">
-              <select
+              {/* <select
                 id="country_id"
                 name="country_id"
                 className="form-control"
@@ -294,16 +310,42 @@ const SingleVendor = () => {
                 </option>
                 <option value="tax1">tax1</option>
                 <option value="tax2">tax2</option>
-              </select>
+              </select> */}
+
+              <Autocomplete
+                multiple
+                disablePortal
+                size="small"
+                id="tags-outlined"
+                onChange={handleTagChange}
+                options={tagsOptions}
+                sx={{ width: "500px" }}
+                name="tags"
+                // isOptionEqualToValue={(option, value) => option.id === value.id}
+                renderInput={(params) => (
+                  <TextField {...params}  label="Tags" />
+                )}
+              />
             </div>
           </div>
         </form>
-
+        <div className="mt-4">
+          <VendorTabs
+            setData={setData}
+            data={data}
+            handleChange={handleChange}
+          />
+        </div>
         <div className="d-flex justify-content-between">
           <div></div>
           <div className="mt-4">
             {" "}
-            <Button type="submit" color="secondary" variant="contained" onSubmit={handleSubmit}>
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained"
+              onSubmit={handleSubmit}
+            >
               Update
             </Button>
           </div>
