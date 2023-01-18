@@ -88,6 +88,20 @@ const SideBar = ({ handleClick, open }) => {
           handleClick={handleClick}
           open={open}
         />
+        <CustomListItem
+          title="My Invoices"
+          icon={DashboardIcon}
+          path="#"
+          handleClick={handleClick}
+          open={open}
+        />
+        <CustomListItem
+          title="My Payment Receipt"
+          icon={RequestIcon}
+          path="#"
+          handleClick={handleClick}
+          open={open}
+        />
         {/* <CustomListItem
           title="Reimbursement Requests"
           icon={RequestIcon}

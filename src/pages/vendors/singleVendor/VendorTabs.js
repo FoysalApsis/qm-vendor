@@ -3,6 +3,7 @@ import Tab from "@mui/material/Tab";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import SalesAndPurchase from "./SalesAndPurchase";
 import ContactAddress from "./ContactAddress";
+import Accounting from "./Accounting";
 
 const VendorTabs = (props) => {
   const { data, setData, handleChange } = props;
@@ -19,9 +20,9 @@ const VendorTabs = (props) => {
           textColor="secondary"
           indicatorColor="secondary"
         >
-          <Tab label="Contacts & Addresses" value="1" />
-          <Tab label="Sales & Purchase" value="2" />
-          <Tab label="Accounting" value="3" />
+          <Tab label="Contacts" value="1" />
+          <Tab label="Purchase Information" value="2" />
+          <Tab label="Accounting Information" value="3" />
         </TabList>
 
         <TabPanel value="1">
@@ -38,7 +39,13 @@ const VendorTabs = (props) => {
             handleChange={handleChange}
           />
         </TabPanel>
-        <TabPanel value="3">Item Three</TabPanel>
+        <TabPanel value="3">
+          <Accounting
+            setData={setData}
+            data={data}
+            handleChange={handleChange}
+          />
+        </TabPanel>
       </TabContext>
     </>
   );

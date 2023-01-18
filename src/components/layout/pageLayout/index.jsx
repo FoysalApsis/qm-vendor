@@ -11,7 +11,7 @@ const PageLayout = () => {
     location.pathname === "/" ? "Dashboard" : ""
   );
 
-  const drawerWidth = 310;
+  const drawerWidth = 250;
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
 

@@ -15,14 +15,6 @@ const useLogin = () => {
     password: "",
   };
 
-  // const data = {
-  //   jsonrpc:"2.0",
-  //   params:{
-  //     "db":process.env.REACT_APP_DB,
-  //     "login":process.env.REACT_APP_LOGIN,
-  //     "password":process.env.REACT_APP_PASSWORD,
-  //   }
-  // }
   const login_params = {
     "db": process.env.REACT_APP_DB,
     "login": process.env.REACT_APP_LOGIN,
@@ -34,11 +26,6 @@ const useLogin = () => {
     // password: Yup.string().required("Password is required!"),
   });
 
-  // const GetVendors = async (data) => {
-  //   const res = {jsonrpc:"2.0",params:{...data}}
-  //   console.log({res});
-  //   return await serverAPI.post("/auth-vendor", res);
-  // };
 
   const PostLogin = async (data) => {
     const res = {jsonrpc:"2.0",params:{...data,login_params}}

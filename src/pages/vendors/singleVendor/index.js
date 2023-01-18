@@ -1,7 +1,8 @@
 import { Button } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import React, { useState } from "react";
+import Alert from '@mui/material/Alert';
+import React, { useEffect, useState } from "react";
 import PageHeader from "../../../components/layout/pageHeader";
 import PageLayout from "../../../components/layout/pageLayout";
 import serverAPI from "../../../config/serverAPI";
@@ -16,6 +17,30 @@ const iconStyles = {
 const SingleVendor = () => {
   const [data, setData] = useState(null);
   const user = JSON.parse(localStorage.getItem("userObj"));
+  const [countries, setCountries] = useState([{}])
+  const [states, setStates] = useState([{}])
+  const [alert, setAlert] = useState(false);
+
+  const getUserInfo =()=>{
+    if (user) {
+      setData({
+        name:user?.name,
+        street:user?.street,
+        street2:user?.street2,
+        phone:user?.phone,
+        mobile:user?.mobile,
+        city:user?.city,
+        state_id:user?.state_id[0],
+        zip:user?.zip,
+        email:user?.email,
+        country_id:user?.country_id[0],
+        website:user?.website,
+        vat:user?.vat,
+        fax:user?.fax,
+        property_supplier_payment_term_id: user?.property_supplier_payment_term_id
+      })
+    }
+  }
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     if (type === "file") {
@@ -23,7 +48,12 @@ const SingleVendor = () => {
         ...data,
         [name]: e.target.files[0],
       });
-    } else {
+    } else if (type === 'select-one'){
+      setData({
+        ...data,
+        [name]: parseInt(value),
+      });
+    }else {
       setData({
         ...data,
         [name]: type === "number" ? parseInt(value) : value,
@@ -31,27 +61,72 @@ const SingleVendor = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const login_params = {
+    "db": process.env.REACT_APP_DB,
+    "login": process.env.REACT_APP_LOGIN,
+    "password": process.env.REACT_APP_PASSWORD,
+  }
+  
+  useEffect(()=>{
+    getUserInfo()
+  },[])
+
+
+  const getCountries = async () => {
+    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
     await serverAPI
-      .put(`update-vendor`, data)
+      .post(`get-country`, body)
       .then((res) => {
-        console.log(res);
+        setCountries(
+          res?.data?.result?.response.map((elm) => {
+            return {id: elm[0].id, label: elm[0].display_name}
+          })
+        );
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  const [tags, setTags] = useState(null);
-  const tagsOptions = [
-    { label: "Vendor", value: "vendor" },
-    { label: "Employees", value: "employees" },
-  ];
-
-  const handleTagChange = (event,values)=>{
-    console.log(values);
+  const getState = async()=>{
+    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
+    await serverAPI
+      .post(`get-state`, body)
+      .then((res) => {;
+        setStates(
+          res?.data?.result?.response.map((elm) => {
+            return {id: elm[0].id, label: elm[0].display_name}
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   }
+  useEffect(()=>{
+    getState();
+    getCountries()
+  },[])
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const res = {jsonrpc:"2.0",params:{...data,login_params,id:user?.id}}
+    await serverAPI
+      .post(`update-vendor`, res)
+      .then((res) => {
+        console.log(res);
+        setAlert(true)
+       
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
+
+  
+
 
   // console.log(data);
 
@@ -59,7 +134,8 @@ const SingleVendor = () => {
     <>
       {" "}
       <PageLayout />
-      <PageHeader title="My Information"></PageHeader>
+
+      <PageHeader title="My Information">      {alert? <Alert severity="success">Sucessfully Updated</Alert>:""}</PageHeader>
       <div className="main-container">
         <form>
           <div className="row">
@@ -73,7 +149,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="name"
                   name="name"
-                  value={user.name ? user.name : ""}
+                  value={data?.name ? data?.name : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -109,7 +185,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street"
                   name="street"
-                  value={user.street ? user.street : ""}
+                  value={data?.street ? data?.street : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -125,7 +201,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="phone"
                   name="phone"
-                  value={user.phone ? user.phone : ""}
+                  value={data?.phone ? data?.phone : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -138,7 +214,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="street2"
                   name="street2"
-                  value={user.street2 ? user.street2 : ""}
+                  value={data?.street2 ? data?.street2 : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -154,7 +230,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="mobile"
                   name="mobile"
-                  value={user.mobile ? user.mobile : ""}
+                  value={data?.mobile ? data?.mobile : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -167,7 +243,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="city"
                   name="city"
-                  value={user.city ? user.city : ""}
+                  value={data?.city ? data?.city : ""}
                   placeholder="City"
                   onChange={handleChange}
                 />
@@ -175,17 +251,21 @@ const SingleVendor = () => {
             </div>
             <div className="col-2 mt-2">
               <select
-                id="state"
-                name="state"
+                id="state_id"
+                name="state_id"
                 className="form-control"
                 placeholder="State"
                 onChange={handleChange}
+                value={Array.isArray(data?.state_id)? data?.state_id[0] : data?.state_id}
               >
                 <option value="" selected disabled>
                   State
                 </option>
-                <option value="Delhi">Delhi</option>
-                <option value="GOA">GOA</option>
+                {
+                  states?.map((item,index)=>(
+                    <option value={item?.id} key={index}>{item?.label}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col-1 mt-2">
@@ -196,7 +276,7 @@ const SingleVendor = () => {
                   id="zip"
                   name="zip"
                   placeholder="ZIP"
-                  value={user.zip ? user.zip : ""}
+                  value={data?.zip ? data?.zip : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -212,7 +292,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="email"
                   name="email"
-                  value={user.email ? user.email : ""}
+                  value={data?.email ? data?.email : ""}
                   onChange={handleChange}
                 />
               </div>
@@ -225,12 +305,16 @@ const SingleVendor = () => {
                 className="form-control"
                 placeholder="country"
                 onChange={handleChange}
+                value={Array.isArray(data?.country_id)? data?.country_id[0] : data?.country_id}
               >
                 <option value="" selected disabled>
                   Country
                 </option>
-                <option value="1">Bangladesh</option>
-                <option value="2">India</option>
+                {
+                  countries?.map((item,index)=>(
+                    <option value={item?.id} key={index}>{item?.label}</option>
+                  ))
+                }
               </select>
             </div>
             <div className="col-1 mt-2">
@@ -246,6 +330,7 @@ const SingleVendor = () => {
                   name="website"
                   placeholder="e.g. https://www.odoo.com"
                   onChange={handleChange}
+                  value={data?.website ? data?.website : ""}
                 />
               </div>
             </div>
@@ -259,7 +344,7 @@ const SingleVendor = () => {
                   className="form-control"
                   id="vat"
                   name="vat"
-                  value={user.vat ? user.vat : ""}
+                  value={data?.vat ? data?.vat : ""}
                   placeholder="e.g. BE0477472701"
                   onChange={handleChange}
                 />
@@ -275,61 +360,16 @@ const SingleVendor = () => {
                   className="form-control"
                   id="fax"
                   name="fax"
-                  value={user.fax ? user.fax : ""}
+                  value={data?.fax ? data?.fax : ""}
                   onChange={handleChange}
                 />
               </div>
             </div>
-            <div className="col-1">
-              <label htmlFor="contact_no">Customer Number:</label>
-            </div>
-            <div className="col-5 mt-2">
-              <div className="form-group">
-                <input
-                  type="text"
-                  className="form-control"
-                  id="contact_no"
-                  name="contact_no"
-                  value={user.contact_no ? user.contact_no : ""}
-                  onChange={handleChange}
-                />
-              </div>
-            </div>
-            <div className="col-1 mt-2">
-              <label htmlFor="tags">Tags:</label>
-            </div>
-            <div className="col-5 mt-2">
-              {/* <select
-                id="country_id"
-                name="country_id"
-                className="form-control"
-                placeholder="Tags"
-              >
-                <option value="" selected disabled>
-                  Tags
-                </option>
-                <option value="tax1">tax1</option>
-                <option value="tax2">tax2</option>
-              </select> */}
-
-              <Autocomplete
-                multiple
-                disablePortal
-                size="small"
-                id="tags-outlined"
-                onChange={handleTagChange}
-                options={tagsOptions}
-                sx={{ width: "500px" }}
-                name="tags"
-                // isOptionEqualToValue={(option, value) => option.id === value.id}
-                renderInput={(params) => (
-                  <TextField {...params}  label="Tags" />
-                )}
-              />
-            </div>
+  
           </div>
         </form>
-        <div className="mt-4">
+        <hr />
+        <div>
           <VendorTabs
             setData={setData}
             data={data}
@@ -344,7 +384,7 @@ const SingleVendor = () => {
               type="submit"
               color="secondary"
               variant="contained"
-              onSubmit={handleSubmit}
+              onClick={handleSubmit}
             >
               Update
             </Button>
