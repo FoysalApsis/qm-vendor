@@ -2,7 +2,7 @@ import { Button, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Alert from "@mui/material/Alert";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import PageHeader from "../../../components/layout/pageHeader";
 import PageLayout from "../../../components/layout/pageLayout";
 import serverAPI from "../../../config/serverAPI";
@@ -22,6 +22,7 @@ const SingleVendor = () => {
   const [alert, setAlert] = useState(false);
 
   const [paymentTerm, setPaymentTerm] = useState(null);
+  const [paymentTermOptions,setPaymentTermOptions]=useState([])
 
   const getUserInfo = () => {
     if (user) {
@@ -70,7 +71,8 @@ const SingleVendor = () => {
     password: process.env.REACT_APP_PASSWORD,
   };
 
-  const getCountries = async () => {
+  const getCountries = useCallback(async () => {
+    console.log("ok");
     const body = { jsonrpc: "2.0", params: { login_params: login_params } };
     await serverAPI
       .post(`get-country`, body)
@@ -84,7 +86,9 @@ const SingleVendor = () => {
       .catch((err) => {
         console.log(err.message);
       });
-  };
+  }, []);
+
+
 
   const getState = async () => {
     const body = { jsonrpc: "2.0", params: { login_params: login_params } };
@@ -101,26 +105,43 @@ const SingleVendor = () => {
         console.log(err.message);
       });
   };
+
+  const getPaymentTerms = useCallback(async()=>{
+    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
+    await serverAPI
+      .post(`get-payment-terms`, body)
+      .then((res) => {
+        setPaymentTermOptions(
+          res?.data?.result?.response.map((elm) => {
+            return {id: elm[0].id, label: elm[0].display_name}
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  },[])
+
+  
+
   useEffect(() => {
     getUserInfo();
     getState();
     getCountries();
-  }, []);
+    getPaymentTerms();
+  }, [getCountries]);
 
-let submit_data = {}
+  let submit_data = {};
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (paymentTerm  == null) {
-      const {
-        property_supplier_payment_term_id,
-        ...rest
-      } = data;
+    if (paymentTerm == null) {
+      const { property_supplier_payment_term_id, ...rest } = data;
       submit_data = rest;
-      console.log("submit_data",submit_data);
-    }else{
-      submit_data = data
+      console.log("submit_data", submit_data);
+    } else {
+      submit_data = data;
     }
     const res = {
       jsonrpc: "2.0",
@@ -138,7 +159,7 @@ let submit_data = {}
 
   //* close notification
   const handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
+    if (reason === "clickaway") {
       return;
     }
     setAlert(false);
@@ -148,20 +169,20 @@ let submit_data = {}
 
   return (
     <>
- 
       {" "}
       <PageLayout />
-      <PageHeader title="My Information">
-        {" "}
-
-      </PageHeader>
-      <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical:"top", horizontal:"right" }}>
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+      <PageHeader title="My Information"> </PageHeader>
+      <Snackbar
+        open={alert}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
+      >
+        <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
           This is a success message!
         </Alert>
       </Snackbar>
       <div className="main-container">
- 
         <form>
           <div className="row">
             <div className="col-1">
@@ -340,7 +361,7 @@ let submit_data = {}
                     : data?.country_id
                 }
               >
-                <option value=""  disabled>
+                <option value="" disabled>
                   Country
                 </option>
                 {countries?.map((item, index) => (
@@ -408,6 +429,8 @@ let submit_data = {}
             handleChange={handleChange}
             paymentTerm={paymentTerm}
             setPaymentTerm={setPaymentTerm}
+            paymentTermOptions={paymentTermOptions}
+            setPaymentTermOptions={setPaymentTermOptions}
           />
         </div>
         <div className="d-flex justify-content-between">

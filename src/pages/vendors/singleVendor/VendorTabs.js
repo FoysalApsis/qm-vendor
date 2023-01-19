@@ -6,7 +6,7 @@ import ContactAddress from "./ContactAddress";
 import Accounting from "./Accounting";
 
 const VendorTabs = (props) => {
-  const { data, setData, handleChange,paymentTerm,setPaymentTerm } = props;
+  const { data, setData, handleChange,paymentTerm,setPaymentTerm,setPaymentTermOptions,paymentTermOptions } = props;
   const [value, setValue] = useState("1");
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
@@ -39,6 +39,8 @@ const VendorTabs = (props) => {
             handleChange={handleChange}
             paymentTerm={paymentTerm}
             setPaymentTerm={setPaymentTerm}
+            paymentTermOptions={paymentTermOptions}
+            setPaymentTermOptions={setPaymentTermOptions}
           />
         </TabPanel>
         <TabPanel value="3">

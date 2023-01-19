@@ -1,39 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 import serverAPI from "../../../config/serverAPI";
 const SalesAndPurchase = (props) => {
-  const { data, setData, handleChange,paymentTerm,setPaymentTerm  } = props;
-  // const [paymentTerm, setPaymentTerm] = useState(null);
+  const { data, setData, handleChange,paymentTerm,setPaymentTerm,setPaymentTermOptions,paymentTermOptions  } = props;
   const [paymentMethod, setPaymentMethod] = useState(null);
-  const [checked, setChecked] = useState(false); //* check reciept reminder checked or not
-  const [paymentTermOptions,setPaymentTermOptions]=useState([])
 
-  const login_params = {
-    "db": process.env.REACT_APP_DB,
-    "login": process.env.REACT_APP_LOGIN,
-    "password": process.env.REACT_APP_PASSWORD,
-  }
-  const getPaymentTerms = async () => {
-    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
-    await serverAPI
-      .post(`get-payment-terms`, body)
-      .then((res) => {
-        setPaymentTermOptions(
-          res?.data?.result?.response.map((elm) => {
-            return {id: elm[0].id, label: elm[0].display_name}
-          })
-        );
-      })
-      .catch((err) => {
-        console.log(err.message);
-      });
-  };
 
-  useEffect(()=>{
-    getPaymentTerms()
-  },[])
+
+
+
+
+
 
   const paymentMethodOptions = [
     { label: "Manual", value: "Manual" },
