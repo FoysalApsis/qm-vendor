@@ -68,7 +68,7 @@ const Accounting = (props) => {
               onClick={handleAddClick}
               data-toggle="tooltip" data-placement="bottom" title="Add"
             />
-            {index > 0 ? (
+            {index  ? (
               <img
                 src={minus}
                 alt="minus"

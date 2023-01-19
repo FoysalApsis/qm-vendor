@@ -1,7 +1,7 @@
-import { Button } from "@mui/material";
+import { Button, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import React, { useEffect, useState } from "react";
 import PageHeader from "../../../components/layout/pageHeader";
 import PageLayout from "../../../components/layout/pageLayout";
@@ -17,30 +17,33 @@ const iconStyles = {
 const SingleVendor = () => {
   const [data, setData] = useState(null);
   const user = JSON.parse(localStorage.getItem("userObj"));
-  const [countries, setCountries] = useState([{}])
-  const [states, setStates] = useState([{}])
+  const [countries, setCountries] = useState([{}]);
+  const [states, setStates] = useState([{}]);
   const [alert, setAlert] = useState(false);
 
-  const getUserInfo =()=>{
+  const [paymentTerm, setPaymentTerm] = useState(null);
+
+  const getUserInfo = () => {
     if (user) {
       setData({
-        name:user?.name,
-        street:user?.street,
-        street2:user?.street2,
-        phone:user?.phone,
-        mobile:user?.mobile,
-        city:user?.city,
-        state_id:user?.state_id[0],
-        zip:user?.zip,
-        email:user?.email,
-        country_id:user?.country_id[0],
-        website:user?.website,
-        vat:user?.vat,
-        fax:user?.fax,
-        property_supplier_payment_term_id: user?.property_supplier_payment_term_id
-      })
+        name: user?.name,
+        street: user?.street,
+        street2: user?.street2,
+        phone: user?.phone,
+        mobile: user?.mobile,
+        city: user?.city,
+        state_id: user?.state_id[0],
+        zip: user?.zip,
+        email: user?.email,
+        country_id: user?.country_id[0],
+        website: user?.website,
+        vat: user?.vat,
+        fax: user?.fax,
+        property_supplier_payment_term_id:
+          user?.property_supplier_payment_term_id,
+      });
     }
-  }
+  };
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     if (type === "file") {
@@ -48,12 +51,12 @@ const SingleVendor = () => {
         ...data,
         [name]: e.target.files[0],
       });
-    } else if (type === 'select-one'){
+    } else if (type === "select-one") {
       setData({
         ...data,
         [name]: parseInt(value),
       });
-    }else {
+    } else {
       setData({
         ...data,
         [name]: type === "number" ? parseInt(value) : value,
@@ -62,24 +65,19 @@ const SingleVendor = () => {
   };
 
   const login_params = {
-    "db": process.env.REACT_APP_DB,
-    "login": process.env.REACT_APP_LOGIN,
-    "password": process.env.REACT_APP_PASSWORD,
-  }
-  
-  useEffect(()=>{
-    getUserInfo()
-  },[])
-
+    db: process.env.REACT_APP_DB,
+    login: process.env.REACT_APP_LOGIN,
+    password: process.env.REACT_APP_PASSWORD,
+  };
 
   const getCountries = async () => {
-    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
+    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
     await serverAPI
       .post(`get-country`, body)
       .then((res) => {
         setCountries(
           res?.data?.result?.response.map((elm) => {
-            return {id: elm[0].id, label: elm[0].display_name}
+            return { id: elm[0].id, label: elm[0].display_name };
           })
         );
       })
@@ -88,55 +86,82 @@ const SingleVendor = () => {
       });
   };
 
-  const getState = async()=>{
-    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
+  const getState = async () => {
+    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
     await serverAPI
       .post(`get-state`, body)
-      .then((res) => {;
+      .then((res) => {
         setStates(
           res?.data?.result?.response.map((elm) => {
-            return {id: elm[0].id, label: elm[0].display_name}
+            return { id: elm[0].id, label: elm[0].display_name };
           })
         );
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }
-  useEffect(()=>{
+  };
+  useEffect(() => {
+    getUserInfo();
     getState();
-    getCountries()
-  },[])
+    getCountries();
+  }, []);
 
+let submit_data = {}
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const res = {jsonrpc:"2.0",params:{...data,login_params,id:user?.id}}
+    if (paymentTerm  == null) {
+      const {
+        property_supplier_payment_term_id,
+        ...rest
+      } = data;
+      submit_data = rest;
+      console.log("submit_data",submit_data);
+    }else{
+      submit_data = data
+    }
+    const res = {
+      jsonrpc: "2.0",
+      params: { ...submit_data, login_params, id: user?.id },
+    };
     await serverAPI
       .post(`update-vendor`, res)
       .then((res) => {
-        console.log(res);
-        setAlert(true)
-       
+        setAlert(true);
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  
+  //* close notification
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setAlert(false);
+  };
 
-
-  // console.log(data);
+  // console.log(paymentTerm);
 
   return (
     <>
+ 
       {" "}
       <PageLayout />
+      <PageHeader title="My Information">
+        {" "}
 
-      <PageHeader title="My Information">      {alert? <Alert severity="success">Sucessfully Updated</Alert>:""}</PageHeader>
+      </PageHeader>
+      <Snackbar open={alert} autoHideDuration={6000} onClose={handleClose}  anchorOrigin={{ vertical:"top", horizontal:"right" }}>
+        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+          This is a success message!
+        </Alert>
+      </Snackbar>
       <div className="main-container">
+ 
         <form>
           <div className="row">
             <div className="col-1">
@@ -256,16 +281,20 @@ const SingleVendor = () => {
                 className="form-control"
                 placeholder="State"
                 onChange={handleChange}
-                value={Array.isArray(data?.state_id)? data?.state_id[0] : data?.state_id}
+                value={
+                  Array.isArray(data?.state_id)
+                    ? data?.state_id[0]
+                    : data?.state_id
+                }
               >
-                <option value="" selected disabled>
+                <option value="" disabled>
                   State
                 </option>
-                {
-                  states?.map((item,index)=>(
-                    <option value={item?.id} key={index}>{item?.label}</option>
-                  ))
-                }
+                {states?.map((item, index) => (
+                  <option value={item?.id} key={index}>
+                    {item?.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-1 mt-2">
@@ -305,16 +334,20 @@ const SingleVendor = () => {
                 className="form-control"
                 placeholder="country"
                 onChange={handleChange}
-                value={Array.isArray(data?.country_id)? data?.country_id[0] : data?.country_id}
+                value={
+                  Array.isArray(data?.country_id)
+                    ? data?.country_id[0]
+                    : data?.country_id
+                }
               >
-                <option value="" selected disabled>
+                <option value=""  disabled>
                   Country
                 </option>
-                {
-                  countries?.map((item,index)=>(
-                    <option value={item?.id} key={index}>{item?.label}</option>
-                  ))
-                }
+                {countries?.map((item, index) => (
+                  <option value={item?.id} key={index}>
+                    {item?.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="col-1 mt-2">
@@ -365,7 +398,6 @@ const SingleVendor = () => {
                 />
               </div>
             </div>
-  
           </div>
         </form>
         <hr />
@@ -374,6 +406,8 @@ const SingleVendor = () => {
             setData={setData}
             data={data}
             handleChange={handleChange}
+            paymentTerm={paymentTerm}
+            setPaymentTerm={setPaymentTerm}
           />
         </div>
         <div className="d-flex justify-content-between">

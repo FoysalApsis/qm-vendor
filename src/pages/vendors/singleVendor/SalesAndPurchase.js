@@ -4,15 +4,12 @@ import Autocomplete from "@mui/material/Autocomplete";
 import Checkbox from "@mui/material/Checkbox";
 import serverAPI from "../../../config/serverAPI";
 const SalesAndPurchase = (props) => {
-  const { data, setData, handleChange } = props;
-  const [paymentTerm, setPaymentTerm] = useState(null);
+  const { data, setData, handleChange,paymentTerm,setPaymentTerm  } = props;
+  // const [paymentTerm, setPaymentTerm] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState(null);
   const [checked, setChecked] = useState(false); //* check reciept reminder checked or not
   const [paymentTermOptions,setPaymentTermOptions]=useState([])
-  // const PaymentTermOptions = [
-  //   { label: "10 days", value: 10 },
-  //   { label: "30 Days", value: 30 },
-  // ];
+
   const login_params = {
     "db": process.env.REACT_APP_DB,
     "login": process.env.REACT_APP_LOGIN,
@@ -23,7 +20,6 @@ const SalesAndPurchase = (props) => {
     await serverAPI
       .post(`get-payment-terms`, body)
       .then((res) => {
-        console.log(res);
         setPaymentTermOptions(
           res?.data?.result?.response.map((elm) => {
             return {id: elm[0].id, label: elm[0].display_name}
@@ -67,7 +63,10 @@ const SalesAndPurchase = (props) => {
     }
   }, [paymentTerm, paymentMethod]);
 
-  console.log(data);
+
+
+  // console.log(data);
+  // console.log(paymentTerm);
 
   return (
     <>
@@ -86,14 +85,14 @@ const SalesAndPurchase = (props) => {
                   id="property_supplier_payment_term_id"
                   options={paymentTermOptions}
                   isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
+                    option.label === value
                   }
                   sx={{ width: 300 }}
                   name="property_supplier_payment_term_id"
                   renderInput={(params) => (
                     <TextField {...params} label="Payment Terms" />
                   )}
-                  value={Array.isArray(data?.property_supplier_payment_term_id)? data?.property_supplier_payment_term_id[1] : paymentTerm['label']}
+                  value={Array.isArray(data?.property_supplier_payment_term_id)? data?.property_supplier_payment_term_id[1] : paymentTerm?.['label']}
                 />
               </div>
             </div>
@@ -128,51 +127,7 @@ const SalesAndPurchase = (props) => {
           </div>
           <div className="col-4"></div>
         </div>
-        <div className="mt-2">
-          {" "}
-          <div className="col-8">
-            <div className="row">
-              <div className="col-4 mt-2">
-                <label htmlFor="paymentTerms">Receipt Reminder:</label>
-              </div>
-              <div className="col-6">
-                <div className="row">
-                  <div className="col-1">
-                    {" "}
-                    <Checkbox
-                      checked={checked}
-                      onChange={(e) => setChecked(e.target.checked)}
-                      inputProps={{ "aria-label": "controlled" }}
-                    />
-                  </div>
-                  <div className="col-6 m-2">
-                    {" "}
-                    {checked ? (
-                      <>
-                        <div className="form-group w-100">
-                          <input
-                            type="number"
-                            min="1"
-                            className="form-control"
-                            id="receiptReminder"
-                            name="receiptReminder"
-                            onWheel={(e) => e.target.blur()}
-                            onChange={handleChange}
-                          />
-                          <span style={{display:"inline"}}>day(s) before</span>
-                        </div>
-                        
-                      </>
-                    ) : (
-                      ""
-                    )}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-2"></div>
-        </div>
+
       </div>
     </>
   );
