@@ -5,7 +5,7 @@ import serverAPI from "../../config/serverAPI";
 import AuthContext from "../../context/authContext/AuthContext";
 import errorHandle from "../../utils/errorHandle";
 import { useNavigate } from "react-router-dom";
-
+import { toast } from "react-toastify";
 const useLogin = () => {
 
   const { Login } = useContext(AuthContext);
@@ -35,10 +35,28 @@ const useLogin = () => {
   // getHeader();
   const Mutation = useMutation(PostLogin, {
     onSuccess: (data) => {
-      const LoggedIn = Login(data?.data?.result?.response);
-      if (LoggedIn) {
-        navigate("/");
+
+      if (data?.data?.result?.response?.length >0) {
+        const LoggedIn = Login(data?.data?.result?.response);
+        if (LoggedIn) {
+          navigate("/");
+        }
       }
+      else{
+        toast.error(`Credentials are incorrect`, {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
+        localStorage.removeItem("token");
+        localStorage.removeItem("userObj");
+        // window.location.replace(`${process.env.REACT_APP_FE_URL}/sign-in`);
+      }
+      
+     
     },
     onError: (err) => {
       errorHandle(err);

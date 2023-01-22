@@ -308,8 +308,8 @@ const SingleVendor = () => {
                     : data?.state_id
                 }
               >
-                <option value="" disabled>
-                  State
+                <option value="" >
+                  Select State
                 </option>
                 {states?.map((item, index) => (
                   <option value={item?.id} key={index}>
@@ -361,8 +361,8 @@ const SingleVendor = () => {
                     : data?.country_id
                 }
               >
-                <option value="" disabled>
-                  Country
+                <option value="" >
+                  Select Country
                 </option>
                 {countries?.map((item, index) => (
                   <option value={item?.id} key={index}>
