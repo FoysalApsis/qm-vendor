@@ -1,7 +1,7 @@
 import React from "react";
 
 const Contact = (props) => {
-  const { data, setData, handleChange } = props;
+  const { data, setData, handleChange, handleChildChange, titles,childData } = props;
   return (
     <>
       <div className="row mt-3">
@@ -12,13 +12,13 @@ const Contact = (props) => {
           <input
             type="text"
             className="form-control form-control-sm"
-            id="contactName"
-            name="contactName"
-            onChange={handleChange}
+            id="name"
+            name="name"
+            onChange={handleChildChange}
           />
         </div>
         <div className="col-2">
-          <label htmlFor="contactName">Email:</label>
+          <label htmlFor="email">Email:</label>
         </div>
         <div className="col-4">
           <input
@@ -26,20 +26,29 @@ const Contact = (props) => {
             className="form-control form-control-sm"
             id="email"
             name="email"
-            onChange={handleChange}
+            onChange={handleChildChange}
           />
         </div>
         <div className="col-2 mt-2">
           <label htmlFor="title">Title:</label>
         </div>
         <div className="col-4 mt-2">
-          <input
-            type="text"
-            className="form-control form-control-sm"
+
+          <select
             id="title"
             name="title"
-            onChange={handleChange}
-          />
+            className="form-control"
+            placeholder="Title"
+            onChange={handleChildChange}
+            // value={Array.isArray(data?.titles) ? data?.titles[0] : data?.titles}
+          >
+            <option value="0">Select Title</option>
+            {titles?.map((item, index) => (
+              <option value={item?.id} key={index}>
+                {item?.label}
+              </option>
+            ))}
+          </select>
         </div>
         <div className="col-2 mt-2">
           <label htmlFor="phone">Phone:</label>
@@ -50,19 +59,19 @@ const Contact = (props) => {
             className="form-control form-control-sm"
             id="phone"
             name="phone"
-            onChange={handleChange}
+            onChange={handleChildChange}
           />
         </div>
         <div className="col-2 mt-2">
-          <label htmlFor="position">Job Position:</label>
+          <label htmlFor="function">Job Position:</label>
         </div>
         <div className="col-4 mt-2">
           <input
             type="text"
             className="form-control form-control-sm"
-            id="position"
-            name="position"
-            onChange={handleChange}
+            id="function"
+            name="function"
+            onChange={handleChildChange}
           />
         </div>
         <div className="col-2 mt-2">
@@ -74,19 +83,19 @@ const Contact = (props) => {
             className="form-control form-control-sm"
             id="mobile"
             name="mobile"
-            onChange={handleChange}
+            onChange={handleChildChange}
           />
         </div>
         <div className="col-2 mt-2">
-          <label htmlFor="notes">Notes:</label>
+          <label htmlFor="comment">Notes:</label>
         </div>
         <div className="col-4 mt-2">
           <textarea
             type="text"
             className="form-control form-control-sm"
-            id="notes"
-            name="notes"
-            onChange={handleChange}
+            id="comment"
+            name="comment"
+            onChange={handleChildChange}
           />
         </div>
       </div>

@@ -3,8 +3,6 @@ import { Grid,Button } from "@mui/material";
 import useLogin from "./useLogin";
 import MedelaLogo from "../../images/MedelaLogo.png";
 import QmLogo from "../../images/respond.png";
-import Parking from "../../images/parking.png";
-import Leaf from "../../images/Leaf.png";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import "./Login.scss";
 

@@ -19,10 +19,12 @@ const SingleVendor = () => {
   const user = JSON.parse(localStorage.getItem("userObj"));
   const [countries, setCountries] = useState([{}]);
   const [states, setStates] = useState([{}]);
+  const [titles, setTitles] = useState([{}]);
+  const [banks, setBanks] = useState([{}]);
   const [alert, setAlert] = useState(false);
 
   const [paymentTerm, setPaymentTerm] = useState(null);
-  const [paymentTermOptions,setPaymentTermOptions]=useState([])
+  const [paymentTermOptions, setPaymentTermOptions] = useState([]);
 
   const getUserInfo = () => {
     if (user) {
@@ -72,7 +74,6 @@ const SingleVendor = () => {
   };
 
   const getCountries = useCallback(async () => {
-    console.log("ok");
     const body = { jsonrpc: "2.0", params: { login_params: login_params } };
     await serverAPI
       .post(`get-country`, body)
@@ -87,8 +88,6 @@ const SingleVendor = () => {
         console.log(err.message);
       });
   }, []);
-
-
 
   const getState = async () => {
     const body = { jsonrpc: "2.0", params: { login_params: login_params } };
@@ -106,29 +105,61 @@ const SingleVendor = () => {
       });
   };
 
-  const getPaymentTerms = useCallback(async()=>{
-    const body = {jsonrpc:"2.0",params:{"login_params":login_params}}
+  const getPaymentTerms = useCallback(async () => {
+    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
     await serverAPI
       .post(`get-payment-terms`, body)
       .then((res) => {
         setPaymentTermOptions(
           res?.data?.result?.response.map((elm) => {
-            return {id: elm[0].id, label: elm[0].display_name}
+            return { id: elm[0].id, label: elm[0].display_name };
           })
         );
       })
       .catch((err) => {
         console.log(err.message);
       });
-  },[])
+  }, []);
+  const getTitle = useCallback(async () => {
+    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    await serverAPI
+      .post(`get-title`, body)
+      .then((res) => {
+        setTitles(
+          res?.data?.result?.response.map((elm) => {
+            return { id: elm[0].id, label: elm[0].display_name };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+  const getPartnerBank = useCallback(async () => {
+    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    await serverAPI
+      .post(`get-partner-bank`, body)
+      .then((res) => {
+        setBanks(
+          res?.data?.result?.response.map((elm) => {
+            return { id: elm[0].id, label: elm[0].display_name };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
-  
+
 
   useEffect(() => {
     getUserInfo();
     getState();
     getCountries();
     getPaymentTerms();
+    getTitle();
+    getPartnerBank();
   }, [getCountries]);
 
   let submit_data = {};
@@ -139,7 +170,6 @@ const SingleVendor = () => {
     if (paymentTerm == null) {
       const { property_supplier_payment_term_id, ...rest } = data;
       submit_data = rest;
-      console.log("submit_data", submit_data);
     } else {
       submit_data = data;
     }
@@ -147,6 +177,8 @@ const SingleVendor = () => {
       jsonrpc: "2.0",
       params: { ...submit_data, login_params, id: user?.id },
     };
+
+    // console.log(res);
     await serverAPI
       .post(`update-vendor`, res)
       .then((res) => {
@@ -165,7 +197,7 @@ const SingleVendor = () => {
     setAlert(false);
   };
 
-  // console.log(paymentTerm);
+
 
   return (
     <>
@@ -200,7 +232,7 @@ const SingleVendor = () => {
                 />
               </div>
             </div>
-            <div className="col-1"></div>
+            {/* <div className="col-1"></div>
             <div className="col-5">
               <div className="image-upload">
                 <label htmlFor="file-input">
@@ -218,7 +250,7 @@ const SingleVendor = () => {
                   onChange={handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="row mt-5">
             <div className="col-1">
@@ -308,9 +340,7 @@ const SingleVendor = () => {
                     : data?.state_id
                 }
               >
-                <option value="" >
-                  Select State
-                </option>
+                <option value="">Select State</option>
                 {states?.map((item, index) => (
                   <option value={item?.id} key={index}>
                     {item?.label}
@@ -361,9 +391,7 @@ const SingleVendor = () => {
                     : data?.country_id
                 }
               >
-                <option value="" >
-                  Select Country
-                </option>
+                <option value="">Select Country</option>
                 {countries?.map((item, index) => (
                   <option value={item?.id} key={index}>
                     {item?.label}
@@ -431,11 +459,15 @@ const SingleVendor = () => {
             setPaymentTerm={setPaymentTerm}
             paymentTermOptions={paymentTermOptions}
             setPaymentTermOptions={setPaymentTermOptions}
+            titles={titles}
+            states={states}
+            countries={countries}
+            banks={banks}
           />
         </div>
         <div className="d-flex justify-content-between">
           <div></div>
-          <div className="mt-4">
+          <div className="mt-5">
             {" "}
             <Button
               type="submit"

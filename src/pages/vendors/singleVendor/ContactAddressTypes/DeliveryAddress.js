@@ -1,7 +1,7 @@
 import React from 'react'
 
 const DeliveryAddress = (props) => {
-    const { data, setData, handleChange } = props;
+    const { data, setData, handleChange,handleChildChange } = props;
   return (
     <> <div className="row mt-3">
     <div className="col-2">
@@ -101,7 +101,7 @@ const DeliveryAddress = (props) => {
         placeholder="State"
         onChange={handleChange}
       >
-        <option value="" selected disabled>
+        <option value=""  disabled>
           State
         </option>
         <option value="Delhi">Delhi</option>
@@ -135,7 +135,7 @@ const DeliveryAddress = (props) => {
         placeholder="country"
         onChange={handleChange}
       >
-        <option value="" selected disabled>
+        <option value=""  disabled>
           Country
         </option>
         <option value="1">Bangladesh</option>
