@@ -25,6 +25,13 @@ import {
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
+var cardStyle = {
+  display: 'block',
+  width: '30vw',
+  transitionDuration: '0.3s',
+  fontWeight:"600",
+  textTransform:"capitalize"
+}
 const ContactAddress = (props) => {
   const {
     data,
@@ -44,6 +51,7 @@ const ContactAddress = (props) => {
   };
 
   const [childData, setChildData] = useState(null);
+  const [childListDatas, setChildListData] = useState([]);
 
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
@@ -74,33 +82,44 @@ const ContactAddress = (props) => {
 
   let sumbit_child_data = {};
   useEffect(() => {
-    if (childData != null) {
-      if (childData?.title === 0) {
-        const { title, ...rest } = childData;
-        sumbit_child_data = rest;
-      }
+    if (childListDatas.length>0) {
+      // if (childData?.title === 0) {
+      //   const { title, ...rest } = childData;
+      //   sumbit_child_data = rest;
+      // }
+
+      // setData({
+      //   ...data,
+      //   child_ids:
+      //     Object.keys(sumbit_child_data).length !== 0
+      //       ? [[0, "virtual_104", { ...sumbit_child_data }]]
+      //       : [[0, "virtual_104", { ...childData }]],
+      // });
 
       setData({
         ...data,
-        child_ids:
-          Object.keys(sumbit_child_data).length !== 0
-            ? [[0, "virtual_104", { ...sumbit_child_data }]]
-            : [[0, "virtual_104", { ...childData }]],
+        child_ids: childListDatas?.map((item) => [0, "virtual_104", item]),
       });
     }
-  }, [childData]);
+  }, [childListDatas]);
 
-  const handleSaveChildData = () => {
+  const handleAdd = () => {
     setChildDataSave(true);
-    handleClose();
+    if (childData) {
+      setChildListData([...childListDatas, childData]);
+      handleClose();
+      setChildData(null);
+    }
   };
+
   const handleCloseChildData = () => {
     setChildData(null);
     handleClose();
   };
 
-  console.log(data);
-
+  // console.log(childData);
+  // console.log(childListDatas);
+  // console.log(data);
   return (
     <div>
       {" "}
@@ -169,6 +188,7 @@ const ContactAddress = (props) => {
                     handleChildChange={handleChildChange}
                     states={states}
                     countries={countries}
+                    childData={childData}
                   />
                 );
               case "delivery":
@@ -189,48 +209,59 @@ const ContactAddress = (props) => {
           <Button onClick={handleCloseChildData} variant="outlined">
             Discard
           </Button>
-          <Button
-            onClick={handleSaveChildData}
-            variant="contained"
-            color="secondary"
-          >
+          <Button onClick={handleAdd} variant="contained" color="secondary">
             Save
           </Button>
         </DialogActions>
       </Dialog>
       <div className="mt-4">
-        {childDataSave === true && data?.child_ids?.length > 0 ? (
-          <>
-            <Card sx={{ maxWidth: 275 }} variant="outlined" onDoubleClick={handleClickOpen}>
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  variant="h6"
-                  gutterBottom
-                  style={{ color: "#9c27b0", fontWeight: "500" }}
-                >
-                  {data?.child_ids?.[0]?.[2]?.name}
-                </Typography>
-                <Typography variant="subtitle2" gutterBottom>
-                  {data?.child_ids?.[0]?.[2]?.function}
-                </Typography>
-                <Typography sx={{ mb: 1.5 }} variant="subtitle2" gutterBottom>
-                  <Link href="#" underline="none">
-                    {data?.child_ids?.[0]?.[2]?.email}
-                  </Link>
-                </Typography>
-                <Typography variant="body2">
-                  Phone: {data?.child_ids?.[0]?.[2]?.phone}
-                </Typography>
-                <Typography variant="body2">
-                  Mobile: {data?.child_ids?.[0]?.[2]?.mobile}
-                </Typography>
-              </CardContent>
-            </Card>
-          </>
-        ) : (
-          ""
-        )}
+        <div className="row">
+          {childDataSave === true && childListDatas?.length > 0
+            ? childListDatas?.map((item) => (
+                <>
+                
+                  <div className="col-3 mt-2">
+                    <Card
+                      sx={{ width: "auto" }}
+                      variant="outlined"
+                      onDoubleClick={handleClickOpen}
+                    >
+                      <CardContent>
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          variant="body1"
+                          gutterBottom
+                          style={{ color: "#9c27b0", fontWeight: "500" }}
+                        >
+                          {item?.name}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom style={{fontStyle: 'italic'}}>
+                          {item?.function}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <Link href="#" underline="none">
+                            {item?.email}
+                          </Link>
+                        </Typography>
+                        <Typography variant="body2" style={cardStyle}>
+                          {item?.type}
+                        </Typography>
+                        <Typography variant="body2">
+                          Phone: {item?.phone}
+                        </Typography>
+                        <Typography variant="body2">
+                          Mobile: {item?.mobile}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </>
+              ))
+            : ""}
+        </div>
       </div>
     </div>
   );

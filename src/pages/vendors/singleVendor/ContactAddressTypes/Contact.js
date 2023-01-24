@@ -15,6 +15,7 @@ const Contact = (props) => {
             id="name"
             name="name"
             onChange={handleChildChange}
+            value={childData?.name||""}
           />
         </div>
         <div className="col-2">
@@ -27,6 +28,7 @@ const Contact = (props) => {
             id="email"
             name="email"
             onChange={handleChildChange}
+            value={childData?.email||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -40,6 +42,7 @@ const Contact = (props) => {
             className="form-control"
             placeholder="Title"
             onChange={handleChildChange}
+            value={childData?.title||""}
             // value={Array.isArray(data?.titles) ? data?.titles[0] : data?.titles}
           >
             <option value="0">Select Title</option>
@@ -60,6 +63,7 @@ const Contact = (props) => {
             id="phone"
             name="phone"
             onChange={handleChildChange}
+            value={childData?.phone||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -72,6 +76,7 @@ const Contact = (props) => {
             id="function"
             name="function"
             onChange={handleChildChange}
+            value={childData?.function||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -84,6 +89,7 @@ const Contact = (props) => {
             id="mobile"
             name="mobile"
             onChange={handleChildChange}
+            value={childData?.mobile||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -96,6 +102,7 @@ const Contact = (props) => {
             id="comment"
             name="comment"
             onChange={handleChildChange}
+            value={childData?.comment||""}
           />
         </div>
       </div>

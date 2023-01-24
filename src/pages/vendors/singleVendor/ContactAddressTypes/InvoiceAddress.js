@@ -1,7 +1,7 @@
 import React from "react";
 
 const InvoiceAddress = (props) => {
-  const { data, setData, handleChange, handleChildChange, countries, states } =
+  const { data, setData, handleChange, handleChildChange, countries, states,childData } =
     props;
   return (
     <>
@@ -16,6 +16,7 @@ const InvoiceAddress = (props) => {
             id="name"
             name="name"
             onChange={handleChildChange}
+            value={childData?.name||""}
           />
         </div>
         <div className="col-1">
@@ -28,6 +29,7 @@ const InvoiceAddress = (props) => {
             id="email"
             name="email"
             onChange={handleChildChange}
+            value={childData?.email||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -40,6 +42,7 @@ const InvoiceAddress = (props) => {
             id="street"
             name="street"
             onChange={handleChildChange}
+            value={childData?.street||""}
           />
         </div>
         <div className="col-1 mt-2">
@@ -52,6 +55,7 @@ const InvoiceAddress = (props) => {
             id="phone"
             name="phone"
             onChange={handleChildChange}
+            value={childData?.phone||""}
           />
         </div>
         <div className="col-2 mt-2">
@@ -64,7 +68,7 @@ const InvoiceAddress = (props) => {
               className="form-control form-control-sm"
               id="street2"
               name="street2"
-              //   value={user.street2 ? user.street2 : ""}
+              value={childData?.street2||""}
               onChange={handleChildChange}
             />
           </div>
@@ -78,6 +82,7 @@ const InvoiceAddress = (props) => {
             className="form-control form-control-sm"
             id="mobile"
             name="mobile"
+            value={childData?.mobile||""}
             onChange={handleChildChange}
           />
         </div>
@@ -89,7 +94,7 @@ const InvoiceAddress = (props) => {
               className="form-control form-control-sm"
               id="city"
               name="city"
-              //   value={user.city ? user.city : ""}
+              value={childData?.city||""}
               placeholder="City"
               onChange={handleChildChange}
             />
@@ -102,6 +107,7 @@ const InvoiceAddress = (props) => {
             className="form-control form-control-sm"
             placeholder="State"
             onChange={handleChildChange}
+            value={childData?.state||""}
           >
             <option value=""  disabled>
               State
@@ -121,7 +127,7 @@ const InvoiceAddress = (props) => {
               id="zip"
               name="zip"
               placeholder="ZIP"
-              //   value={user.zip ? user.zip : ""}
+              value={childData?.zip||""}
               onChange={handleChildChange}
             />
           </div>
@@ -139,6 +145,7 @@ const InvoiceAddress = (props) => {
             className="form-control form-control-sm"
             placeholder="country"
             onChange={handleChildChange}
+            value={childData?.country_id||""}
           >
             <option value=""  disabled>
               Country
@@ -162,6 +169,7 @@ const InvoiceAddress = (props) => {
             id="notes"
             name="notes"
             onChange={handleChildChange}
+            value={childData?.notes||""}
           />
         </div>
       </div>
