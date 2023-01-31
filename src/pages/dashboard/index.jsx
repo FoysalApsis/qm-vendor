@@ -8,9 +8,9 @@ import useDashboard from "./useDashboard";
 import AuthContext from "../../context/authContext/AuthContext";
 
 const Dashboard = ({ isTab, isMobile }) => {
-  const { dashboardData, delegateData } = useDashboard();
-  const delegated_users = delegateData?.my_delegated_user;
-  const delegated_to_me = delegateData?.users_delegated_to_me;
+  // const { dashboardData, delegateData } = useDashboard();
+  // const delegated_users = delegateData?.my_delegated_user;
+  // const delegated_to_me = delegateData?.users_delegated_to_me;
   const { user } = useContext(AuthContext);
   return (
     <>

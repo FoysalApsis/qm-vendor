@@ -28,16 +28,21 @@ const useLogin = () => {
 
 
   const PostLogin = async (data) => {
-    const res = {jsonrpc:"2.0",params:{...data,login_params}}
+    const res = {jsonrpc:"2.0",params:{...data}}
     return await serverAPI.post("/auth-vendor", res, {});  
   };
 
   // getHeader();
   const Mutation = useMutation(PostLogin, {
     onSuccess: (data) => {
-
-      if (data?.data?.result?.response?.length >0) {
-        const LoggedIn = Login(data?.data?.result?.response);
+      // if (data?.data?.result?.response?.length >0) {
+      //   const LoggedIn = Login(data?.data?.result?.response);
+      //   if (LoggedIn) {
+      //     navigate("/");
+      //   }
+      // }
+      if (data?.data?.length >0) {
+        const LoggedIn = Login(data?.data);
         if (LoggedIn) {
           navigate("/");
         }

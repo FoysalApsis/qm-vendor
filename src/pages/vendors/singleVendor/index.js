@@ -74,12 +74,12 @@ const SingleVendor = () => {
   };
 
   const getCountries = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-country`, body)
       .then((res) => {
         setCountries(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -90,12 +90,14 @@ const SingleVendor = () => {
   }, []);
 
   const getState = async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", 
+    params: {} 
+  };
     await serverAPI
       .post(`get-state`, body)
       .then((res) => {
         setStates(
-          res?.data?.result?.response.map((elm) => {
+          res?.data.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -106,12 +108,12 @@ const SingleVendor = () => {
   };
 
   const getPaymentTerms = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-payment-terms`, body)
       .then((res) => {
         setPaymentTermOptions(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -121,12 +123,29 @@ const SingleVendor = () => {
       });
   }, []);
   const getTitle = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-title`, body)
       .then((res) => {
         setTitles(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
+            return { id: elm[0].id, label: elm[0].display_name };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  const getChildren = useCallback(async () => {
+    const user = JSON.parse(localStorage.getItem('userObj'))
+    const body = { jsonrpc: "2.0", params: {child_ids:user.child_ids} };
+    await serverAPI
+      .post(`get-vendor-children`, body)
+      .then((res) => {
+        setTitles(
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -136,12 +155,12 @@ const SingleVendor = () => {
       });
   }, []);
   const getPartnerBank = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: { } };
     await serverAPI
       .post(`get-partner-bank`, body)
       .then((res) => {
         setBanks(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -160,6 +179,7 @@ const SingleVendor = () => {
     getPaymentTerms();
     getTitle();
     getPartnerBank();
+    getChildren();
   }, [getCountries]);
 
   let submit_data = {};
@@ -175,7 +195,7 @@ const SingleVendor = () => {
     }
     const res = {
       jsonrpc: "2.0",
-      params: { ...submit_data, login_params, id: user?.id },
+      params: { ...submit_data, id: user?.id },
     };
 
     // console.log(res);
