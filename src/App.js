@@ -69,6 +69,12 @@ function App() {
                 <SingleVendor isTab={isTab} isMobile={isMobile} />
             }
           />
+           <Route
+            path="/my-purchase-order"
+            element={
+                <SingleVendor isTab={isTab} isMobile={isMobile} />
+            }
+          />
           <Route path="/settings/*" element={<SettingsRoutes />} />
           <Route
             path="/*"

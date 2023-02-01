@@ -22,6 +22,7 @@ const SingleVendor = () => {
   const [titles, setTitles] = useState([{}]);
   const [banks, setBanks] = useState([{}]);
   const [alert, setAlert] = useState(false);
+  const [childs, setChilds] = useState([{}]);
 
   const [paymentTerm, setPaymentTerm] = useState(null);
   const [paymentTermOptions, setPaymentTermOptions] = useState([]);
@@ -29,6 +30,7 @@ const SingleVendor = () => {
   const getUserInfo = () => {
     if (user) {
       setData({
+        id:user?.id,
         name: user?.name,
         street: user?.street,
         street2: user?.street2,
@@ -43,7 +45,7 @@ const SingleVendor = () => {
         vat: user?.vat,
         fax: user?.fax,
         property_supplier_payment_term_id:
-          user?.property_supplier_payment_term_id,
+          user?.property_supplier_payment_term_id
       });
     }
   };
@@ -144,16 +146,18 @@ const SingleVendor = () => {
     await serverAPI
       .post(`get-vendor-children`, body)
       .then((res) => {
-        setTitles(
+        console.log("------------", res?.data?.response);
+        setChilds(
           res?.data?.response.map((elm) => {
-            return { id: elm[0].id, label: elm[0].display_name };
+            return { id: elm[0].id, name: elm[0].name,email:elm[0].email, phone:elm[0].phone,mobile:elm[0].mobile ,type:elm[0].type,title:elm[0].title[1]};
+            // return {...elm[0]}
           })
         );
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+    }, []);
   const getPartnerBank = useCallback(async () => {
     const body = { jsonrpc: "2.0", params: { } };
     await serverAPI
@@ -483,6 +487,7 @@ const SingleVendor = () => {
             states={states}
             countries={countries}
             banks={banks}
+            childs={childs}
           />
         </div>
         <div className="d-flex justify-content-between">

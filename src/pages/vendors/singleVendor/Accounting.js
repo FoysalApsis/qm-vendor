@@ -6,13 +6,12 @@ import add from "../../../images/add.png";
 
 const Accounting = (props) => {
   const { data, setData, handleChange, banks } = props;
-  const [values, setValues] = useState([[0,"virtual_822",{ bank_id: "", acc_number: "" }]]);
+  const [values, setValues] = useState([{ bank_name: "", acc_number: "" ,bank_ic:"",transit_no:""}]);
   const [index, setIndex] = useState(null);
 
   const handleAddClick = () => {
-    setValues([...values, [0,"virtual_822",{ bank_id: "", acc_number: "" }]]);
+    setValues([...values, { bank_name: "", acc_number: "" ,bank_ic:"",transit_no:""}]);
   };
-
   const handleRemoveClick = (index) => {
     const list = [...values];
     list.splice(index, 1);
@@ -20,24 +19,44 @@ const Accounting = (props) => {
   };
 
   const handleInputChange = (e, index) => {
-    const { name, type } = e.target;
+    const { name, value } = e.target;
     setIndex(index);
-    const list = [...values];
-    // console.log(list);
-    list[index][2][name] =
-      type === "select-one" ? parseInt(e.target.value) : e.target.value;
-    setValues(list);
+    let newArray = values?.map((item,itemIndex) => index ===itemIndex ? {...item,[name]:value}: item  ) 
+    // newArray = newArray.map((e)=>{
+    //   return {
+    //     "bank_info":e.bank_name + e.bank_ic + e.transit_no,
+    //     "acc_number":e.acc_number
+    //   }
+    // })
+    // console.log(newArray);
+    setValues(newArray)
+    // const list = [...values];
+    // // console.log(list);
+    // list[index][2][name] =
+    //   type === "select-one" ? parseInt(e.target.value) : e.target.value;
+    // setValues(list);
   };
-
   useEffect(() => {
-    if (values[0]["bank_id"] !== "" || values[0]["acc_number"] != "") {
+    if (values[0]["bank_name"] !== "" || values[0]["acc_number"] != "" || values[0]["bank_ic"] !== "" || values[0]["transit_no"] !== "") {
+      let newArr = values.map((e)=>{
+        return {
+              "b_info":`${e.bank_name} ${e.bank_ic} ${e.transit_no}`,
+              "acc_no":e.acc_number
+            }
+      })
+      // setData({
+      //   ...data,
+      //   bank_ids: newArr?.map((item)=>{return [0,"virtual_822",item]}),
+      // });
       setData({
         ...data,
-        bank_ids: values,
+        b_info: newArr[0]['b_info'],
+        acc_no: newArr[0]['acc_no'],
       });
     }
   }, [values]);
 
+  console.log(data,"--------data");
 
   return (
     <>
@@ -45,9 +64,9 @@ const Accounting = (props) => {
         return (
           <div key={index} className="mb-2">
             <div className="row">
-              <div className="col-2">
+              <div className="col-3">
                 {" "}
-                <select
+                {/* <select
                   id="bank_id"
                   name="bank_id"
                   className="form-control w-100 "
@@ -61,20 +80,71 @@ const Accounting = (props) => {
                       {item?.label}
                     </option>
                   ))}
-                </select>
+                </select> */}
+                <TextField
+                  id="standard-basic"
+                  label="Name of the Bank"
+                  name="bank_name"
+                  variant="outlined"
+                  color="secondary"
+                  // style={{ width: "30%" }}
+                  size={"small"}
+                  onChange={(e) => handleInputChange(e, index)}
+                />
+                
+              
               </div>
-              <div className="col-10">
+              <div className="col-2">
                 {" "}
+              <TextField
+                  id="standard-basic"
+                  label="Bank Identifier Code"
+                  name="bank_ic"
+                  variant="outlined"
+                  color="secondary"
+                  // style={{ width: "30%" }}
+                  size={"small"}
+                  onChange={(e) => handleInputChange(e, index)}
+                />
+              </div>
+              <div className="col-2"> 
+              {" "}
+              <TextField
+                  id="standard-basic"
+                  label="Transit Number"
+                  name="transit_no"
+                  variant="outlined"
+                  color="secondary"
+                  // style={{ width: "30%" }}
+                  size={"small"}
+                  onChange={(e) => handleInputChange(e, index)}
+                />
+                
+              </div>
+              <div className="col-4">
+                {" "}
+
                 <TextField
                   id="standard-basic"
                   label="Account Number"
                   name="acc_number"
                   variant="outlined"
                   color="secondary"
-                  style={{ width: "30%" }}
+                  style={{ width: "70%" }}
                   size={"small"}
                   onChange={(e) => handleInputChange(e, index)}
                 />
+                {/* <TextField
+                  id="standard-basic"
+                  label="Account Number"
+                  name="acc_number"
+                  variant="outlined"
+                  color="secondary"
+                  // style={{ width: "30%" }}
+                  size={"small"}
+                  onChange={(e) => handleInputChange(e, index)}
+                /> */}
+                
                 <img
                   src={add}
                   alt="add"

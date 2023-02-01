@@ -102,6 +102,13 @@ const SideBar = ({ handleClick, open }) => {
           handleClick={handleClick}
           open={open}
         />
+        <CustomListItem
+          title="My Purchase Order"
+          icon={RequestIcon}
+          path="/my-purchase-order"
+          handleClick={handleClick}
+          open={open}
+        />
         {/* <CustomListItem
           title="Reimbursement Requests"
           icon={RequestIcon}

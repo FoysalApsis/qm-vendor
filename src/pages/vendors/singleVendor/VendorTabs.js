@@ -18,14 +18,14 @@ const VendorTabs = (props) => {
     titles,
     states,
     countries,
-    banks
+    banks,
+    childs
   } = props;
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
-
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -58,6 +58,7 @@ const VendorTabs = (props) => {
             titles={titles}
             states={states}
             countries={countries}
+            childs={childs}
             handleClickOpen={handleClickOpen}
             handleClose={handleClose}
             open={open}
