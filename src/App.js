@@ -14,6 +14,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import PublicRoute from "./utils/PublicRoute";
 import PageNotFound from "./components/layout/PageNotFound";
 import SingleVendor from "./pages/vendors/singleVendor";
+import MyPurchaseOrder from "./pages/purchase-orders";
+import SinglePO from "./pages/purchase-orders/SinglePO";
 
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
@@ -72,9 +74,18 @@ function App() {
            <Route
             path="/my-purchase-order"
             element={
-                <SingleVendor isTab={isTab} isMobile={isMobile} />
+                <MyPurchaseOrder />
             }
           />
+           <Route
+            path="/my-purchase-order/:id"
+            element={
+                <SinglePO></SinglePO>
+            }
+          />
+             
+      
+          
           <Route path="/settings/*" element={<SettingsRoutes />} />
           <Route
             path="/*"

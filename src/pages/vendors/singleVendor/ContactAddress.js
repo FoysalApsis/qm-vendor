@@ -98,7 +98,6 @@ setOldChildListDatas(childs)
 
   useEffect(() => {
     if (childListDatas.length>0 || oldChildListDatas.length>0 ) {
-      console.log("yehhhhhh chalgaya");
       // if (childData?.title === 0) {
       //   const { title, ...rest } = childData;
       //   sumbit_child_data = rest;
@@ -135,7 +134,6 @@ setOldChildListDatas(childs)
       });
     }
   }, [childListDatas,oldChildListDatas]);
-  console.log(data,"yeh data hai");
 
   
   const handleAdd = () => {
@@ -167,9 +165,6 @@ setOldChildListDatas(childs)
     handleClose();
   };
 
-  // console.log(childData);
-  // console.log(childListDatas);
-  // console.log(data);
   return (
     <div>
       {" "}

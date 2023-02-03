@@ -44,8 +44,7 @@ const SalesAndPurchase = (props) => {
 
 
 
-  // console.log(data);
-  // console.log(paymentTerm);
+
 
   return (
     <>

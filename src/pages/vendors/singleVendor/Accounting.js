@@ -3,7 +3,7 @@ import TextField from "@mui/material/TextField";
 import minus from "../../../images/minus.png";
 import add from "../../../images/add.png";
 
-
+// const regex = /^[0-9\b]+$/;
 const Accounting = (props) => {
   const { data, setData, handleChange, banks } = props;
   const [values, setValues] = useState([{ bank_name: "", acc_number: "" ,bank_ic:"",transit_no:""}]);
@@ -20,8 +20,9 @@ const Accounting = (props) => {
 
   const handleInputChange = (e, index) => {
     const { name, value } = e.target;
-    setIndex(index);
-    let newArray = values?.map((item,itemIndex) => index ===itemIndex ? {...item,[name]:value}: item  ) 
+      setIndex(index);
+      let newArray = values?.map((item,itemIndex) => index ===itemIndex ? {...item,[name]:value}: item  ) 
+      setValues(newArray)
     // newArray = newArray.map((e)=>{
     //   return {
     //     "bank_info":e.bank_name + e.bank_ic + e.transit_no,
@@ -29,13 +30,20 @@ const Accounting = (props) => {
     //   }
     // })
     // console.log(newArray);
-    setValues(newArray)
     // const list = [...values];
     // // console.log(list);
     // list[index][2][name] =
     //   type === "select-one" ? parseInt(e.target.value) : e.target.value;
     // setValues(list);
   };
+
+  const numberTypeHandler =(e,index)=> {
+    const { name, value } = e.target;
+    let newValue = value?.split("").filter(Number).join("")
+    setIndex(index);
+    let newArray = values?.map((item,itemIndex) => index ===itemIndex ? {...item,[name]:newValue}: item  ) 
+    setValues(newArray)
+  }
   useEffect(() => {
     if (values[0]["bank_name"] !== "" || values[0]["acc_number"] != "" || values[0]["bank_ic"] !== "" || values[0]["transit_no"] !== "") {
       let newArr = values.map((e)=>{
@@ -56,11 +64,10 @@ const Accounting = (props) => {
     }
   }, [values]);
 
-  console.log(data,"--------data");
 
   return (
     <>
-      {values?.map((e, index) => {
+      {values?.map((item, index) => {
         return (
           <div key={index} className="mb-2">
             <div className="row">
@@ -94,45 +101,60 @@ const Accounting = (props) => {
                 
               
               </div>
-              <div className="col-2">
+              <div className="col-3">
                 {" "}
               <TextField
+                  // type="number"
+                  
                   id="standard-basic"
                   label="Bank Identifier Code"
                   name="bank_ic"
                   variant="outlined"
                   color="secondary"
+                  value={item?.bank_ic ? item.bank_ic:""}
+
+                  InputProps={{ inputProps: { minlength: 3, maxlength: 3 } }}
+
                   // style={{ width: "30%" }}
                   size={"small"}
-                  onChange={(e) => handleInputChange(e, index)}
+                  onChange={(e) => numberTypeHandler(e, index)}
                 />
               </div>
-              <div className="col-2"> 
+              <div className="col-3"> 
               {" "}
               <TextField
+                  // type="number"
                   id="standard-basic"
                   label="Transit Number"
                   name="transit_no"
                   variant="outlined"
                   color="secondary"
+                  value={item?.transit_no ? item.transit_no:""}
+
+                  InputProps={{ inputProps: { minlength: 5, maxlength: 5 } }}
                   // style={{ width: "30%" }}
                   size={"small"}
-                  onChange={(e) => handleInputChange(e, index)}
+                  onChange={(e) => numberTypeHandler(e, index)}
                 />
                 
               </div>
-              <div className="col-4">
+              <div className="col-3">
                 {" "}
 
                 <TextField
+                  // type="t"
                   id="standard-basic"
                   label="Account Number"
                   name="acc_number"
                   variant="outlined"
                   color="secondary"
-                  style={{ width: "70%" }}
+                  value={item?.acc_number ? item.acc_number:""}
+                  InputProps={{ inputProps: { minlength: 7, maxlength: 10 } }}
+                  // style={{ width: "100" }}
                   size={"small"}
-                  onChange={(e) => handleInputChange(e, index)}
+                  onChange={(e) =>{
+                    numberTypeHandler(e, index)
+                  }}
                 />
                 {/* <TextField
                   id="standard-basic"
@@ -145,7 +167,7 @@ const Accounting = (props) => {
                   onChange={(e) => handleInputChange(e, index)}
                 /> */}
                 
-                <img
+                {/* <img
                   src={add}
                   alt="add"
                   style={{
@@ -176,7 +198,7 @@ const Accounting = (props) => {
                   />
                 ) : (
                   ""
-                )}
+                )} */}
               </div>
             </div>
           </div>

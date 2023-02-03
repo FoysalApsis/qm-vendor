@@ -41,7 +41,6 @@ const PageLayout = () => {
       setOpen(title);
     }
   };
-
   return (
     <>
       <Navbar handleDrawerToggle={handleDrawerToggle} />
