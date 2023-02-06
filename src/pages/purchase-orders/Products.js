@@ -6,9 +6,7 @@ const Products = ({data}) => {
     const rows = data
     let total = 0 
     data?.map((e)=>{
-        console.log(e.price_subtotal);
         total = total + e.price_subtotal
-        console.log(total);
     })
   return (
     <div >

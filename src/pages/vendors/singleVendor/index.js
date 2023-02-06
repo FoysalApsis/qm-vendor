@@ -146,10 +146,9 @@ const SingleVendor = () => {
     await serverAPI
       .post(`get-vendor-children`, body)
       .then((res) => {
-        console.log("------------", res?.data?.response);
         setChilds(
           res?.data?.response.map((elm) => {
-            return { id: elm[0].id, name: elm[0].name,email:elm[0].email, phone:elm[0].phone,mobile:elm[0].mobile ,type:elm[0].type,title:elm[0].title[1]};
+            return { id: elm[0].id, name: elm[0].name,email:elm[0].email, phone:elm[0].phone,mobile:elm[0].mobile ,type:elm[0].type,title:elm[0].title[0]};
             // return {...elm[0]}
           })
         );

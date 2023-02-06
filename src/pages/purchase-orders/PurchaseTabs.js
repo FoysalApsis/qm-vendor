@@ -6,7 +6,6 @@ import Products from "./Products";
 
 const PurchaseTabs = ({data}) => {
     const [value, setValue] = useState("1");
-    console.log(data,"datatatatata");
     return (
         <>
     
