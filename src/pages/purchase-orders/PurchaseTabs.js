@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import Products from "./Products";
 
 
-const PurchaseTabs = ({data}) => {
+const PurchaseTabs = ({data,total}) => {
     const [value, setValue] = useState("1");
     return (
         <>
@@ -25,6 +25,7 @@ const PurchaseTabs = ({data}) => {
              <TabPanel value="1">
               <Products
                 data = {data}
+                total={total}
                 // setData={setData}
                 // data={data}
                 // handleChange={handleChange}

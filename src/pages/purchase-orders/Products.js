@@ -1,13 +1,14 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
 import React from 'react'
 
-const Products = ({data}) => {
+const Products = ({data,total}) => {
 
     const rows = data
-    let total = 0 
-    data?.map((e)=>{
-        total = total + e.price_subtotal
-    })
+    // let total = 0 
+    // data?.map((e)=>{
+    //     total = total + e.price_subtotal
+    // })
+    console.log(data);
   return (
     <div >
       <TableContainer component={Paper}>
@@ -43,7 +44,7 @@ const Products = ({data}) => {
               {/* <TableCell align="center">{row.task_id}</TableCell> */}
               <TableCell align="center">{row.product_qty}</TableCell>
               <TableCell align="center">{row.price_unit}</TableCell>
-              <TableCell align="center">{row.taxes_id}</TableCell>
+              <TableCell align="center">{row.price_tax}</TableCell>
               <TableCell align="center">{row.price_subtotal}</TableCell>
              
             </TableRow>

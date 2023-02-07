@@ -32,7 +32,7 @@ const MyPurchaseOrder = () => {
     .then((res) => {
         setPurchaseOrders(
             res?.data?.response.map((elm) => {
-                return { id: elm[0].id, display_name: elm[0].display_name, company_id:elm[0].company_id[1],partner_id:elm[0].partner_id[1] , date_order:elm[0].date_order , amount_total:elm[0].amount_total,state:elm[0].state };
+                return { id: elm[0].id, display_name: elm[0].display_name, company_id:elm[0].company_id[1],partner_id:elm[0].partner_id[1] , date_order:elm[0].date_order , amount_total:elm[0].tax_totals.formatted_amount_total,state:elm[0].state };
             })
         );
       })
@@ -40,6 +40,19 @@ const MyPurchaseOrder = () => {
         console.log(err.message);
       });
   }, []);
+
+  const getStatus = (status)=>{
+    if(status === 'cancel'){
+      return (
+        <span style={{color:"red"}}>Cancelled</span>
+      )
+    }else {
+      return (
+
+        <span style={{color:"green"}}>Confirmed</span>
+      )
+    }
+  }
 
   useEffect(()=>{
     getMyPO()
@@ -75,9 +88,9 @@ const MyPurchaseOrder = () => {
         <TableBody>
           {rows.map((row) => (
             <TableRow
-              key={row.id}
-              sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-              onClick={()=> navigator(row.id)}
+            key={row.id}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+            onClick={()=> navigator(row.id)}
             >
               <TableCell component="th" scope="row">
                 {row.display_name}
@@ -86,7 +99,8 @@ const MyPurchaseOrder = () => {
               <TableCell align="center">{row.company_id}</TableCell>
               <TableCell align="center">{row.date_order}</TableCell>
               <TableCell align="center">{row.amount_total}</TableCell>
-              <TableCell align="center">{row.state}</TableCell>
+              {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
+              <TableCell align="center">{getStatus(row.state)}</TableCell>
               {/* <TableCell align="right">{row.fat}</TableCell>
               <TableCell align="right">{row.carbs}</TableCell>
               <TableCell align="right">{row.protein}</TableCell> */}

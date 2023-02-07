@@ -47,7 +47,8 @@ const SinglePO = () => {
       .then((res) => {
         setSinglePO(
           res?.data?.response.map((elm) => {
-            console.log(elm[0], "aaaaaaaaaaaaaaaaaa")
+            console.log(elm[0], "single")
+
             // console.log(elm[0],"single po");
             // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
             getVendor(elm[0].shift_to_id[0]) 
@@ -61,6 +62,33 @@ const SinglePO = () => {
             }
           })
           )
+      })
+      .catch((err) => {
+        console.log(err.message)
+      })
+  }, [])
+  const getPDF = useCallback(async () => {
+    const body = { jsonrpc: "2.0", params: { id } ,userData : user }
+    await serverAPI
+      .post(`get-po-pdf`, body)
+      .then((res) => {
+        // setSinglePO(
+        //   res?.data?.response.map((elm) => {
+        //     console.log(elm[0], "single")
+
+        //     // console.log(elm[0],"single po");
+        //     // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
+        //     getVendor(elm[0].shift_to_id[0]) 
+        //     getCompany(elm[0].company_id[0])
+            
+
+        //     return {
+        //       ...elm[0],
+        //       // street: user?.street,
+        //       // street2: user?.street2,
+        //     }
+        //   })
+        //   )
       })
       .catch((err) => {
         console.log(err.message)
@@ -126,7 +154,9 @@ const SinglePO = () => {
   useEffect(() => {
     getSinglePO()
     getPoProducts()
+    getPDF()
   }, [])
+
 
 
   return (
@@ -157,7 +187,7 @@ const SinglePO = () => {
             className="col-2"
             style={{ display: "grid", placeContent: "center" }}
           >
-            <label htmlFor="name">Order Deadline:</label>
+            <label htmlFor="name">Order Date:</label>
           </div>
           <div className="col-4">
             <div className="form-group">
@@ -210,7 +240,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2">
+          <div className="col-3 mt-2 mb-5">
             <label htmlFor="phone">Purchase Representative:</label>
           </div>
           <div className="col-5 mt-2">
@@ -222,8 +252,8 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 value={
-                  singlePO?.[0]?.po_approver_id
-                    ? singlePO[0].po_approver_id[1]
+                  singlePO?.[0]?.user_id
+                    ? singlePO[0].user_id[1]
                     : ""
                 }
                 //   value={data?.mobile ? data?.mobile : ""}
@@ -234,7 +264,7 @@ const SinglePO = () => {
           <div className="col-4"></div>
 
           <div className="col-1 mt-2">
-            <label htmlFor="phone">Address</label>
+            <label htmlFor="phone">Vendor Address</label>
           </div>
           <div className="col-11 mt-2">
             <div className="form-group">
@@ -310,7 +340,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2 mb-4x">
+          <div className="col-3 mt-2 mb-5">
             {" "}
             <div className="form-group">
               <input
@@ -422,6 +452,7 @@ const SinglePO = () => {
       <div>
         <PurchaseTabs
           data={productsPO}
+          total={singlePO?.[0]?.tax_totals.formatted_amount_total}
         />
       </div>
       {/* <div className="d-flex justify-content-between">
