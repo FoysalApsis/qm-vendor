@@ -22,6 +22,7 @@ const SingleVendor = () => {
   const [titles, setTitles] = useState([{}]);
   const [banks, setBanks] = useState([{}]);
   const [alert, setAlert] = useState(false);
+  const [childs, setChilds] = useState([{}]);
 
   const [paymentTerm, setPaymentTerm] = useState(null);
   const [paymentTermOptions, setPaymentTermOptions] = useState([]);
@@ -29,6 +30,7 @@ const SingleVendor = () => {
   const getUserInfo = () => {
     if (user) {
       setData({
+        id:user?.id,
         name: user?.name,
         street: user?.street,
         street2: user?.street2,
@@ -43,7 +45,7 @@ const SingleVendor = () => {
         vat: user?.vat,
         fax: user?.fax,
         property_supplier_payment_term_id:
-          user?.property_supplier_payment_term_id,
+          user?.property_supplier_payment_term_id
       });
     }
   };
@@ -74,12 +76,12 @@ const SingleVendor = () => {
   };
 
   const getCountries = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-country`, body)
       .then((res) => {
         setCountries(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -90,12 +92,14 @@ const SingleVendor = () => {
   }, []);
 
   const getState = async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", 
+    params: {} 
+  };
     await serverAPI
       .post(`get-state`, body)
       .then((res) => {
         setStates(
-          res?.data?.result?.response.map((elm) => {
+          res?.data.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -106,12 +110,12 @@ const SingleVendor = () => {
   };
 
   const getPaymentTerms = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-payment-terms`, body)
       .then((res) => {
         setPaymentTermOptions(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -121,12 +125,12 @@ const SingleVendor = () => {
       });
   }, []);
   const getTitle = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-title`, body)
       .then((res) => {
         setTitles(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -135,13 +139,31 @@ const SingleVendor = () => {
         console.log(err.message);
       });
   }, []);
+
+  const getChildren = useCallback(async () => {
+    const user = JSON.parse(localStorage.getItem('userObj'))
+    const body = { jsonrpc: "2.0", params: {child_ids:user.child_ids} };
+    await serverAPI
+      .post(`get-vendor-children`, body)
+      .then((res) => {
+        setChilds(
+          res?.data?.response.map((elm) => {
+            return { id: elm[0].id, name: elm[0].name,email:elm[0].email, phone:elm[0].phone,mobile:elm[0].mobile ,type:elm[0].type,title:elm[0].title[0]};
+            // return {...elm[0]}
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+    }, []);
   const getPartnerBank = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { login_params: login_params } };
+    const body = { jsonrpc: "2.0", params: { } };
     await serverAPI
       .post(`get-partner-bank`, body)
       .then((res) => {
         setBanks(
-          res?.data?.result?.response.map((elm) => {
+          res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
         );
@@ -160,6 +182,7 @@ const SingleVendor = () => {
     getPaymentTerms();
     getTitle();
     getPartnerBank();
+    getChildren();
   }, [getCountries]);
 
   let submit_data = {};
@@ -175,7 +198,7 @@ const SingleVendor = () => {
     }
     const res = {
       jsonrpc: "2.0",
-      params: { ...submit_data, login_params, id: user?.id },
+      params: { ...submit_data, id: user?.id },
     };
 
     // console.log(res);
@@ -463,6 +486,7 @@ const SingleVendor = () => {
             states={states}
             countries={countries}
             banks={banks}
+            childs={childs}
           />
         </div>
         <div className="d-flex justify-content-between">

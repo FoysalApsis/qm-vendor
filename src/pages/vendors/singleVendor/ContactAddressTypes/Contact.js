@@ -2,6 +2,7 @@ import React from "react";
 
 const Contact = (props) => {
   const { data, setData, handleChange, handleChildChange, titles,childData } = props;
+  console.log(childData,"childData");
   return (
     <>
       <div className="row mt-3">
@@ -43,6 +44,7 @@ const Contact = (props) => {
             placeholder="Title"
             onChange={handleChildChange}
             value={childData?.title||""}
+            // value={"2"||""}
             // value={Array.isArray(data?.titles) ? data?.titles[0] : data?.titles}
           >
             <option value="0">Select Title</option>

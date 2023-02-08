@@ -22,6 +22,7 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
+import { date } from "yup/lib/locale";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -40,6 +41,7 @@ const ContactAddress = (props) => {
     titles,
     states,
     countries,
+    childs,
     handleClickOpen,
     open,
     handleClose,
@@ -52,6 +54,7 @@ const ContactAddress = (props) => {
 
   const [childData, setChildData] = useState(null);
   const [childListDatas, setChildListData] = useState([]);
+  const [oldChildListDatas,setOldChildListDatas ] = useState([])
 
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
@@ -62,6 +65,7 @@ const ContactAddress = (props) => {
         [name]: e.target.files[0],
         type: myType,
         parent_id: "False",
+        // id:Date.now()
       });
     } else if (type === "select-one") {
       setChildData({
@@ -69,20 +73,31 @@ const ContactAddress = (props) => {
         [name]: parseInt(value),
         type: myType,
         parent_id: "False",
+        // id:Date.now()
       });
     } else {
+
       setChildData({
         ...childData,
         [name]: type === "number" ? parseInt(value) : value,
         type: myType,
         parent_id: "False",
+        // id:Date.now()
       });
     }
   };
 
   let sumbit_child_data = {};
+
+  useEffect(()=>{
+    if(childs?.length > 0) {
+      setChildDataSave(true);
+setOldChildListDatas(childs)
+    }
+  },[childs])
+
   useEffect(() => {
-    if (childListDatas.length>0) {
+    if (childListDatas.length>0 || oldChildListDatas.length>0 ) {
       // if (childData?.title === 0) {
       //   const { title, ...rest } = childData;
       //   sumbit_child_data = rest;
@@ -95,20 +110,53 @@ const ContactAddress = (props) => {
       //       ? [[0, "virtual_104", { ...sumbit_child_data }]]
       //       : [[0, "virtual_104", { ...childData }]],
       // });
+      let ids =  childListDatas?.map((item) =>{ 
+        // delete item['id']
+        return [0, "virtual_104", item]})
+      let oldIds =  oldChildListDatas?.map((item) =>{ 
+        // delete item['id']
+       return  [1, item.id, item]})
+      //  ids =ids.map((e)=>{
+      //   let obj = e[2]
+      //   delete obj["id"]
+      //    return e
+      //   })
+      //   oldIds =oldIds.map((e)=>{
+      //     let obj = e[2]
+      //     delete obj["id"]
+      //     return e
+      //   })
+      //   console.log(oldIds,ids,"[[[[[[[[[[[[[[[[");
 
       setData({
         ...data,
-        child_ids: childListDatas?.map((item) => [0, "virtual_104", item]),
+        child_ids:[...ids, ...oldIds],
       });
     }
-  }, [childListDatas]);
+  }, [childListDatas,oldChildListDatas]);
 
+  
   const handleAdd = () => {
     setChildDataSave(true);
     if (childData) {
-      setChildListData([...childListDatas, childData]);
-      handleClose();
-      setChildData(null);
+      if(childData.id){
+        let newArr=childListDatas.filter((e,index)=> e.id!== childData.id)
+        let oldArr=oldChildListDatas.filter((e,index)=> e.id!== childData.id)
+        if(newArr.length === childListDatas.length){
+          setOldChildListDatas([childData,...oldArr])
+        }else{
+          setChildListData([...newArr,childData]) 
+        }
+         
+        handleClose();
+        setChildData(null);
+      }
+      else{
+//        setChildData((prev)=>{return {...prev,id: Date.now()}})
+        setChildListData((prev)=>[...prev, {...childData,id: Date.now()}]);
+        handleClose();
+        setChildData(null);
+      }
     }
   };
 
@@ -117,9 +165,6 @@ const ContactAddress = (props) => {
     handleClose();
   };
 
-  // console.log(childData);
-  // console.log(childListDatas);
-  // console.log(data);
   return (
     <div>
       {" "}
@@ -216,6 +261,55 @@ const ContactAddress = (props) => {
       </Dialog>
       <div className="mt-4">
         <div className="row">
+        {childDataSave === true && oldChildListDatas?.length > 0
+            ? oldChildListDatas?.map((item) => (
+                <>
+                
+                  <div className="col-3 mt-2">
+                    <Card
+                      sx={{ width: "auto" }}
+                      variant="outlined"
+                      onDoubleClick={()=>{
+                        setChildData(item)
+                        handleClickOpen()
+                      } 
+                    }
+                    >
+                      <CardContent>
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          variant="body1"
+                          gutterBottom
+                          style={{ color: "#9c27b0", fontWeight: "500" }}
+                        >
+                          {item?.name}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom style={{fontStyle: 'italic'}}>
+                          {item?.function}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          gutterBottom
+                        >
+                          <Link href="#" underline="none">
+                            {item?.email}
+                          </Link>
+                        </Typography>
+                        <Typography variant="body2" style={cardStyle}>
+                          {item?.type}
+                        </Typography>
+                        <Typography variant="body2">
+                          Phone: {item?.phone}
+                        </Typography>
+                        <Typography variant="body2">
+                          Mobile: {item?.mobile}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </>
+              ))
+            : ""}
           {childDataSave === true && childListDatas?.length > 0
             ? childListDatas?.map((item) => (
                 <>
@@ -224,7 +318,10 @@ const ContactAddress = (props) => {
                     <Card
                       sx={{ width: "auto" }}
                       variant="outlined"
-                      onDoubleClick={handleClickOpen}
+                      onDoubleClick={()=>{
+                        setChildData(item)
+                        handleClickOpen()
+                      } }
                     >
                       <CardContent>
                         <Typography
