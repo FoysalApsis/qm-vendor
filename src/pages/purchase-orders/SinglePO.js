@@ -11,6 +11,7 @@ const SinglePO = () => {
   const [productsPO, setProductsPO] = useState()
   const [vendor, setVendor] = useState()
   const [company, setCompany] = useState()
+  const [tax, setTax] = useState()
   const [data, setData] = useState(null)
 
   const user = JSON.parse(localStorage.getItem("userObj"))
@@ -19,6 +20,10 @@ const SinglePO = () => {
   const handleChange = () => {
     console.log()
   }
+  // const downloadPDF = () =>{
+  //   getPDF()
+
+  // }
   //   const handleChange = (e) => {
   //     const { name, value, type } = e.target
   //     if (type === "file") {
@@ -47,7 +52,6 @@ const SinglePO = () => {
       .then((res) => {
         setSinglePO(
           res?.data?.response.map((elm) => {
-            console.log(elm[0], "single")
 
             // console.log(elm[0],"single po");
             // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
@@ -72,23 +76,11 @@ const SinglePO = () => {
     await serverAPI
       .post(`get-po-pdf`, body)
       .then((res) => {
-        // setSinglePO(
-        //   res?.data?.response.map((elm) => {
-        //     console.log(elm[0], "single")
-
-        //     // console.log(elm[0],"single po");
-        //     // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
-        //     getVendor(elm[0].shift_to_id[0]) 
-        //     getCompany(elm[0].company_id[0])
-            
-
-        //     return {
-        //       ...elm[0],
-        //       // street: user?.street,
-        //       // street2: user?.street2,
-        //     }
-        //   })
-        //   )
+        let a = document.createElement("a");
+        a.setAttribute("download",true)
+        a.setAttribute("target","_blank")
+        a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data}`);
+        a.click()
       })
       .catch((err) => {
         console.log(err.message)
@@ -100,14 +92,25 @@ const SinglePO = () => {
     await serverAPI
       .post(`get-po-products`, body)
       .then((res) => {
+        // for (const elm of res?.data?.response) {
+        //     console.log(elm, "elmemelmelmel");
+        // }
+        let tax;
         setProductsPO(
-          res?.data?.response.map((elm) => {
-            // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
-           
+          res?.data?.response.map( (elm) => {
+          //      tax = getTax(elm[0].taxes_id[0]).then(async (value)=> await value);
+          //  if(tax){
+          //     console.log(tax,"tax");
+          //     elm[0].tax_name = tax[0].display_name
+          //     elm[0].tax_group_id = tax[0].tax_group_id[1]
+          //   }
             return {
               ...elm[0],
             }
           })
+
+          
+
         )
       })
       .catch((err) => {
@@ -151,10 +154,27 @@ const SinglePO = () => {
       })
   }, [SinglePO])
 
+  // const getTax = useCallback(async (arg) => {
+  //   const body = { jsonrpc: "2.0", params: { "tax_id": arg } }
+  //  return await serverAPI
+  //     .post(`get-tax`, body)
+  //     .then((res) => {
+  //       if(res.data){
+  //       return res?.data?.response?.map((elm) => {        
+  //           return {
+  //             ...elm[0],
+  //           }
+  //         })
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message)
+  //     })
+  // }, [SinglePO])
+
   useEffect(() => {
     getSinglePO()
     getPoProducts()
-    getPDF()
   }, [])
 
 
@@ -162,7 +182,17 @@ const SinglePO = () => {
   return (
     <div className="main-container">
       <PageLayout />
-      <PageHeader title={`Purchase Order :  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}></PageHeader>
+      <PageHeader title={`Purchase Order :  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}>
+      {" "}
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained"
+              onClick={getPDF}
+            >
+              Download PDF
+            </Button>
+      </PageHeader>
       <form>
         <div className="row">
           
@@ -452,7 +482,7 @@ const SinglePO = () => {
       <div>
         <PurchaseTabs
           data={productsPO}
-          total={singlePO?.[0]?.tax_totals.formatted_amount_total}
+          total={singlePO?.[0]?.tax_totals}
         />
       </div>
       {/* <div className="d-flex justify-content-between">

@@ -1,14 +1,26 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material';
-import React from 'react'
+import { width } from '@mui/system';
+import React, { useEffect, useState } from 'react'
 
 const Products = ({data,total}) => {
 
+  const [tax,setTax] = useState()
     const rows = data
     // let total = 0 
     // data?.map((e)=>{
     //     total = total + e.price_subtotal
     // })
-    console.log(data);
+    useEffect(()=>{
+      setTax(rows?.map((e)=>{
+        if(e.price_tax != 0 ){
+          return e.price_tax
+        }
+        else return e.price_tax
+      }))
+    },[])
+    
+    console.log(total.groups_by_subtotal['Untaxed Amount'][0].tax_group_amount);
+    console.log(tax);
   return (
     <div >
       <TableContainer component={Paper}>
@@ -44,16 +56,36 @@ const Products = ({data,total}) => {
               {/* <TableCell align="center">{row.task_id}</TableCell> */}
               <TableCell align="center">{row.product_qty}</TableCell>
               <TableCell align="center">{row.price_unit}</TableCell>
-              <TableCell align="center">{row.price_tax}</TableCell>
-              <TableCell align="center">{row.price_subtotal}</TableCell>
+              <TableCell align="center">{row?.tax_name}</TableCell>
+              <TableCell align="center">$ {row.price_subtotal}</TableCell>
              
             </TableRow>
           ))}
         </TableBody>
       </Table>
     </TableContainer>
-    <div className='mt-2 me-4' style={{textAlign:"end"}}>
-       Total: {total}
+    <div className='mt-2 me-4 d-flex justify-content-end' style={{textAlign:"end"}}>
+      {/* <div className='text-end'>Untaxed Amount: {total.formatted_amount_untaxed} </div>
+      <div className='text-end'>Total:$ {total.groups_by_subtotal['Untaxed Amount'][0].tax_group_amount} </div>
+      <div className='text-end'>Total: {total.formatted_amount_total} </div> */}
+      <table style={{width:"300px"}}>
+        <tr>
+          <td>
+          Untaxed Amount:
+          </td>
+          <td> {total.formatted_amount_untaxed}</td>
+        </tr>
+        <tr>
+          <td>Tax:</td>
+          <td>$ {total.groups_by_subtotal['Untaxed Amount'][0].tax_group_amount}</td>
+        </tr>
+        <tr style={{borderTop:"1px solid black"}}>
+          <td>Total: </td>
+          <td>{total.formatted_amount_total}</td>
+        </tr>
+
+         </table>
+       
     </div>
     </div>
   )
