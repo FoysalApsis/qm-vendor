@@ -55,8 +55,8 @@ const SinglePO = () => {
 
             // console.log(elm[0],"single po");
             // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
-            getVendor(elm[0].shift_to_id[0]) 
-            getCompany(elm[0].company_id[0])
+            getVendor(elm[0]?.shift_to_id ? elm[0]?.shift_to_id[0] : 0 ) 
+            getCompany(elm[0]?.company_id ? elm[0]?.company_id[0] : 0)
             
 
             return {
