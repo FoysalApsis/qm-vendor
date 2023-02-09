@@ -76,7 +76,7 @@ const SinglePO = () => {
     const body = { jsonrpc: "2.0", 
     params: { 
       id,
-      file_name : `Purchase${args}.pdf`
+      file_name : `Purchase Order-${args}.pdf`
     } 
   }
     await serverAPI
