@@ -72,9 +72,14 @@ const SinglePO = () => {
       })
   }, [])
   const getPDF = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { id } ,userData : user }
+    const body = { jsonrpc: "2.0", 
+    params: { 
+      id,
+      file_name : `Purchase Order - ${singlePO?.[0]?.name}`
+    } 
+  }
     await serverAPI
-      .post(`get-po-pdf`, body)
+      .post(`get-pdf`, body)
       .then((res) => {
         let a = document.createElement("a");
         a.setAttribute("download",true)
