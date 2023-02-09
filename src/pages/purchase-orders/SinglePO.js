@@ -71,22 +71,21 @@ const SinglePO = () => {
         console.log(err.message)
       })
   }, [])
-  const getPDF = useCallback(async () => {
-    console.log(singlePO?.[0]?.name,"-----------------name");
+  const getPDF = useCallback(async (args) => {
+   
     const body = { jsonrpc: "2.0", 
     params: { 
       id,
-      file_name : `Purchase Order - ${singlePO?.[0]?.name}.pdf`
+      file_name : `Purchase${args}.pdf`
     } 
   }
     await serverAPI
       .post(`get-pdf`, body)
       .then((res) => {
-        console.log(res?.data?.data,"ooooooooooooooooooooooo");
         let a = document.createElement("a");
         a.setAttribute("download",true)
         a.setAttribute("target","_blank")
-        a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data}`);
+        a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
         a.click()
       })
       .catch((err) => {
@@ -195,7 +194,7 @@ const SinglePO = () => {
               type="submit"
               color="secondary"
               variant="contained"
-              onClick={getPDF}
+              onClick={()=>getPDF(singlePO?.[0]?.name)}
             >
               Download PDF
             </Button>
