@@ -67,19 +67,25 @@ const SinglePO = () => {
         );
       })
       .catch((err) => {
-        console.log(err.message);
-      });
-  }, []);
-  const getPDF = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { id }, userData: user };
+        console.log(err.message)
+      })
+  }, [])
+  const getPDF = useCallback(async (args) => {
+   
+    const body = { jsonrpc: "2.0", 
+    params: { 
+      id,
+      file_name : `Purchase Order-${args}.pdf`
+    } 
+  }
     await serverAPI
-      .post(`get-po-pdf`, body)
+      .post(`get-pdf`, body)
       .then((res) => {
         let a = document.createElement("a");
-        a.setAttribute("download", true);
-        a.setAttribute("target", "_blank");
-        a.setAttribute("href", `${process.env.REACT_APP_API_URL}/${res?.data}`);
-        a.click();
+        a.setAttribute("download",true)
+        a.setAttribute("target","_blank")
+        a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
+        a.click()
       })
       .catch((err) => {
         console.log(err.message);
@@ -173,20 +179,16 @@ const SinglePO = () => {
   return (
     <div className="main-container">
       <PageLayout />
-      <PageHeader
-        title={`Purchase Order :  ${
-          singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""
-        } `}
-      >
-        {" "}
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          onClick={getPDF}
-        >
-          Download PDF
-        </Button>
+      <PageHeader title={`Purchase Order :  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}>
+      {" "}
+            <Button
+              type="submit"
+              color="secondary"
+              variant="contained"
+              onClick={()=>getPDF(singlePO?.[0]?.name)}
+            >
+              Download PDF
+            </Button>
       </PageHeader>
       <form>
         {/* <div className="row">
