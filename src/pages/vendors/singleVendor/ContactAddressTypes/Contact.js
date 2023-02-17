@@ -2,7 +2,6 @@ import React from "react";
 
 const Contact = (props) => {
   const { data, setData, handleChange, handleChildChange, titles,childData } = props;
-  console.log(childData,"childData");
   return (
     <>
       <div className="row mt-3">

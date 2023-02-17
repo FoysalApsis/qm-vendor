@@ -26,6 +26,12 @@ const SingleVendor = () => {
 
   const [paymentTerm, setPaymentTerm] = useState(null);
   const [paymentTermOptions, setPaymentTermOptions] = useState([]);
+  const [paymentMethod, setPaymentMethod] = useState([]);
+  const [paymentMethodOptions, setPaymentMethodOptions] = useState([]);
+
+  const [childEmail, setChildEmail] = useState([]);
+
+  
 
   const getUserInfo = () => {
     if (user) {
@@ -44,11 +50,14 @@ const SingleVendor = () => {
         website: user?.website,
         vat: user?.vat,
         fax: user?.fax,
-        property_supplier_payment_term_id:
-          user?.property_supplier_payment_term_id
+        // property_supplier_payment_term_id: user?.property_supplier_payment_term_id,
+        // property_payment_method_id:user?.property_payment_method_id
       });
     }
   };
+
+  
+ 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
     if (type === "file") {
@@ -68,6 +77,8 @@ const SingleVendor = () => {
       });
     }
   };
+
+ 
 
   const login_params = {
     db: process.env.REACT_APP_DB,
@@ -115,6 +126,21 @@ const SingleVendor = () => {
       .post(`get-payment-terms`, body)
       .then((res) => {
         setPaymentTermOptions(
+          res?.data?.response.map((elm) => {
+            return { id: elm[0].id, label: elm[0].display_name };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+  const getPaymentMethod = useCallback(async () => {
+    const body = { jsonrpc: "2.0", params: {} };
+    await serverAPI
+      .post(`get-payment-method`, body)
+      .then((res) => {
+        setPaymentMethodOptions(
           res?.data?.response.map((elm) => {
             return { id: elm[0].id, label: elm[0].display_name };
           })
@@ -183,6 +209,7 @@ const SingleVendor = () => {
     getTitle();
     getPartnerBank();
     getChildren();
+    getPaymentMethod()
   }, [getCountries]);
 
   let submit_data = {};
@@ -234,7 +261,7 @@ const SingleVendor = () => {
         anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
         <Alert onClose={handleClose} severity="success" sx={{ width: "100%" }}>
-          This is a success message!
+          Update Successfully
         </Alert>
       </Snackbar>
       <div className="main-container">
@@ -487,6 +514,12 @@ const SingleVendor = () => {
             countries={countries}
             banks={banks}
             childs={childs}
+            childEmail = {childEmail}
+            setChildEmail = {setChildEmail}
+            paymentMethod = {paymentMethod}
+            setPaymentMethod = {setPaymentMethod}     
+            paymentMethodOptions = {paymentMethodOptions}
+            setPaymentMethodOptions = {setPaymentMethodOptions}     
           />
         </div>
         <div className="d-flex justify-content-between">

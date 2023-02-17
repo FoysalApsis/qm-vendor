@@ -23,16 +23,17 @@ import {
   DialogTitle,
 } from "@mui/material";
 import { date } from "yup/lib/locale";
+import { toast, ToastContainer } from "react-toastify";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 var cardStyle = {
-  display: 'block',
-  width: '30vw',
-  transitionDuration: '0.3s',
-  fontWeight:"600",
-  textTransform:"capitalize"
-}
+  display: "block",
+  width: "30vw",
+  transitionDuration: "0.3s",
+  fontWeight: "600",
+  textTransform: "capitalize",
+};
 const ContactAddress = (props) => {
   const {
     data,
@@ -45,6 +46,8 @@ const ContactAddress = (props) => {
     handleClickOpen,
     open,
     handleClose,
+    childEmail,
+    setChildEmail
   } = props;
   const [myType, setType] = useState("contact");
   const [childDataSave, setChildDataSave] = useState(false);
@@ -54,7 +57,20 @@ const ContactAddress = (props) => {
 
   const [childData, setChildData] = useState(null);
   const [childListDatas, setChildListData] = useState([]);
-  const [oldChildListDatas,setOldChildListDatas ] = useState([])
+  const [oldChildListDatas, setOldChildListDatas] = useState([]);
+
+  // useEffect(() => {
+  //   data?.child_ids?.forEach((e) => {
+
+  //     if (e[0] === 0) {
+  //       console.log(e[2],childEmail.includes(e[2].email));
+  //       if (!childEmail.includes(e[2].email)) {
+  //         setChildEmail((prev) => [...prev, e[2].email]);
+  //         setChildListData((prev) => [...prev, { ...e[2] }]);
+  //       }
+  //     }
+  //   });
+  // }, [childListDatas]);
 
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
@@ -76,7 +92,6 @@ const ContactAddress = (props) => {
         // id:Date.now()
       });
     } else {
-
       setChildData({
         ...childData,
         [name]: type === "number" ? parseInt(value) : value,
@@ -87,35 +102,23 @@ const ContactAddress = (props) => {
     }
   };
 
-  let sumbit_child_data = {};
-
-  useEffect(()=>{
-    if(childs?.length > 0) {
+  useEffect(() => {
+    if (childs?.length > 0) {
       setChildDataSave(true);
-setOldChildListDatas(childs)
+      setOldChildListDatas(childs);
     }
-  },[childs])
+  }, [childs]);
 
   useEffect(() => {
-    if (childListDatas.length>0 || oldChildListDatas.length>0 ) {
-      // if (childData?.title === 0) {
-      //   const { title, ...rest } = childData;
-      //   sumbit_child_data = rest;
-      // }
-
-      // setData({
-      //   ...data,
-      //   child_ids:
-      //     Object.keys(sumbit_child_data).length !== 0
-      //       ? [[0, "virtual_104", { ...sumbit_child_data }]]
-      //       : [[0, "virtual_104", { ...childData }]],
-      // });
-      let ids =  childListDatas?.map((item) =>{ 
+    if (childListDatas.length > 0 || oldChildListDatas.length > 0) {
+      let ids = childListDatas?.map((item) => {
         // delete item['id']
-        return [0, "virtual_104", item]})
-      let oldIds =  oldChildListDatas?.map((item) =>{ 
+        return [0, "virtual_104", item];
+      });
+      let oldIds = oldChildListDatas?.map((item) => {
         // delete item['id']
-       return  [1, item.id, item]})
+        return [1, item.id, item];
+      });
       //  ids =ids.map((e)=>{
       //   let obj = e[2]
       //   delete obj["id"]
@@ -130,33 +133,48 @@ setOldChildListDatas(childs)
 
       setData({
         ...data,
-        child_ids:[...ids, ...oldIds],
+        child_ids: [...ids, ...oldIds],
       });
     }
-  }, [childListDatas,oldChildListDatas]);
+  }, [childListDatas, oldChildListDatas]);
 
-  
   const handleAdd = () => {
     setChildDataSave(true);
-    if (childData) {
-      if(childData.id){
-        let newArr=childListDatas.filter((e,index)=> e.id!== childData.id)
-        let oldArr=oldChildListDatas.filter((e,index)=> e.id!== childData.id)
-        if(newArr.length === childListDatas.length){
-          setOldChildListDatas([childData,...oldArr])
-        }else{
-          setChildListData([...newArr,childData]) 
+    if (childData && childData.email) {
+      console.log(childData.email,"email");
+      if (childData.id) {
+        let newArr = childListDatas.filter((e, index) => e.id !== childData.id);
+        let oldArr = oldChildListDatas.filter(
+          (e, index) => e.id !== childData.id
+        );
+        if (newArr.length === childListDatas.length) {
+          setOldChildListDatas([childData, ...oldArr]);
+        } else {
+          // setChildEmail((prev)=>[...prev,childData.email])
+          setChildListData([...newArr, childData]);
         }
-         
+
+        handleClose();
+        setChildData(null);
+      } else {
+        //        setChildData((prev)=>{return {...prev,id: Date.now()}})
+        let dateId = Date.now();
+        // setChildEmail((prev)=>[...prev,childData.email])
+        setChildListData((prev) => [...prev, { ...childData, id: dateId }]);
         handleClose();
         setChildData(null);
       }
-      else{
-//        setChildData((prev)=>{return {...prev,id: Date.now()}})
-        setChildListData((prev)=>[...prev, {...childData,id: Date.now()}]);
-        handleClose();
-        setChildData(null);
-      }
+    } else {
+      toast.error('Email Cannot be Empty', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
     }
   };
 
@@ -167,7 +185,20 @@ setOldChildListDatas(childs)
 
   return (
     <div>
-      {" "}
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+      {/* Same as */}
+      <ToastContainer />{" "}
       <Button variant="contained" color="secondary" onClick={handleClickOpen}>
         Add
       </Button>
@@ -261,19 +292,19 @@ setOldChildListDatas(childs)
       </Dialog>
       <div className="mt-4">
         <div className="row">
-        {childDataSave === true && oldChildListDatas?.length > 0
+          {childDataSave === true &&
+          oldChildListDatas?.length > 0 &&
+          Object.entries(oldChildListDatas[0]).length > 0
             ? oldChildListDatas?.map((item) => (
                 <>
-                
-                  <div className="col-3 mt-2">
+                  <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
                     <Card
-                      sx={{ width: "auto" }}
+                      sx={{ width: "auto", maxWidth: "260px" }}
                       variant="outlined"
-                      onDoubleClick={()=>{
-                        setChildData(item)
-                        handleClickOpen()
-                      } 
-                    }
+                      onDoubleClick={() => {
+                        setChildData(item);
+                        handleClickOpen();
+                      }}
                     >
                       <CardContent>
                         <Typography
@@ -284,13 +315,14 @@ setOldChildListDatas(childs)
                         >
                           {item?.name}
                         </Typography>
-                        <Typography variant="body2" gutterBottom style={{fontStyle: 'italic'}}>
-                          {item?.function}
-                        </Typography>
                         <Typography
                           variant="body2"
                           gutterBottom
+                          style={{ fontStyle: "italic" }}
                         >
+                          {item?.function}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
                           <Link href="#" underline="none">
                             {item?.email}
                           </Link>
@@ -312,16 +344,16 @@ setOldChildListDatas(childs)
             : ""}
           {childDataSave === true && childListDatas?.length > 0
             ? childListDatas?.map((item) => (
-                <>
                 
-                  <div className="col-3 mt-2">
+                <>
+                  <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
                     <Card
-                      sx={{ width: "auto" }}
+                      sx={{ width: "auto", maxWidth: "260px" }}
                       variant="outlined"
-                      onDoubleClick={()=>{
-                        setChildData(item)
-                        handleClickOpen()
-                      } }
+                      onDoubleClick={() => {
+                        setChildData(item);
+                        handleClickOpen();
+                      }}
                     >
                       <CardContent>
                         <Typography
@@ -332,13 +364,14 @@ setOldChildListDatas(childs)
                         >
                           {item?.name}
                         </Typography>
-                        <Typography variant="body2" gutterBottom style={{fontStyle: 'italic'}}>
-                          {item?.function}
-                        </Typography>
                         <Typography
                           variant="body2"
                           gutterBottom
+                          style={{ fontStyle: "italic" }}
                         >
+                          {item?.function}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
                           <Link href="#" underline="none">
                             {item?.email}
                           </Link>
@@ -356,9 +389,11 @@ setOldChildListDatas(childs)
                     </Card>
                   </div>
                 </>
+             
               ))
             : ""}
         </div>
+       
       </div>
     </div>
   );

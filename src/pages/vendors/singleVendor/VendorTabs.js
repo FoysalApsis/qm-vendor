@@ -19,7 +19,13 @@ const VendorTabs = (props) => {
     states,
     countries,
     banks,
-    childs
+    childs,
+    childEmail,
+    setChildEmail,
+    paymentMethod,
+    setPaymentMethod,
+    setPaymentMethodOptions,
+    paymentMethodOptions
   } = props;
   const [value, setValue] = useState("1");
   const [open, setOpen] = useState(false);
@@ -62,6 +68,8 @@ const VendorTabs = (props) => {
             handleClickOpen={handleClickOpen}
             handleClose={handleClose}
             open={open}
+            childEmail = {childEmail}
+            setChildEmail = {setChildEmail}
           />
         </TabPanel>
         <TabPanel value="2">
@@ -73,6 +81,10 @@ const VendorTabs = (props) => {
             setPaymentTerm={setPaymentTerm}
             paymentTermOptions={paymentTermOptions}
             setPaymentTermOptions={setPaymentTermOptions}
+            paymentMethod = {paymentMethod}
+            setPaymentMethod = {setPaymentMethod} 
+            paymentMethodOptions = {paymentMethodOptions}
+            setPaymentMethodOptions = {setPaymentMethodOptions}    
           />
         </TabPanel>
         <TabPanel value="3">

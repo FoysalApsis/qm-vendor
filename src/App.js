@@ -16,6 +16,8 @@ import PageNotFound from "./components/layout/PageNotFound";
 import SingleVendor from "./pages/vendors/singleVendor";
 import MyPurchaseOrder from "./pages/purchase-orders";
 import SinglePO from "./pages/purchase-orders/SinglePO";
+import Invoices from "./pages/Invoice";
+import CreateBill from "./pages/Invoice/CreateBill";
 
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
@@ -81,6 +83,18 @@ function App() {
             path="/my-purchase-order/:id"
             element={
                 <SinglePO></SinglePO>
+            }
+          />
+          <Route
+            path="/invoice"
+            element={
+                <Invoices />
+            }
+          />
+          <Route
+            path="/invoice/create-bill"
+            element={
+              <CreateBill></CreateBill>
             }
           />
              

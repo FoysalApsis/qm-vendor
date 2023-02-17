@@ -33,7 +33,6 @@ const MyPurchaseOrder = () => {
     .then((res) => {
         setPurchaseOrders(
             res?.data?.response.map((elm) => {
-              console.log("elmmmmm",elm[0]);
                 return { id: elm[0].id, display_name: elm[0].display_name, company_id:elm[0].company_id[1],partner_id:elm[0].partner_id[1] , date_order:elm[0].date_order , amount_total:elm[0].tax_totals.formatted_amount_total,state:elm[0].state };
             })
         );
@@ -95,6 +94,7 @@ const MyPurchaseOrder = () => {
             key={row.id}
             sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             onClick={()=> navigator(row.id)}
+            style={{cursor:"pointer"}}
             >
               <TableCell component="th" scope="row">
                 {row.display_name}

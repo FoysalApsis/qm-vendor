@@ -10,6 +10,11 @@ import {
 } from "../../../utils/Icons";
 import { useContext } from "react";
 import AuthContext from "../../../context/authContext/AuthContext";
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import InventoryOutlinedIcon from '@mui/icons-material/InventoryOutlined';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 
 const SideBar = ({ handleClick, open }) => {
   const { user } = useContext(AuthContext);
@@ -76,35 +81,35 @@ const SideBar = ({ handleClick, open }) => {
       <List className="px-2 pt-4">
         <CustomListItem
           title="Dashboard"
-          icon={DashboardIcon}
+          icon={GridViewOutlinedIcon}
           path="/"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Info"
-          icon={RequestIcon}
+          icon={InfoOutlinedIcon}
           path="/vendor"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Invoices"
-          icon={DashboardIcon}
-          path="#"
+          icon={DescriptionOutlinedIcon}
+          path="/invoice"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Payment Receipt"
-          icon={RequestIcon}
+          icon={PaidOutlinedIcon}
           path="#"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Purchase Order"
-          icon={RequestIcon}
+          icon={InventoryOutlinedIcon}
           path="/my-purchase-order"
           handleClick={handleClick}
           open={open}

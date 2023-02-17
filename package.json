@@ -8,6 +8,7 @@
     "@emotion/styled": "^11.8.1",
     "@material-ui/icons": "^4.11.3",
     "@microsoft/microsoft-graph-client": "^3.0.2",
+    "@mui/icons-material": "^5.11.9",
     "@mui/lab": "^5.0.0-alpha.84",
     "@mui/material": "^5.8.1",
     "@mui/styles": "^5.8.0",
