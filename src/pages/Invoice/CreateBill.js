@@ -1,5 +1,6 @@
 import { Button } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
@@ -8,30 +9,43 @@ const CreateBill = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([{}]);
   const fileInput = useRef(null);
   const [file, setFile] = useState(null);
-
+  const [selectedPO, setSelectedPO] = useState()
 
   const uploadPdfFile = (e) => {
-   
+   console.log(e.target.files[0]);
     setFile(e.target.files[0])
-    console.log(e.target.files[0]);
   };
 
   const sendFile = ()=>{
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("jsonrpc", "2.0")
-    formData.append("params",{id:1})
-    uploadFile(formData)
+    if (selectedPO) {
+      const formData = new FormData();
+      console.log(file,"this is file");
+      formData.append("document", file);
+      formData.append("id",selectedPO)
+      uploadFile(formData)
+    }
+    else{
+      toast.error('Please Select a Purchase Order', {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+    }
   }
 
+  // const handleChange = (e) =>{
+  //   setSelectedPO(e.target.value)
+  // }
+
   const uploadFile = useCallback(async (args) => {
-  
-    args.forEach((element,_) => {
-      console.log(element);
-    });
-    const body = args;
+    const body = args
     await serverAPI
-      .post(`/upload-pdf`, body)
+      .post(`/upload-file-to-po`, body)
       .then((res) => {
         // setSinglePO(
         //   res?.data?.response.map((elm) => {
@@ -47,9 +61,29 @@ const CreateBill = () => {
         //     };
         //   })
         // );
+        toast.success(res?.data?.msg, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       })
       .catch((err) => {
-        console.log(err.message);
+        console.log(err,"error");
+        toast.error(err?.response?.data?.msg, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
       });
   }, []);
 
@@ -96,7 +130,7 @@ const CreateBill = () => {
               name="purchase_order"
               className="form-control"
               placeholder="Select a purchase order"
-              // onChange={handleChange}
+              onChange={(e)=>setSelectedPO(e.target.value)}
               // value={
               //   Array.isArray(data?.country_id)
               //     ? data?.country_id[0]
@@ -113,7 +147,7 @@ const CreateBill = () => {
           </div>
         </div>
         
-        {/* <div className="col-11 mt-2">
+        <div className="col-11 mt-2">
             {" "}
             <Button
               className="capitalize mt-5"
@@ -140,7 +174,7 @@ const CreateBill = () => {
             >
               Send{" "}
             </Button>
-          </div> */}
+          </div>
       </div>
     </div>
   );

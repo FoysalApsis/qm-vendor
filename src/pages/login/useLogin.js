@@ -15,12 +15,6 @@ const useLogin = () => {
     password: "",
   };
 
-  const login_params = {
-    "db": process.env.REACT_APP_DB,
-    "login": process.env.REACT_APP_LOGIN,
-    "password": process.env.REACT_APP_PASSWORD,
-  }
-
   const SignInValidations = Yup.object().shape({
     email: Yup.string().required("Username is required!"),
     // password: Yup.string().required("Password is required!"),

@@ -6,9 +6,11 @@ import { Input } from "@mui/material";
 
 // const regex = /^[0-9\b]+$/;
 const Accounting = (props) => {
+  const user = JSON.parse(localStorage.getItem("userObj"));
   const { data, setData, handleChange, banks } = props;
-  const [values, setValues] = useState([{ bank_name: "", acc_number: "" ,bank_ic:"",transit_no:""}]);
+  const [values, setValues] = useState([{ bank_name: user?.bank_name, acc_number: user?.acc_no ,bank_ic:user?.bank_ic,transit_no:user?.transit_no}]);
   const [index, setIndex] = useState(null);
+
 
   const handleAddClick = () => {
     setValues([...values, { bank_name: "", acc_number: "" ,bank_ic:"",transit_no:""}]);
@@ -86,6 +88,7 @@ const Accounting = (props) => {
                   className="form-control"
                   // style={{ width: "30%" }}
                   size={"small"}
+                  defaultValue = {user?.bank_name ? user?.bank_name : "" }
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </div>
@@ -100,7 +103,7 @@ const Accounting = (props) => {
                name="bank_ic"
                variant="outlined"
                color="secondary"
-               value={item?.bank_ic ? item.bank_ic:""}
+               defaultValue={user?.bank_ic ? user.bank_ic:""}
 
                InputProps={{ inputProps: { minlength: 3, maxlength: 3 } }}
                size={"small"}
@@ -119,7 +122,7 @@ const Accounting = (props) => {
                name="transit_no"
                variant="outlined"
                color="secondary"
-               value={item?.transit_no ? item.transit_no:""}
+               defaultValue={user?.transit_no ? user.transit_no:""}
 
                InputProps={{ inputProps: { minlength: 5, maxlength: 5 } }}
                // style={{ width: "30%" }}
@@ -138,7 +141,7 @@ const Accounting = (props) => {
               name="acc_number"
               variant="outlined"
               color="secondary"
-              value={item?.acc_number ? item.acc_number:""}
+              defaultValue={user?.acc_no ? user.acc_no:""}
               InputProps={{ inputProps: { minlength: 7, maxlength: 10 } }}
               min="7"
               max="10"

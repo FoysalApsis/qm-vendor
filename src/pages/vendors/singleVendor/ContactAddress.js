@@ -47,7 +47,11 @@ const ContactAddress = (props) => {
     open,
     handleClose,
     childEmail,
-    setChildEmail
+    setChildEmail,
+    childListDatas,
+    setChildListData,
+    oldChildListDatas,
+    setOldChildListDatas,
   } = props;
   const [myType, setType] = useState("contact");
   const [childDataSave, setChildDataSave] = useState(false);
@@ -56,8 +60,7 @@ const ContactAddress = (props) => {
   };
 
   const [childData, setChildData] = useState(null);
-  const [childListDatas, setChildListData] = useState([]);
-  const [oldChildListDatas, setOldChildListDatas] = useState([]);
+  const [isEmailValid, setEmailValid] = useState(false);
 
   // useEffect(() => {
   //   data?.child_ids?.forEach((e) => {
@@ -74,6 +77,13 @@ const ContactAddress = (props) => {
 
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
+
+    if (name === "email") {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (emailRegex.test(e.target.value)) {
+        setEmailValid(true);
+      }
+    }
 
     if (type === "file") {
       setChildData({
@@ -119,18 +129,6 @@ const ContactAddress = (props) => {
         // delete item['id']
         return [1, item.id, item];
       });
-      //  ids =ids.map((e)=>{
-      //   let obj = e[2]
-      //   delete obj["id"]
-      //    return e
-      //   })
-      //   oldIds =oldIds.map((e)=>{
-      //     let obj = e[2]
-      //     delete obj["id"]
-      //     return e
-      //   })
-      //   console.log(oldIds,ids,"[[[[[[[[[[[[[[[[");
-
       setData({
         ...data,
         child_ids: [...ids, ...oldIds],
@@ -141,7 +139,6 @@ const ContactAddress = (props) => {
   const handleAdd = () => {
     setChildDataSave(true);
     if (childData && childData.email) {
-      console.log(childData.email,"email");
       if (childData.id) {
         let newArr = childListDatas.filter((e, index) => e.id !== childData.id);
         let oldArr = oldChildListDatas.filter(
@@ -165,7 +162,7 @@ const ContactAddress = (props) => {
         setChildData(null);
       }
     } else {
-      toast.error('Email Cannot be Empty', {
+      toast.error("Email Cannot be Empty", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -174,7 +171,7 @@ const ContactAddress = (props) => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
     }
   };
 
@@ -344,7 +341,6 @@ const ContactAddress = (props) => {
             : ""}
           {childDataSave === true && childListDatas?.length > 0
             ? childListDatas?.map((item) => (
-                
                 <>
                   <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
                     <Card
@@ -389,11 +385,60 @@ const ContactAddress = (props) => {
                     </Card>
                   </div>
                 </>
-             
               ))
             : ""}
+          {/* {childDataSave === true && childListDatas?.length > 0
+            ? data?.child_ids?.filter((e)=>e[1]==="virtual_104").map((item) => (
+
+                <>
+                
+                  <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
+                    <Card
+                      sx={{ width: "auto", maxWidth: "260px" }}
+                      variant="outlined"
+                      onDoubleClick={() => {
+                        setChildData(item);
+                        handleClickOpen();
+                      }}
+                    >
+                      <CardContent>
+                        <Typography
+                          sx={{ fontSize: 14 }}
+                          variant="body1"
+                          gutterBottom
+                          style={{ color: "#9c27b0", fontWeight: "500" }}
+                        >
+                          {item[2]?.name}
+                        </Typography>
+                        <Typography
+                          variant="body2"
+                          gutterBottom
+                          style={{ fontStyle: "italic" }}
+                        >
+                          {item[2]?.function}
+                        </Typography>
+                        <Typography variant="body2" gutterBottom>
+                          <Link href="#" underline="none">
+                            {item[2]?.email}
+                          </Link>
+                        </Typography>
+                        <Typography variant="body2" style={cardStyle}>
+                          {item[2]?.type}
+                        </Typography>
+                        <Typography variant="body2">
+                          Phone: {item[2]?.phone}
+                        </Typography>
+                        <Typography variant="body2">
+                          Mobile: {item[2]?.mobile}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </>
+
+              ))
+            : ""} */}
         </div>
-       
       </div>
     </div>
   );

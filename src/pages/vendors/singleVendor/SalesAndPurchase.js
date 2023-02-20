@@ -62,9 +62,9 @@ const SalesAndPurchase = (props) => {
                   onChange={handlePaymentTermChange}
                   id="property_supplier_payment_term_id"
                   options={paymentTermOptions}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
+                  // isOptionEqualToValue={(option, value) =>
+                  //   option.id === value.id
+                  // }
                   sx={{ width: 300 }}
                   name="property_supplier_payment_term_id"
                   renderInput={(params) => (
@@ -98,9 +98,9 @@ const SalesAndPurchase = (props) => {
                   onChange={handlePaymentMethodChange}
                   id="property_payment_method_id"
                   options={paymentMethodOptions}
-                  isOptionEqualToValue={(option, value) =>
-                    option.id === value.id
-                  }
+                  // isOptionEqualToValue={(option, value) =>
+                  //   option.id === value.id
+                  // }
                   sx={{ width: 300 }}
                   name="property_payment_method_id"
                   renderInput={(params) => (

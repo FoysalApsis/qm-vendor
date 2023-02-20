@@ -50,10 +50,17 @@ const SingleVendor = () => {
         website: user?.website,
         vat: user?.vat,
         fax: user?.fax,
-        // property_supplier_payment_term_id: user?.property_supplier_payment_term_id,
-        // property_payment_method_id:user?.property_payment_method_id
+        property_supplier_payment_term_id: user?.property_supplier_payment_term_id[0],
+        property_payment_method_id:user?.property_payment_method_id[0],
+        bank_name:user?.bank_name,
+        bank_ic:user?.bank_ic,
+        transit_no:user?.transit_no,
+        acc_no : user?.acc_no
       });
+      setPaymentTerm({id:user?.property_supplier_payment_term_id[0],label:user?.property_supplier_payment_term_id[1]})
+      setPaymentMethod({id:user?.property_payment_method_id[0],label:user?.property_payment_method_id[1]})
     }
+    console.log(user,"user");
   };
 
   
@@ -78,13 +85,6 @@ const SingleVendor = () => {
     }
   };
 
- 
-
-  const login_params = {
-    db: process.env.REACT_APP_DB,
-    login: process.env.REACT_APP_LOGIN,
-    password: process.env.REACT_APP_PASSWORD,
-  };
 
   const getCountries = useCallback(async () => {
     const body = { jsonrpc: "2.0", params: {} };
@@ -233,11 +233,23 @@ const SingleVendor = () => {
       .post(`update-vendor`, res)
       .then((res) => {
         setAlert(true);
+        refetchUserData()
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
+
+  const refetchUserData = async ()=>{
+    const res = {jsonrpc:"2.0",params:{"email":user?.email,"password":user?.vendor_password
+  }}
+    return await serverAPI.post("/auth-vendor", res, {}).then((res)=>{
+      console.log(res,"auth vendopr");
+      localStorage.setItem("userObj", JSON.stringify(res?.data[0]));
+    }).catch((err)=>{
+      console.log(err.message);
+    })
+  }
 
   //* close notification
   const handleClose = (event, reason) => {

@@ -40,7 +40,8 @@ const VendorTabs = (props) => {
     setOpen(false);
   };
 
-
+  const [childListDatas, setChildListData] = useState([]);
+  const [oldChildListDatas, setOldChildListDatas] = useState([]);
   return (
     <>
 
@@ -70,6 +71,10 @@ const VendorTabs = (props) => {
             open={open}
             childEmail = {childEmail}
             setChildEmail = {setChildEmail}
+            childListDatas = {childListDatas}
+            setChildListData = {setChildListData}
+            oldChildListDatas = {oldChildListDatas}
+            setOldChildListDatas = {setOldChildListDatas}
           />
         </TabPanel>
         <TabPanel value="2">
