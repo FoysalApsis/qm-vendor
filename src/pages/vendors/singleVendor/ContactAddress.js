@@ -78,6 +78,8 @@ const ContactAddress = (props) => {
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
 
+    console.log(name,value);
+
     if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (emailRegex.test(e.target.value)) {
@@ -271,6 +273,9 @@ const ContactAddress = (props) => {
                     setData={setData}
                     data={data}
                     handleChildChange={handleChildChange}
+                    states={states}
+                    countries={countries}
+                    childData={childData}
                   />
                 );
               default:

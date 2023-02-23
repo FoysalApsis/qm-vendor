@@ -62,7 +62,7 @@ const Invoices = () => {
           variant="contained"
           onClick={handleCreateBill}
         >
-          Create Bill
+          Submit Invoice
         </Button>
       </PageHeader>
       

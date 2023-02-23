@@ -1,4 +1,4 @@
-import { Button, Snackbar } from "@mui/material";
+import { Button, CircularProgress, Snackbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Alert from "@mui/material/Alert";
@@ -31,12 +31,10 @@ const SingleVendor = () => {
 
   const [childEmail, setChildEmail] = useState([]);
 
-  
-
   const getUserInfo = () => {
     if (user) {
       setData({
-        id:user?.id,
+        id: user?.id,
         name: user?.name,
         street: user?.street,
         street2: user?.street2,
@@ -50,23 +48,29 @@ const SingleVendor = () => {
         website: user?.website,
         vat: user?.vat,
         fax: user?.fax,
-        property_supplier_payment_term_id: user?.property_supplier_payment_term_id[0],
-        property_payment_method_id:user?.property_payment_method_id[0],
-        bank_name:user?.bank_name,
-        bank_ic:user?.bank_ic,
-        transit_no:user?.transit_no,
-        acc_no : user?.acc_no
+        property_supplier_payment_term_id:
+          user?.property_supplier_payment_term_id[0],
+        property_payment_method_id: user?.property_payment_method_id[0],
+        bank_name: user?.bank_name,
+        bank_ic: user?.bank_ic,
+        transit_no: user?.transit_no,
+        acc_no: user?.acc_no,
       });
-      setPaymentTerm({id:user?.property_supplier_payment_term_id[0],label:user?.property_supplier_payment_term_id[1]})
-      setPaymentMethod({id:user?.property_payment_method_id[0],label:user?.property_payment_method_id[1]})
+      setPaymentTerm({
+        id: user?.property_supplier_payment_term_id[0],
+        label: user?.property_supplier_payment_term_id[1],
+      });
+      setPaymentMethod({
+        id: user?.property_payment_method_id[0],
+        label: user?.property_payment_method_id[1],
+      });
     }
-    console.log(user,"user");
+    console.log(user, "user");
   };
 
-  
- 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
+    console.log(name,value,"val");
     if (type === "file") {
       setData({
         ...data,
@@ -85,7 +89,6 @@ const SingleVendor = () => {
     }
   };
 
-
   const getCountries = useCallback(async () => {
     const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
@@ -103,9 +106,7 @@ const SingleVendor = () => {
   }, []);
 
   const getState = async () => {
-    const body = { jsonrpc: "2.0", 
-    params: {} 
-  };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-state`, body)
       .then((res) => {
@@ -167,14 +168,22 @@ const SingleVendor = () => {
   }, []);
 
   const getChildren = useCallback(async () => {
-    const user = JSON.parse(localStorage.getItem('userObj'))
-    const body = { jsonrpc: "2.0", params: {child_ids:user.child_ids} };
+    const user = JSON.parse(localStorage.getItem("userObj"));
+    const body = { jsonrpc: "2.0", params: { child_ids: user.child_ids } };
     await serverAPI
       .post(`get-vendor-children`, body)
       .then((res) => {
         setChilds(
           res?.data?.response.map((elm) => {
-            return { id: elm[0].id, name: elm[0].name,email:elm[0].email, phone:elm[0].phone,mobile:elm[0].mobile ,type:elm[0].type,title:elm[0].title[0]};
+            return {
+              id: elm[0].id,
+              name: elm[0].name,
+              email: elm[0].email,
+              phone: elm[0].phone,
+              mobile: elm[0].mobile,
+              type: elm[0].type,
+              title: elm[0].title[0],
+            };
             // return {...elm[0]}
           })
         );
@@ -182,9 +191,9 @@ const SingleVendor = () => {
       .catch((err) => {
         console.log(err.message);
       });
-    }, []);
+  }, []);
   const getPartnerBank = useCallback(async () => {
-    const body = { jsonrpc: "2.0", params: { } };
+    const body = { jsonrpc: "2.0", params: {} };
     await serverAPI
       .post(`get-partner-bank`, body)
       .then((res) => {
@@ -199,8 +208,6 @@ const SingleVendor = () => {
       });
   }, []);
 
-
-
   useEffect(() => {
     getUserInfo();
     getState();
@@ -209,7 +216,7 @@ const SingleVendor = () => {
     getTitle();
     getPartnerBank();
     getChildren();
-    getPaymentMethod()
+    getPaymentMethod();
   }, [getCountries]);
 
   let submit_data = {};
@@ -233,23 +240,28 @@ const SingleVendor = () => {
       .post(`update-vendor`, res)
       .then((res) => {
         setAlert(true);
-        refetchUserData()
+        refetchUserData();
       })
       .catch((err) => {
         console.log(err.message);
       });
   };
 
-  const refetchUserData = async ()=>{
-    const res = {jsonrpc:"2.0",params:{"email":user?.email,"password":user?.vendor_password
-  }}
-    return await serverAPI.post("/auth-vendor", res, {}).then((res)=>{
-      console.log(res,"auth vendopr");
-      localStorage.setItem("userObj", JSON.stringify(res?.data[0]));
-    }).catch((err)=>{
-      console.log(err.message);
-    })
-  }
+  const refetchUserData = async () => {
+    const res = {
+      jsonrpc: "2.0",
+      params: { email: user?.email, password: user?.vendor_password },
+    };
+    return await serverAPI
+      .post("/auth-vendor", res, {})
+      .then((res) => {
+        console.log(res, "auth vendopr");
+        localStorage.setItem("userObj", JSON.stringify(res?.data[0]));
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   //* close notification
   const handleClose = (event, reason) => {
@@ -259,7 +271,7 @@ const SingleVendor = () => {
     setAlert(false);
   };
 
-
+  
 
   return (
     <>
@@ -389,8 +401,8 @@ const SingleVendor = () => {
                 />
               </div>
             </div>
-            <div className="col-2 mt-2">
-              <select
+            <div className="col-3 mt-2">
+              {/* <select
                 id="state_id"
                 name="state_id"
                 className="form-control"
@@ -403,14 +415,47 @@ const SingleVendor = () => {
                 }
               >
                 <option value="">Select State</option>
+                {states?.length < 2 && (
+                  <option value="...loading">Loading....</option>
+                )}
                 {states?.map((item, index) => (
                   <option value={item?.id} key={index}>
                     {item?.label}
                   </option>
                 ))}
-              </select>
+              </select> */}
+              <Autocomplete
+                    name="state_id"
+                    id="state_id"
+                    options={states}
+                    autoHighlight
+                    size="small"
+                    defaultValue = {
+                      Array.isArray(data?.state_id)
+                      ? {id:data?.state_id[0],label:data?.state_id[1]}
+                      : user?.state_id ? {id:user?.state_id[0],label:user?.state_id[1]} : {id:"",label:""}
+                    }
+                    loading={states?.length < 2}
+                    loadingText={"Loading...."}
+                    getOptionLabel={(option) => option.label}
+                    isOptionEqualToValue={(option,value) =>  option?.id === value?.id}
+                    onChange={(e,value)=>{ setData({
+                      ...data,
+                      "state_id": parseInt(value?.id),
+                    });} }
+                   
+                    renderInput={(params) => <TextField     name="state_id" {...params} label="Select a State"  InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <>
+                          {states?.length < 2 ? <CircularProgress color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }} />}
+                    />
             </div>
-            <div className="col-1 mt-2">
+            {/* <div className="col-1 mt-2">
               <div className="form-group">
                 <input
                   type="text"
@@ -422,7 +467,7 @@ const SingleVendor = () => {
                   onChange={handleChange}
                 />
               </div>
-            </div>
+            </div> */}
             <div className="col-1 mt-2">
               <label htmlFor="phone">Email:</label>
             </div>
@@ -440,8 +485,8 @@ const SingleVendor = () => {
               </div>
             </div>
             <div className="col-1"></div>
-            <div className="col-5 mt-2">
-              <select
+            <div className="col-4 mt-2">
+              {/* <select
                 id="country_id"
                 name="country_id"
                 className="form-control"
@@ -453,13 +498,62 @@ const SingleVendor = () => {
                     : data?.country_id
                 }
               >
-                <option value="">Select Country</option>
-                {countries?.map((item, index) => (
-                  <option value={item?.id} key={index}>
-                    {item?.label}
-                  </option>
-                ))}
-              </select>
+                <option value="">
+                  Select Country
+                </option>
+                {countries?.length < 2 && (
+                  <option value="...loading">Loading....</option>
+                )}
+                {countries?.length > 2 &&
+                  countries?.map((item, index) => (
+                    <option value={item?.id} key={index}>
+                      {item?.label}
+                    </option>
+                  ))}
+              </select> */}
+                    <Autocomplete
+                    name="country_id"
+                    id="country_id"
+                    options={countries}
+                    autoHighlight
+                    size="small"
+                    defaultValue = {
+                      Array.isArray(data?.country_id)
+                      ? {id:data?.country_id[0],label:data?.country_id[1]}
+                      : user?.country_id ? {id:user?.country_id[0],label:user?.country_id[1]} : {id:"",label:""}
+                    }
+                    loading={countries?.length < 2}
+                    loadingText={"Loading...."}
+                    getOptionLabel={(option) => option.label}
+                    isOptionEqualToValue={(option,value) =>  option?.id === value?.id}
+                    onChange={(e,value)=>{ setData({
+                      ...data,
+                      "country_id": parseInt(value?.id),
+                    });} }
+                   
+                    renderInput={(params) => <TextField     name="country_id" {...params} label="Select a Country"  InputProps={{
+                      ...params.InputProps,
+                      endAdornment: (
+                        <>
+                          {countries?.length < 2 ? <CircularProgress color="inherit" size={20} /> : null}
+                          {params.InputProps.endAdornment}
+                        </>
+                      ),
+                    }} />}
+                    />
+            </div>
+            <div className="col-1 mt-2">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="zip"
+                  name="zip"
+                  placeholder="ZIP"
+                  value={data?.zip ? data?.zip : ""}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
             <div className="col-1 mt-2">
               <label htmlFor="website">Website Link:</label>
@@ -526,12 +620,12 @@ const SingleVendor = () => {
             countries={countries}
             banks={banks}
             childs={childs}
-            childEmail = {childEmail}
-            setChildEmail = {setChildEmail}
-            paymentMethod = {paymentMethod}
-            setPaymentMethod = {setPaymentMethod}     
-            paymentMethodOptions = {paymentMethodOptions}
-            setPaymentMethodOptions = {setPaymentMethodOptions}     
+            childEmail={childEmail}
+            setChildEmail={setChildEmail}
+            paymentMethod={paymentMethod}
+            setPaymentMethod={setPaymentMethod}
+            paymentMethodOptions={paymentMethodOptions}
+            setPaymentMethodOptions={setPaymentMethodOptions}
           />
         </div>
         <div className="d-flex justify-content-between">

@@ -118,11 +118,11 @@ const CreateBill = () => {
   return (
     <div className="main-container">
       <PageLayout />
-      <PageHeader title={"Create Bill"}></PageHeader>
+      <PageHeader title={"Submit Invoice"}></PageHeader>
       <div className="row mt-2">
         <div className="row col-6">
           <div className="col-4">
-            <label htmlFor="Po">Purchase Order:</label>
+            <label htmlFor="Po">Purchase Order Number:</label>
           </div>
           <div className="col-8">
             <select
@@ -155,7 +155,7 @@ const CreateBill = () => {
               variant="contained"
               onClick={() => fileInput?.current?.click()}
             >
-              Upload Pdf file{" "}
+              Upload Invoice{" "}
               <input
                 ref={fileInput}
                 onChange={(e) => uploadPdfFile(e)}
@@ -172,7 +172,7 @@ const CreateBill = () => {
 
               onClick={sendFile}
             >
-              Send{" "}
+              Submit{" "}
             </Button>
           </div>
       </div>
