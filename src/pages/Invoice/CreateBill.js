@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import PageHeader from "../../components/layout/pageHeader";
@@ -9,23 +9,15 @@ const CreateBill = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([{}]);
   const fileInput = useRef(null);
   const [file, setFile] = useState(null);
-  const [selectedPO, setSelectedPO] = useState()
+  const [selectedPO, setSelectedPO] = useState();
+  const [dateSubmission,setDateSubmission] = useState()
+  const [invoiceNumber,setInvoiceNumber] = useState()
 
   const uploadPdfFile = (e) => {
-   console.log(e.target.files[0]);
-    setFile(e.target.files[0])
-  };
-
-  const sendFile = ()=>{
-    if (selectedPO) {
-      const formData = new FormData();
-      console.log(file,"this is file");
-      formData.append("document", file);
-      formData.append("id",selectedPO)
-      uploadFile(formData)
-    }
-    else{
-      toast.error('Please Select a Purchase Order', {
+    if(e.target.files[0].size < 2000000){
+      setFile(e.target.files[0]);
+    }else{
+      toast.error("Cannot Upload File of size more than 2 MB", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -34,33 +26,70 @@ const CreateBill = () => {
         draggable: true,
         progress: undefined,
         theme: "light",
-        });
+      });
+    }
+  };
+
+  const sendFile = () => {
+    if (selectedPO) {
+      const formData = new FormData();
+      formData.append("document", file);
+      formData.append("id", selectedPO["id"]);
+      uploadFile(formData);
+      let submit_invoice = JSON.parse(localStorage.getItem("submit_invoice"))
+      
+      let obj = {
+        // "id":new Date().getTime(),
+        "selected_po" : selectedPO['label'],
+        "date":dateSubmission,
+        "invoice_number":invoiceNumber,
+        "pdf_name":file['name']
+      }
+      let arr;
+      if(submit_invoice){
+        let tempArr = [...submit_invoice,obj] 
+        const unique =tempArr.reverse().filter(
+          (obj, index) =>
+          tempArr.findIndex((item) => item.selected_po === obj.selected_po) === index
+        );
+        localStorage.setItem("submit_invoice",JSON.stringify(unique))
+      }else{
+        arr = [obj]
+        localStorage.setItem("submit_invoice",JSON.stringify(arr))
+      }
+
+    } else {
+      toast.error("Please Select a Purchase Order", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  };
+  const handleChange = (e) =>{
+    let {name,value,type} = e.target
+    if(name === "purchase_order" ){
+      value = JSON.parse(value)
+      setSelectedPO({id:value?.id,label:value?.display_name})
+    }else if(name ==="date"){
+      setDateSubmission(value)
+    }else if(name === "invoice_number"){
+      setInvoiceNumber(value)
     }
   }
 
-  // const handleChange = (e) =>{
-  //   setSelectedPO(e.target.value)
-  // }
+ 
 
   const uploadFile = useCallback(async (args) => {
-    const body = args
+    const body = args;
     await serverAPI
       .post(`/upload-file-to-po`, body)
       .then((res) => {
-        // setSinglePO(
-        //   res?.data?.response.map((elm) => {
-        //     // console.log(elm[0],"single po");
-        //     // return { partner_id:elm[0].partner_id[1], date_order:elm[0].date_order,partner_ref:elm[0].partner_ref,date_planned:elm[0].date_planned, po_approver_id:elm[0].po_approver_id[1],currency_id:elm[0].currency_id[1], };
-        //     getVendor(elm[0]?.shift_to_id ? elm[0]?.shift_to_id[0] : 0);
-        //     getCompany(elm[0]?.company_id ? elm[0]?.company_id[0] : 0);
-
-        //     return {
-        //       ...elm[0],
-        //       // street: user?.street,
-        //       // street2: user?.street2,
-        //     };
-        //   })
-        // );
         toast.success(res?.data?.msg, {
           position: "bottom-center",
           autoClose: 5000,
@@ -70,10 +99,10 @@ const CreateBill = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-          });
+        });
       })
       .catch((err) => {
-        console.log(err,"error");
+        console.log(err, "error");
         toast.error(err?.response?.data?.msg, {
           position: "bottom-center",
           autoClose: 5000,
@@ -83,7 +112,7 @@ const CreateBill = () => {
           draggable: true,
           progress: undefined,
           theme: "light",
-          });
+        });
       });
   }, []);
 
@@ -119,18 +148,20 @@ const CreateBill = () => {
     <div className="main-container">
       <PageLayout />
       <PageHeader title={"Submit Invoice"}></PageHeader>
-      <div className="row mt-2">
-        <div className="row col-6">
-          <div className="col-4">
-            <label htmlFor="Po">Purchase Order Number:</label>
+      <div className="row mt-2" style={{ maxWidth: "500px" }}>
+        <div className="row col-12">
+          <div className="col-5 mt-2">
+            <label htmlFor="Po">PO Number:</label>
           </div>
-          <div className="col-8">
+          <div className="col-7">
             <select
               id="purchase_order"
               name="purchase_order"
               className="form-control"
               placeholder="Select a purchase order"
-              onChange={(e)=>setSelectedPO(e.target.value)}
+
+              // onChange={(e) => setSelectedPO(e.target.value)}
+              onChange={(e)=>handleChange(e)}
               // value={
               //   Array.isArray(data?.country_id)
               //     ? data?.country_id[0]
@@ -139,23 +170,64 @@ const CreateBill = () => {
             >
               <option value="">Select Purchase Order</option>
               {purchaseOrders?.map((item, index) => (
-                <option value={item?.id} key={index}>
+                <option
+                 value={JSON.stringify(item)}
+                // value={item?.id}
+                key={index}>
                   {item?.display_name}
                 </option>
               ))}
             </select>
           </div>
         </div>
-        
-        <div className="col-11 mt-2">
-            {" "}
+
+        <div className="row col-12 mt-3">
+          <div className="col-5 mt-3">
+            <label htmlFor="Po">Date of Submission:</label>
+          </div>
+          <div className="col-7 ">
+            <TextField
+              id="date"
+              name="date"
+              type="date"
+              label="Date of Submission"
+              defaultValue="2023-02-24"
+              sx={{ width: 220 }}
+              onChange={(e)=>handleChange(e)}
+
+            />
+          </div>
+        </div>
+        <div className="row col-12 mt-3">
+          <div className="col-5 mt-2">
+            <label htmlFor="Po">Invoice Number:</label>
+          </div>
+          <div className="col-7 ">
+            <div className="form-group">
+              <input
+                type="text"
+                className="form-control"
+                id="invoice_number"
+                name="invoice_number"
+                // value={data?.mobile ? data?.mobile : ""}
+                onChange={(e)=>handleChange(e)}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row col-12 mt-3">
+          <div className="col-5 mt-2">
+            <label htmlFor="Po">Invoice Copy:</label>
+          </div>
+          <div className="col-7 ">
+            <div>
             <Button
-              className="capitalize mt-5"
+              className="capitalize"
               size="small"
               variant="contained"
               onClick={() => fileInput?.current?.click()}
             >
-              Upload Invoice{" "}
+             {file?.name ? file?.name :"Upload Invoice"}{" "}
               <input
                 ref={fileInput}
                 onChange={(e) => uploadPdfFile(e)}
@@ -164,17 +236,25 @@ const CreateBill = () => {
                 accept=".pdf"
               />{" "}
             </Button>
-            <Button
-              className="capitalize mt-5 ms-3"
-              size="small"
-              variant="contained"
-              color="secondary"
-
-              onClick={sendFile}
-            >
-              Submit{" "}
-            </Button>
+            </div>
+            <div style={{fontSize:"12px"}}>
+              (Only PDF is accepted; max size 2 MB)
+            </div>
           </div>
+        </div>
+        <div className="col-11 mt-2">
+          {" "}
+         
+          <Button
+            className="capitalize mt-5"
+            size="small"
+            variant="contained"
+            color="secondary"
+            onClick={sendFile}
+          >
+            Submit Invoice{" "}
+          </Button>
+        </div>
       </div>
     </div>
   );

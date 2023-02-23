@@ -14,8 +14,15 @@ const Dashboard = ({ isTab, isMobile }) => {
   const { user } = useContext(AuthContext);
   return (
     <>
+     <div className='main-container'>
       <PageLayout />
       <PageHeader title="Dashboard" />
+      <div className="w-100 h-100" style={{display:"grid",placeContent:"center",fontSize:"25px"}}>
+        Coming Soon...
+      </div>
+
+     </div>
+
       {/* <div className="dashboard-container">
         {(delegated_users && Object.keys(delegated_users).length !== 0) ||
         delegated_to_me?.length > 0 ? (

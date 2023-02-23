@@ -179,7 +179,7 @@ const SinglePO = () => {
   return (
     <div className="main-container">
       <PageLayout />
-      <PageHeader title={`Purchase Order :  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}>
+      <PageHeader title={`PO:  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}>
       {" "}
             <Button
               type="submit"
@@ -187,7 +187,7 @@ const SinglePO = () => {
               variant="contained"
               onClick={()=>getPDF(singlePO?.[0]?.name)}
             >
-              Download PDF
+              Download PO
             </Button>
       </PageHeader>
       <form>

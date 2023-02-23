@@ -102,8 +102,8 @@ const InvoiceAddress = (props) => {
         </div>
         <div className="col-2 mt-2">
           <select
-            id="state"
-            name="state"
+            id="state_id"
+            name="state_id"
             className="form-control form-control-sm"
             placeholder="State"
             onChange={handleChildChange}

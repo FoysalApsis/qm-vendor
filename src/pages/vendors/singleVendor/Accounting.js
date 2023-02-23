@@ -121,7 +121,7 @@ const Accounting = (props) => {
                   color="secondary"
                   defaultValue={user?.bank_ic ? user.bank_ic : ""}
                   maxLength={3}
-                  type="number"
+                  
                   InputProps={{ inputProps: { minlength: 3, maxlength: 3 } }}
                   size={"small"}
                   onChange={(e) => handleInputChange(e, index)}
@@ -140,9 +140,11 @@ const Accounting = (props) => {
                   color="secondary"
                   defaultValue={user?.transit_no ? user.transit_no : ""}
                   InputProps={{ inputProps: { minlength: 5, maxlength: 5 } }}
+                  minLength={5}
+                  maxLength={5}
                   // style={{ width: "30%" }}
                   size={"small"}
-                  onChange={(e) => numberTypeHandler(e, index)}
+                  onChange={(e) => handleInputChange(e, index)}
                 />
               </div>
               <div className=" col-3 mt-3 text-end">
@@ -156,13 +158,12 @@ const Accounting = (props) => {
                   variant="outlined"
                   color="secondary"
                   defaultValue={user?.acc_no ? user.acc_no : ""}
-                  InputProps={{ inputProps: { minlength: 7, maxlength: 10 } }}
-                  min="7"
-                  max="10"
+                  maxLength={11}
+                  minLength={7}
                   // style={{ width: "100" }}
                   size={"small"}
                   onChange={(e) => {
-                    numberTypeHandler(e, index);
+                    handleInputChange(e, index);
                   }}
                 />
               </div>

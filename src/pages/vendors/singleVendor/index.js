@@ -175,14 +175,23 @@ const SingleVendor = () => {
       .then((res) => {
         setChilds(
           res?.data?.response.map((elm) => {
+            console.log(elm[0],"childsds");
             return {
-              id: elm[0].id,
-              name: elm[0].name,
-              email: elm[0].email,
-              phone: elm[0].phone,
-              mobile: elm[0].mobile,
-              type: elm[0].type,
-              title: elm[0].title[0],
+              id: elm[0]?.id,
+              name: elm[0]?.name,
+              email: elm[0]?.email,
+              phone: elm[0]?.phone,
+              mobile: elm[0]?.mobile,
+              type: elm[0]?.type,
+              title: elm[0]?.title[0],
+              country_id:elm[0]?.country_id[0],
+              state_id:elm[0]?.state_id[0],
+              street:elm[0]?.street,
+              street2:elm[0]?.street2,
+              city:elm[0]?.city,
+              zip:elm[0]?.zip
+
+
             };
             // return {...elm[0]}
           })

@@ -53,13 +53,13 @@ const ContactAddress = (props) => {
     oldChildListDatas,
     setOldChildListDatas,
   } = props;
-  const [myType, setType] = useState("contact");
   const [childDataSave, setChildDataSave] = useState(false);
   const handleTypeChange = (event) => {
     setType(event.target.value);
   };
-
+  
   const [childData, setChildData] = useState(null);
+  const [myType, setType] = useState("contact");
   const [isEmailValid, setEmailValid] = useState(false);
 
   // useEffect(() => {
@@ -181,7 +181,7 @@ const ContactAddress = (props) => {
     setChildData(null);
     handleClose();
   };
-
+console.log(childData,"<====childData");
   return (
     <div>
       <ToastContainer
@@ -305,6 +305,7 @@ const ContactAddress = (props) => {
                       variant="outlined"
                       onDoubleClick={() => {
                         setChildData(item);
+                        setType(item?.type);
                         handleClickOpen();
                       }}
                     >
@@ -353,6 +354,7 @@ const ContactAddress = (props) => {
                       variant="outlined"
                       onDoubleClick={() => {
                         setChildData(item);
+                        setType(item?.type);
                         handleClickOpen();
                       }}
                     >

@@ -33,7 +33,7 @@ const MyPurchaseOrder = () => {
     .then((res) => {
         setPurchaseOrders(
             res?.data?.response.map((elm) => {
-                return { id: elm[0].id, display_name: elm[0].display_name, company_id:elm[0].company_id[1],partner_id:elm[0].partner_id[1] , date_order:elm[0].date_order , amount_total:elm[0].tax_totals.formatted_amount_total,state:elm[0].state };
+               return { id: elm[0].id, display_name: elm[0].display_name, company_id:elm[0].company_id[1],partner_id:elm[0].partner_id[1] , date_order:elm[0].date_order , amount_total:elm[0].tax_totals.amount_total,state:elm[0].state };
             })
         );
       })
@@ -77,11 +77,11 @@ const MyPurchaseOrder = () => {
                 color:'white'
             }
           }} >
-            <TableCell  > <b style={{color:"white"}}> Reference </b></TableCell>
+            <TableCell  > <b style={{color:"white"}}> PO Number </b></TableCell>
             <TableCell align='center' > <b style={{color:"white"}}> Vendor </b></TableCell>
-            <TableCell align="center"><b style={{color:"white"}}> Company </b></TableCell>
+            <TableCell align="center"><b style={{color:"white"}}> Order From </b></TableCell>
             <TableCell align='center'> <b style={{color:"white"}}> Order Deadline </b></TableCell>
-            <TableCell align='center'> <b style={{color:"white"}}> Total </b></TableCell>
+            <TableCell align='center'> <b style={{color:"white"}}> Total Amount </b></TableCell>
             <TableCell align='center'> <b style={{color:"white"}}> Status </b></TableCell>
             {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
             <TableCell align="right">Carbs&nbsp;(g)</TableCell>
@@ -101,7 +101,7 @@ const MyPurchaseOrder = () => {
               </TableCell>
               <TableCell align="center">{row.partner_id}</TableCell>
               <TableCell align="center">{row.company_id}</TableCell>
-              <TableCell align="center">{row.date_order}</TableCell>
+              <TableCell align="center">{row?.date_order?.split(" ")[0]}</TableCell>
               <TableCell align="center">{row.amount_total}</TableCell>
               {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
               <TableCell align="center">{getStatus(row.state)}</TableCell>
