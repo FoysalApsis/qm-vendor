@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { idID } from "@mui/material/locale";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
@@ -14,6 +14,7 @@ const SinglePO = () => {
   const [company, setCompany] = useState();
   const [tax, setTax] = useState();
   const [data, setData] = useState(null);
+  const [loading,setLoading] = useState(false)
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   let { id } = useParams();
@@ -71,7 +72,7 @@ const SinglePO = () => {
       })
   }, [])
   const getPDF = useCallback(async (args) => {
-   
+    setLoading(true)
     const body = { jsonrpc: "2.0", 
     params: { 
       id,
@@ -81,11 +82,15 @@ const SinglePO = () => {
     await serverAPI
       .post(`get-pdf`, body)
       .then((res) => {
-        let a = document.createElement("a");
-        a.setAttribute("download",true)
-        a.setAttribute("target","_blank")
-        a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
-        a.click()
+        console.log(res,"ress");
+        if(res?.data?.fileArrived) {
+          let a = document.createElement("a");
+          a.setAttribute("download",true)
+          a.setAttribute("target","_blank")
+          a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
+          a.click()
+          setLoading(false)
+        }
       })
       .catch((err) => {
         console.log(err.message);
@@ -179,7 +184,7 @@ const SinglePO = () => {
   return (
     <div className="main-container">
       <PageLayout />
-      <PageHeader title={`PO:  ${ singlePO?.[0] ? singlePO?.[0]?.group_id[1] : ""} `}>
+      <PageHeader title={`PO:  ${ singlePO?.[0] ? singlePO?.[0]?.display_name : ""} `}>
       {" "}
             <Button
               type="submit"
@@ -189,6 +194,8 @@ const SinglePO = () => {
             >
               Download PO
             </Button>
+        { loading && <CircularProgress color="secondary" className="ms-3"/>}
+
       </PageHeader>
       <form>
         {/* <div className="row">
@@ -208,6 +215,7 @@ const SinglePO = () => {
                 value={
                   singlePO?.[0]?.partner_id ? singlePO?.[0]?.partner_id[1] : ""
                 }
+                disabled
                 onChange={handleChange}
               />
             </div>
@@ -230,6 +238,8 @@ const SinglePO = () => {
                 name="date_order"
                 value={singlePO?.[0]?.date_order ? singlePO[0]?.date_order : ""}
                 onChange={handleChange}
+                disabled
+
               />
             </div>
           </div>
@@ -247,6 +257,7 @@ const SinglePO = () => {
                 className="form-control"
                 id="partner_ref"
                 name="partner_ref"
+                disabled
                 value={
                   singlePO?.[0]?.partner_ref ? singlePO[0].partner_ref : ""
                 }
@@ -271,6 +282,7 @@ const SinglePO = () => {
                 className="form-control"
                 id="date_planned"
                 name="date_planned"
+                disabled
                 value={
                   singlePO?.[0]?.date_planned ? singlePO[0].date_planned : ""
                 }
@@ -293,6 +305,7 @@ const SinglePO = () => {
                 className="form-control"
                 id="po_approver_id"
                 name="po_approver_id"
+                disabled
                 value={singlePO?.[0]?.user_id ? singlePO[0].user_id[1] : ""}
                 //   value={data?.mobile ? data?.mobile : ""}
                 onChange={handleChange}
@@ -316,6 +329,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder=""
+                disabled
                 value={user?.street ? user?.street : ""}
                 onChange={handleChange}
               />
@@ -330,6 +344,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder=""
+                disabled
                 value={user?.street2 ? user?.street2 : ""}
                 onChange={handleChange}
               />
@@ -345,6 +360,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="City"
+                disabled
                 value={user?.city ? user?.city : ""}
                 onChange={handleChange}
               />
@@ -358,7 +374,8 @@ const SinglePO = () => {
                 className="form-control"
                 id="po_approver_id"
                 name="po_approver_id"
-                placeholder="City"
+                placeholder="State"
+                disabled
                 value={user?.state_id ? user?.state_id[1] : ""}
                 onChange={handleChange}
               />
@@ -373,6 +390,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="Zip code"
+                disabled
                 value={user?.zip ? user?.zip : ""}
                 onChange={handleChange}
               />
@@ -387,6 +405,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="Country"
+                disabled
                 value={user?.country_id ? user?.country_id[1] : ""}
                 onChange={handleChange}
               />
@@ -403,6 +422,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder=""
+                disabled
                 value={
                   vendor?.[0]?.street
                     ? vendor?.[0]?.street
@@ -423,6 +443,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder=""
+                disabled
                 value={
                   vendor?.[0]?.street2
                     ? vendor?.[0]?.street2
@@ -444,6 +465,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="City"
+                disabled
                 value={
                   vendor?.[0]?.city
                     ? vendor?.[0]?.city
@@ -464,6 +486,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="State"
+                disabled
                 value={
                   vendor?.[0]?.state_id
                     ? vendor?.[0]?.state_id[1]
@@ -484,6 +507,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="Zip code"
+                disabled
                 value={
                   vendor?.[0]?.zip
                     ? vendor?.[0]?.zip
@@ -504,6 +528,7 @@ const SinglePO = () => {
                 id="po_approver_id"
                 name="po_approver_id"
                 placeholder="Country"
+                disabled
                 value={
                   vendor?.[0]?.country_id
                     ? vendor?.[0]?.country_id[1]
