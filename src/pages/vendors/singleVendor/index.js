@@ -41,28 +41,28 @@ const SingleVendor = () => {
         phone: user?.phone,
         mobile: user?.mobile,
         city: user?.city,
-        state_id: user?.state_id[0],
+        state_id: user?.state_id?.[0],
         zip: user?.zip,
         email: user?.email,
-        country_id: user?.country_id[0],
+        country_id: user?.country_id?.[0],
         website: user?.website,
         vat: user?.vat,
         fax: user?.fax,
         property_supplier_payment_term_id:
-          user?.property_supplier_payment_term_id[0],
-        property_payment_method_id: user?.property_payment_method_id[0],
+          user?.property_supplier_payment_term_id?.[0],
+        property_payment_method_id: user?.property_payment_method_id?.[0],
         bank_name: user?.bank_name,
         bank_ic: user?.bank_ic,
         transit_no: user?.transit_no,
         acc_no: user?.acc_no,
       });
       setPaymentTerm({
-        id: user?.property_supplier_payment_term_id[0],
-        label: user?.property_supplier_payment_term_id[1],
+        id: user?.property_supplier_payment_term_id?.[0],
+        label: user?.property_supplier_payment_term_id?.[1],
       });
       setPaymentMethod({
-        id: user?.property_payment_method_id[0],
-        label: user?.property_payment_method_id[1],
+        id: user?.property_payment_method_id?.[0],
+        label: user?.property_payment_method_id?.[1],
       });
     }
     console.log(user, "user");

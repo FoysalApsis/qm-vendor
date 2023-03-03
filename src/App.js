@@ -18,6 +18,8 @@ import MyPurchaseOrder from "./pages/purchase-orders";
 import SinglePO from "./pages/purchase-orders/SinglePO";
 import Invoices from "./pages/Invoice";
 import CreateBill from "./pages/Invoice/CreateBill";
+import PaymentReceipts from "./pages/payment-receipts";
+import SinglePR from "./pages/payment-receipts/SinglePR";
 
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
@@ -95,6 +97,18 @@ function App() {
             path="/invoice/create-bill"
             element={
               <CreateBill></CreateBill>
+            }
+          />
+          <Route
+            path="/my-payment-receipt"
+            element={
+              <PaymentReceipts></PaymentReceipts>
+            }
+          />
+          <Route
+            path="/my-payment-receipt/:id"
+            element={
+              <SinglePR></SinglePR>
             }
           />
              

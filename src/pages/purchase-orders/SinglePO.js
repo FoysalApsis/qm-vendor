@@ -158,23 +158,6 @@ const SinglePO = () => {
     [SinglePO]
   );
 
-  // const getTax = useCallback(async (arg) => {
-  //   const body = { jsonrpc: "2.0", params: { "tax_id": arg } }
-  //  return await serverAPI
-  //     .post(`get-tax`, body)
-  //     .then((res) => {
-  //       if(res.data){
-  //       return res?.data?.response?.map((elm) => {
-  //           return {
-  //             ...elm[0],
-  //           }
-  //         })
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message)
-  //     })
-  // }, [SinglePO])
 
   useEffect(() => {
     getSinglePO();

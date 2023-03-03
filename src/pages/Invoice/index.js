@@ -11,27 +11,14 @@ import PageHeader from "../../components/layout/pageHeader";
 import serverAPI from "../../config/serverAPI";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import DownloadIcon from "@mui/icons-material/Download";
 
 const Invoices = () => {
   const [bills, setBills] = useState([{}]);
-  const submit_invoice = JSON.parse(localStorage.getItem("submit_invoice"));
+  const [submittedInvoice, setSubmittedInvoice] = useState([{}]);
   const rows = [...bills];
-  let submittedRows = [];
-  if (submit_invoice) {
-    submittedRows = [...submit_invoice];
-    console.log(submittedRows, "aaaaaa");
-
-    let res = [];
-    // submittedRows.forEach((e)=>{
-      
-    //   let index = submittedRows.lastIndexOf(data => data.selected_po == e.selected_po);
-    //   // res.push(submittedRows[index])
-    //   console.log(index, 'index');
-    // })
-    // let item = submittedRows[0];
-    // let i = submittedRows.lastIndexOf(data => data.selected_po == item.selected_po);
-    // console.log(i,"console.log(uniqueArr)r")
-  }
+  let submittedRows = [ ...submittedInvoice];
+ 
   const navigate = useNavigate();
 
   const handleCreateBill = () => {
@@ -56,6 +43,54 @@ const Invoices = () => {
         console.log(err.message);
       });
   }, []);
+  const getSubmittedInvoice = useCallback(async () => {
+    const user = JSON.parse(localStorage.getItem("userObj"));
+    const body = { jsonrpc: "2.0", params: { vendor_id: user.id } };
+    await serverAPI
+      .post(`get-submitted-invoice`, body)
+      .then((res) => {
+        setSubmittedInvoice(
+          res?.data?.response.map((elm) => {
+            console.log(elm,"elm[0");
+            return {
+              ...elm[0],
+            };
+          })
+        );
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+  // const getSubmittedInvoice = useCallback(async () => {
+  //   const body = { jsonrpc: "2.0", params: { submit_invoice } };
+  //   await serverAPI
+  //     .post(`get-submitted-invoice`, body)
+  //     .then((res) => {
+  //       setBills(
+  //         res?.data?.response.map((elm) => {
+  //           return {
+  //             ...elm,
+  //           };
+  //         })
+  //       );
+  //     })
+  //     .catch((err) => {
+  //       console.log(err.message);
+  //     });
+  // }, []);
+
+  const downloadPDF = (arg) => {
+    const fileName = arg?.replace(/ /g, "-");
+    let a = document.createElement("a");
+    a.setAttribute("download", true);
+    a.setAttribute("target", "_blank");
+    a.setAttribute(
+      "href",
+      `${process.env.REACT_APP_API_URL}/uploads/${fileName}`
+    );
+    a.click();
+  };
 
   const getStatus = (status) => {
     if (status === "draft") {
@@ -85,6 +120,7 @@ const Invoices = () => {
 
   useEffect(() => {
     getBills();
+    getSubmittedInvoice();
   }, []);
 
   return (
@@ -137,7 +173,7 @@ const Invoices = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {submit_invoice &&
+              {Object.entries(submittedRows[0]).length ?
                 submittedRows?.map((row) => (
                   <TableRow
                     key={row?.id}
@@ -145,13 +181,21 @@ const Invoices = () => {
                     // onClick={() => navigator(row?.id)}
                   >
                     <TableCell component="th" scope="row">
-                      {row?.date}
+                      {row?.date_of_submission}
                     </TableCell>
-                    <TableCell align="center">{row?.selected_po}</TableCell>
+                    <TableCell align="center">{row?.po_id[1]}</TableCell>
                     <TableCell align="center">{row?.invoice_number}</TableCell>
-                    <TableCell align="center">{row?.pdf_name}</TableCell>
+                    <TableCell align="center">
+                      <span> {row?.document_name} </span>
+                      <span
+                        onClick={() => downloadPDF(row?.pdf_name)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <DownloadIcon />
+                      </span>
+                    </TableCell>
                   </TableRow>
-                ))}
+                )): ""}
             </TableBody>
           </Table>
         </TableContainer>

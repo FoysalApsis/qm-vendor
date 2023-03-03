@@ -103,7 +103,7 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="My Payment Receipt"
           icon={PaidOutlinedIcon}
-          path="#"
+          path="/my-payment-receipt"
           handleClick={handleClick}
           open={open}
         />

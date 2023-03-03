@@ -13,6 +13,8 @@ const CreateBill = () => {
   const [dateSubmission,setDateSubmission] = useState()
   const [invoiceNumber,setInvoiceNumber] = useState()
 
+  const user = JSON.parse(localStorage.getItem("userObj"));
+  console.log(user,"user")
   const uploadPdfFile = (e) => {
     if(e.target.files[0].size < 2000000){
       setFile(e.target.files[0]);
@@ -32,31 +34,36 @@ const CreateBill = () => {
 
   const sendFile = () => {
     if (selectedPO) {
+      
       const formData = new FormData();
       formData.append("document", file);
-      formData.append("id", selectedPO["id"]);
+      formData.append("po_id", selectedPO["id"]);
+      formData.append("date_of_submission",dateSubmission)
+      formData.append("invoice_number",invoiceNumber)
+      formData.append('vendor_id',user?.id)
+      formData.append('pdf_name',file['name'])
       uploadFile(formData);
-      let submit_invoice = JSON.parse(localStorage.getItem("submit_invoice"))
+      // let submit_invoice = JSON.parse(localStorage.getItem("submit_invoice"))
       
-      let obj = {
-        // "id":new Date().getTime(),
-        "selected_po" : selectedPO['label'],
-        "date":dateSubmission,
-        "invoice_number":invoiceNumber,
-        "pdf_name":file['name']
-      }
-      let arr;
-      if(submit_invoice){
-        let tempArr = [...submit_invoice,obj] 
-        const unique =tempArr.reverse().filter(
-          (obj, index) =>
-          tempArr.findIndex((item) => item.selected_po === obj.selected_po) === index
-        );
-        localStorage.setItem("submit_invoice",JSON.stringify(unique))
-      }else{
-        arr = [obj]
-        localStorage.setItem("submit_invoice",JSON.stringify(arr))
-      }
+      // let obj = {
+      //   // "id":new Date().getTime(),
+      //   "selected_po" : selectedPO['label'],
+      //   "date":dateSubmission,
+      //   "invoice_number":invoiceNumber,
+      //   "pdf_name":file['name']
+      // }
+      // let arr;
+      // if(submit_invoice){
+      //   let tempArr = [...submit_invoice,obj] 
+      //   const unique =tempArr.reverse().filter(
+      //     (obj, index) =>
+      //     tempArr.findIndex((item) => item.selected_po === obj.selected_po) === index
+      //   );
+      //   localStorage.setItem("submit_invoice",JSON.stringify(unique))
+      // }else{
+      //   arr = [obj]
+      //   localStorage.setItem("submit_invoice",JSON.stringify(arr))
+      // }
 
     } else {
       toast.error("Please Select a Purchase Order", {
