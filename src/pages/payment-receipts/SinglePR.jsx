@@ -8,6 +8,8 @@ import serverAPI from "../../config/serverAPI";
 const SinglePR = () => {
   const [singlePR, setSinglePR] = useState();
   let { id } = useParams();
+  const [loading,setLoading] = useState(false)
+
 
   const getSinglePR = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
@@ -29,35 +31,37 @@ const SinglePR = () => {
       });
   }, []);
 
-//   const getPDF = useCallback(async (args) => {
-//     setLoading(true)
-//     const body = { jsonrpc: "2.0", 
-//     params: { 
-//       id,
-//       file_name : `Purchase Order-${args}.pdf`
-//     } 
-//   }
-//     await serverAPI
-//       .post(`get-pdf`, body)
-//       .then((res) => {
-//         console.log(res,"ress");
-//         if(res?.data?.fileArrived) {
-//           let a = document.createElement("a");
-//           a.setAttribute("download",true)
-//           a.setAttribute("target","_blank")
-//           a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
-//           a.click()
-//           setLoading(false)
-//         }
-//       })
-//       .catch((err) => {
-//         console.log(err.message);
-//       });
-//   }, []);
+  const getPDF = useCallback(async (args) => {
+    setLoading(true)
+    const body = { jsonrpc: "2.0", 
+    params: { 
+      id,
+      file_name : `Payment Receipts-${args}.pdf`
+    } 
+  }
+    await serverAPI
+      .post(`get-payment-receipt-pdf`, body)
+      .then((res) => {
+        console.log(res,"ress");
+        if(res?.data?.fileArrived) {
+          let a = document.createElement("a");
+          a.setAttribute("download",true)
+          a.setAttribute("target","_blank")
+          a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
+          a.click()
+          setLoading(false)
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
 
   useEffect(() => {
     getSinglePR();
   }, []);
+
+  console.log(singlePR?.[0]?.name,"singlePR?.[0]?.name")
 
   return (
     <div className="main-container">
@@ -71,7 +75,7 @@ const SinglePR = () => {
           type="submit"
           color="secondary"
           variant="contained"
-        //   onClick={() => getPDF(singlePR?.[0]?.name)}
+          onClick={() => getPDF(singlePR?.[0]?.name)}
         >
           Download PR
         </Button>
