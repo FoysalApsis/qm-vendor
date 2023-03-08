@@ -97,6 +97,10 @@ const CreateBill = () => {
     await serverAPI
       .post(`/upload-file-to-po`, body)
       .then((res) => {
+        setSelectedPO({})
+        setInvoiceNumber()
+        setDateSubmission()
+        setFile()
         toast.success(res?.data?.msg, {
           position: "bottom-center",
           autoClose: 5000,
@@ -169,6 +173,9 @@ const CreateBill = () => {
 
               // onChange={(e) => setSelectedPO(e.target.value)}
               onChange={(e)=>handleChange(e)}
+              defaultValue={
+                selectedPO?.id ? selectedPO.id : "" 
+              }
               // value={
               //   Array.isArray(data?.country_id)
               //     ? data?.country_id[0]

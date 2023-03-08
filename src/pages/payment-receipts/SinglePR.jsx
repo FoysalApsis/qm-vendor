@@ -61,8 +61,6 @@ const SinglePR = () => {
     getSinglePR();
   }, []);
 
-  console.log(singlePR?.[0]?.name,"singlePR?.[0]?.name")
-
   return (
     <div className="main-container">
       <PageLayout />
@@ -77,7 +75,7 @@ const SinglePR = () => {
           variant="contained"
           onClick={() => getPDF(singlePR?.[0]?.name)}
         >
-          Download PR
+          Download Purchase Receipt
         </Button>
       </PageHeader>
       <form>
