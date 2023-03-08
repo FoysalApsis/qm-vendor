@@ -144,18 +144,18 @@ const Invoices = () => {
             <TableHead
               sx={{
                 "&.MuiTableHead-root": {
-                  backgroundColor: "#6c227c",
+                  backgroundColor: "#323130",
                 },
               }}
             >
               <TableRow
                 sx={{
                   "&.MuiTableRow-root": {
-                    color: "white",
+                    color: "#F8F8F8",
                   },
                 }}
               >
-                <TableCell>
+                <TableCell >
                   {" "}
                   <b style={{ color: "white" }}> Date of Submission </b>
                 </TableCell>
@@ -179,6 +179,7 @@ const Invoices = () => {
                     key={row?.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     // onClick={() => navigator(row?.id)}
+                    style={{backgroundColor:"#F8F8F8"}}
                   >
                     <TableCell component="th" scope="row">
                       {row?.date_of_submission}
@@ -205,18 +206,18 @@ const Invoices = () => {
             <TableHead
               sx={{
                 "&.MuiTableHead-root": {
-                  backgroundColor: "#6c227c",
+                  backgroundColor: "#323130",
                 },
               }}
             >
               <TableRow
                 sx={{
                   "&.MuiTableRow-root": {
-                    color: "white",
+                    color: "#F8F8F8",
                   },
                 }}
               >
-                <TableCell>
+                <TableCell >
                   {" "}
                   <b style={{ color: "white" }}>Invoice Number </b>
                 </TableCell>
@@ -251,6 +252,7 @@ const Invoices = () => {
                   key={row?.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   // onClick={() => navigator(row?.id)}
+                  style={{backgroundColor:"#F8F8F8"}}
                 >
                   <TableCell component="th" scope="row">
                     {row?.name}
