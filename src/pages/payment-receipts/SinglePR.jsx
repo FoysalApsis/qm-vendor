@@ -1,4 +1,4 @@
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PageHeader from "../../components/layout/pageHeader";
@@ -75,10 +75,11 @@ const SinglePR = () => {
           type="submit"
           color="secondary"
           variant="contained"
-          onClick={() => getPDF(singlePR?.[0]?.name)}
+          onClick={() => getPDF(singlePR?.[0]?.id)}
         >
           Download PR
         </Button>
+        { loading && <CircularProgress color="secondary" className="ms-3"/>}
       </PageHeader>
       <form>
         {/* <div className="row">
