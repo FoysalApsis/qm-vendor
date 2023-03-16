@@ -87,7 +87,7 @@ const SinglePR = () => {
         singlePR?.[0]?.name ? singlePR?.[0]?.name : ""
       }`}
       buttonName={"Download Payment Receipt"}
-      onButtonClick={() => getPDF(singlePR?.[0]?.name)}
+      onButtonClick={() => getPDF(singlePR?.[0]?.id)}
       loading={loading}
     >
       <form>

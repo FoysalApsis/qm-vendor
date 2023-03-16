@@ -2,8 +2,6 @@ import { Button, TextField } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import MainLayout from "../../components/layout/mainLayout";
-import PageHeader from "../../components/layout/pageHeader";
-import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
 
 const CreateBill = () => {
@@ -35,35 +33,29 @@ const CreateBill = () => {
 
   const sendFile = () => {
     if (selectedPO) {
-      const formData = new FormData();
-      formData.append("document", file);
-      formData.append("po_id", selectedPO["id"]);
-      formData.append("date_of_submission", dateSubmission);
-      formData.append("invoice_number", invoiceNumber);
-      formData.append("vendor_id", user?.id);
-      formData.append("pdf_name", file["name"]);
-      uploadFile(formData);
-      // let submit_invoice = JSON.parse(localStorage.getItem("submit_invoice"))
+      if(file){
 
-      // let obj = {
-      //   // "id":new Date().getTime(),
-      //   "selected_po" : selectedPO['label'],
-      //   "date":dateSubmission,
-      //   "invoice_number":invoiceNumber,
-      //   "pdf_name":file['name']
-      // }
-      // let arr;
-      // if(submit_invoice){
-      //   let tempArr = [...submit_invoice,obj]
-      //   const unique =tempArr.reverse().filter(
-      //     (obj, index) =>
-      //     tempArr.findIndex((item) => item.selected_po === obj.selected_po) === index
-      //   );
-      //   localStorage.setItem("submit_invoice",JSON.stringify(unique))
-      // }else{
-      //   arr = [obj]
-      //   localStorage.setItem("submit_invoice",JSON.stringify(arr))
-      // }
+        const formData = new FormData();
+        formData.append("document", file);
+        formData.append("po_id", selectedPO["id"]);
+        formData.append("date_of_submission", dateSubmission);
+        formData.append("invoice_number", invoiceNumber);
+        formData.append("vendor_id", user?.id);
+        formData.append("pdf_name", file?.["name"]);
+        uploadFile(formData);
+      }
+      else{
+        toast.error("Please Upload Invoice File", {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      }
     } else {
       toast.error("Please Select a Purchase Order", {
         position: "bottom-center",
@@ -94,9 +86,8 @@ const CreateBill = () => {
     await serverAPI
       .post(`/upload-file-to-po`, body)
       .then((res) => {
-        setSelectedPO({});
-        setInvoiceNumber();
-        setDateSubmission();
+        // setSelectedPO({id:"",label:""});
+        // setInvoiceNumber();
         setFile();
         toast.success(res?.data?.msg, {
           position: "bottom-center",
@@ -159,7 +150,7 @@ const CreateBill = () => {
     setDateSubmission(`${year}/${month}/${day}`)
   }, []);
 
-  console.log(typeof dateSubmission,"ddd");
+  console.log( selectedPO,"ddd");
   return (
     <MainLayout pageTitle={"Submit Invoice"}>
       <div className="row mt-2" style={{ maxWidth: "900px" }}>
@@ -175,14 +166,14 @@ const CreateBill = () => {
               placeholder="Select a purchase order"
               // onChange={(e) => setSelectedPO(e.target.value)}
               onChange={(e) => handleChange(e)}
-              defaultValue={selectedPO?.id ? selectedPO.id : ""}
+
               // value={
               //   Array.isArray(data?.country_id)
               //     ? data?.country_id[0]
               //     : data?.country_id
               // }
             >
-              <option value="">Select Purchase Order</option>
+              <option value="1">Select Purchase Order</option>
               {purchaseOrders?.map((item, index) => (
                 <option
                   value={JSON.stringify(item)}
@@ -211,6 +202,7 @@ const CreateBill = () => {
                 name="invoice_number"
                 // value={data?.mobile ? data?.mobile : ""}
                 onChange={(e) => handleChange(e)}
+                // value={invoiceNumber ? invoiceNumber : "" }
               />
             </div>
           </div>

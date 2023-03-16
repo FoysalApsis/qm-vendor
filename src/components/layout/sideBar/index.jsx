@@ -105,6 +105,13 @@ const SideBar = ({ handleClick, open }) => {
           open={open}
         />
         <CustomListItem
+          title="My Purchase Order"
+          icon={CircleOutlinedIcon}
+          path="/my-purchase-order"
+          handleClick={handleClick}
+          open={open}
+        />
+        <CustomListItem
           title="My Invoices"
           icon={CircleOutlinedIcon}
           path="/invoice"
@@ -118,13 +125,7 @@ const SideBar = ({ handleClick, open }) => {
           handleClick={handleClick}
           open={open}
         />
-        <CustomListItem
-          title="My Purchase Order"
-          icon={CircleOutlinedIcon}
-          path="/my-purchase-order"
-          handleClick={handleClick}
-          open={open}
-        />
+        
         {/* <CustomListItem
           title="Reimbursement Requests"
           icon={RequestIcon}
