@@ -22,7 +22,7 @@ const PurchaseTabs = ({data,total}) => {
             </TabList>
     
 
-             <TabPanel value="1">
+             <TabPanel value="1" sx={{padding:"24px 0px"}}>
               <Products
                 data = {data}
                 total={total}

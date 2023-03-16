@@ -9,11 +9,13 @@ import {
 } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import { SidebarAccButton } from "../../../utils/Icons";
-import "./SideBar.scss";
+// import "./SideBar.scss";
+import "./newSideBar.scss";
+
 const sx = {
   "& .css-10hburv-MuiTypography-root ": {
     fontWeight: 600,
-    fontSize: "1rem",
+    fontSize: "14px",
   },
   fontSize: 12,
   color: "#000",
@@ -81,10 +83,10 @@ export const CustomListItem = ({
             sx={{ borderRadius: "6px !important", marginBottom: "10px" }}
             onClick={() => handleClick(title)}
           >
-            <ListItemIcon style={{color:"white"}}>
+            <ListItemIcon className="text-primaryColor" style={{color: "#6B1D73"}}>
               <Icon />
             </ListItemIcon>
-            <ListItemText sx={sx} primary={title} style={{ color: '#FFFFFF' }}/>
+            <ListItemText className="segoe-normal"  sx={sx} primary={title} style={{ color: '#201F1E' }}/>
           </ListItemButton>
         </Link>
       ) : (
@@ -93,13 +95,13 @@ export const CustomListItem = ({
           sx={{
             borderRadius: "6px !important",
             marginBottom: "10px",
-            fontFamily: "FuturaBold",
+            fontFamily: "Segoe",
           }}
           className={open === title ? "active-sidenavbar" : ""}
           onClick={() => handleClick(title)}
         >
-          <ListItemIcon>
-            <Icon />
+          <ListItemIcon className="text-primary">
+            <Icon className="text-primary"  sx={{ color: "#6B1D73" }}/>
           </ListItemIcon>
           <ListItemText sx={sx} primary={title} style={{ color: '#FFFFFF' }}/>
           {subItemList && (

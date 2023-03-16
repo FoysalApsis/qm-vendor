@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import MainLayout from "../../components/layout/mainLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
@@ -58,16 +59,14 @@ const PaymentReceipts = () => {
   },[])
 
   return (
-    <div className="main-container">
-      <PageLayout />
-      <PageHeader title={"Payment Receipts"}></PageHeader>
+    <MainLayout pageTitle={"My Payment Receipts"} >
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead
             sx={{
               "&.MuiTableHead-root": {
-                backgroundColor: "#6c227c",
+                backgroundColor: "#323130",
               },
             }}
           >
@@ -84,11 +83,11 @@ const PaymentReceipts = () => {
               </TableCell>
               <TableCell align="center">
                 {" "}
-                <b style={{ color: "white" }}> Number </b>
+                <b style={{ color: "white" }}>Receipt Number </b>
               </TableCell>
-              <TableCell align="center">
+              {/* <TableCell align="center">
                 <b style={{ color: "white" }}> Journal </b>
-              </TableCell>
+              </TableCell> */}
               <TableCell align="center">
                 {" "}
                 <b style={{ color: "white" }}> Payment Method </b>
@@ -97,10 +96,10 @@ const PaymentReceipts = () => {
                 {" "}
                 <b style={{ color: "white" }}> Total Amount </b>
               </TableCell>
-              <TableCell align="center">
+              {/* <TableCell align="center">
                 {" "}
                 <b style={{ color: "white" }}> Status </b>
-              </TableCell>
+              </TableCell> */}
               {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
             <TableCell align="right">Carbs&nbsp;(g)</TableCell>
             <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
@@ -113,23 +112,25 @@ const PaymentReceipts = () => {
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 onClick={() => navigator(row.id)}
                 style={{ cursor: "pointer" }}
+                className="bg-[#F8F8F8]"
+
               >
                 <TableCell component="th" scope="row">
                   {row?.date}
                 </TableCell>
                 <TableCell align="center">{row?.name}</TableCell>
-                <TableCell align="center">{row?.journal_id?.[1]}</TableCell>
+                {/* <TableCell align="center">{row?.journal_id?.[1]}</TableCell> */}
                 <TableCell align="center">
                   {row?.payment_method_line_id?.[1]}
                 </TableCell>
                 <TableCell align="center">{row?.amount_total}</TableCell>
-                <TableCell align="center">{getStatus(row?.state)}</TableCell>
+                {/* <TableCell align="center">{getStatus(row?.state)}</TableCell> */}
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-    </div>
+      </MainLayout >
   );
 };
 

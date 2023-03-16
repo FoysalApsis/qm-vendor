@@ -1,4 +1,5 @@
 import {
+  Box,
   Card,
   CardActions,
   CardContent,
@@ -22,8 +23,12 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@mui/material";
-import { date } from "yup/lib/locale";
+import AddIcon from '@mui/icons-material/Add';
 import { toast, ToastContainer } from "react-toastify";
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import LocalShippingOutlinedIcon from '@mui/icons-material/LocalShippingOutlined';
+import LocalAtmOutlinedIcon from '@mui/icons-material/LocalAtmOutlined';
+
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -198,7 +203,7 @@ console.log(childData,"<====childData");
       />
       {/* Same as */}
       <ToastContainer />{" "}
-      <Button variant="contained" color="secondary" onClick={handleClickOpen}>
+      <Button variant="contained" startIcon={<AddIcon/>} onClick={handleClickOpen}  className="!bg-[#ffffff] !text-primaryColor border !capitalize !border-primaryColor">
         Add
       </Button>
       <Dialog
@@ -299,46 +304,60 @@ console.log(childData,"<====childData");
           Object.entries(oldChildListDatas[0]).length > 0
             ? oldChildListDatas?.map((item) => (
                 <>
-                  <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
+                  <div className="col-6 border-0 p-0 " >
                     <Card
-                      sx={{ width: "auto", maxWidth: "260px" }}
+                      sx={{ width: "auto" }}
                       variant="outlined"
                       onDoubleClick={() => {
                         setChildData(item);
                         setType(item?.type);
                         handleClickOpen();
                       }}
+                      className="!bg-greyColor"
                     >
-                      <CardContent>
+                      <CardContent className="flex items-center">
+                        <Box className="me-3">
+                        <Typography>
+                          {item?.type === "contact" && <PersonOutlineOutlinedIcon className="!text-primaryColor"/>}
+                          {item?.type === "delivery" && <LocalShippingOutlinedIcon className="!text-primaryColor"/>}
+                          {item?.type === "invoice" && <LocalAtmOutlinedIcon className="!text-primaryColor"/>}
+                        </Typography>
+
+                        </Box>
+                        <Box>
+
+                        
                         <Typography
                           sx={{ fontSize: 14 }}
                           variant="body1"
                           gutterBottom
-                          style={{ color: "#9c27b0", fontWeight: "500" }}
+                          style={{ fontWeight: "500" }}
+                          className="!text-secondaryColor segoe-bold"
                         >
                           {item?.name}
                         </Typography>
-                        <Typography
+                        {/* <Typography
                           variant="body2"
                           gutterBottom
                           style={{ fontStyle: "italic" }}
                         >
                           {item?.function}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant="body2" gutterBottom>
-                          <Link href="#" underline="none">
+                          <Link href="#" underline="none" className="!text-[#605E5C]">
                             {item?.email}
                           </Link>
                         </Typography>
-                        <Typography variant="body2" style={cardStyle}>
+                        {/* <Typography variant="body2" style={cardStyle}>
                           {item?.type}
-                        </Typography>
-                        <Typography variant="body2">
+                        </Typography> */}
+                        {/* <Typography variant="body2">
                           Phone: {item?.phone}
                         </Typography>
                         <Typography variant="body2">
                           Mobile: {item?.mobile}
-                        </Typography>
+                        </Typography> */}
+                        </Box>
                       </CardContent>
                     </Card>
                   </div>
@@ -348,46 +367,58 @@ console.log(childData,"<====childData");
           {childDataSave === true && childListDatas?.length > 0
             ? childListDatas?.map((item) => (
                 <>
-                  <div className="col-3 mt-2" style={{ maxWidth: "260px" }}>
+                  <div className="col-6 border-0 p-0" >
                     <Card
-                      sx={{ width: "auto", maxWidth: "260px" }}
+                      sx={{ width: "auto", }}
                       variant="outlined"
                       onDoubleClick={() => {
                         setChildData(item);
                         setType(item?.type);
                         handleClickOpen();
                       }}
+                      className="!bg-greyColor"
                     >
-                      <CardContent>
+                      <CardContent className="flex items-center">
+                      <Box className="me-3">
+
+                      <Typography>
+                          {item?.type === "contact" && <PersonOutlineOutlinedIcon className="!text-primaryColor"/>}
+                          {item?.type === "delivery" && <LocalShippingOutlinedIcon className="!text-primaryColor"/>}
+                          {item?.type === "invoice" && <LocalAtmOutlinedIcon className="!text-primaryColor"/>}
+                        </Typography>
+                      </Box>
+                      <Box>
                         <Typography
                           sx={{ fontSize: 14 }}
                           variant="body1"
                           gutterBottom
                           style={{ color: "#9c27b0", fontWeight: "500" }}
+                          className="!text-secondaryColor segoe-bold"
                         >
                           {item?.name}
                         </Typography>
-                        <Typography
+                        {/* <Typography
                           variant="body2"
                           gutterBottom
                           style={{ fontStyle: "italic" }}
                         >
                           {item?.function}
-                        </Typography>
+                        </Typography> */}
                         <Typography variant="body2" gutterBottom>
-                          <Link href="#" underline="none">
+                          <Link href="#" underline="none" className="!text-[#605E5C]">
                             {item?.email}
                           </Link>
                         </Typography>
-                        <Typography variant="body2" style={cardStyle}>
+                        {/* <Typography variant="body2" style={cardStyle}>
                           {item?.type}
-                        </Typography>
-                        <Typography variant="body2">
+                        </Typography> */}
+                        {/* <Typography variant="body2">
                           Phone: {item?.phone}
                         </Typography>
                         <Typography variant="body2">
                           Mobile: {item?.mobile}
-                        </Typography>
+                        </Typography> */}
+                        </Box>
                       </CardContent>
                     </Card>
                   </div>

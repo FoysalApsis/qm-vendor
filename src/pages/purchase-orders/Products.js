@@ -35,11 +35,13 @@ const Products = ({ data, total }) => {
           <TableHead
             sx={{
               "&.MuiTableHead-root": {
-                backgroundColor: "#6c227c",
+                backgroundColor: "#323130",
               },
             }}
           >
-            <TableRow>
+            <TableRow 
+            
+            >
               {/* <TableCell  > <b style={{color:"white"}}> Product </b></TableCell> */}
               <TableCell align="left">
                 {" "}
@@ -53,6 +55,10 @@ const Products = ({ data, total }) => {
               <TableCell align="center">
                 {" "}
                 <b style={{ color: "white" }}> Quantity </b>{" "}
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}> UoM </b>{" "}
               </TableCell>
               <TableCell align="center">
                 {" "}
@@ -73,6 +79,8 @@ const Products = ({ data, total }) => {
               <TableRow
                 key={row?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                className="bg-[#F8F8F8]"
+
               >
                 {/* <TableCell component="th" scope="row">
                 {row?.display_name}
@@ -81,6 +89,7 @@ const Products = ({ data, total }) => {
                 <TableCell align="center">{row?.date_planned}</TableCell>
                 {/* <TableCell align="center">{row.task_id}</TableCell> */}
                 <TableCell align="center">{row?.product_qty}</TableCell>
+                <TableCell align="center">{row?.product_uom}</TableCell>
                 <TableCell align="center">{row?.price_unit}</TableCell>
                 <TableCell align="center">{row?.tax_name}</TableCell>
                 <TableCell align="center">$ {row?.price_subtotal}</TableCell>
@@ -97,7 +106,7 @@ const Products = ({ data, total }) => {
       <div className='text-end'>Total:$ {total.groups_by_subtotal['Untaxed Amount'][0].tax_group_amount} </div>
       <div className='text-end'>Total: {total.formatted_amount_total} </div> */}
         {total && (
-          <table style={{ width: "300px" }}>
+          <table style={{ width: "250px" }} className="bg-[#F8F8F8]">
             <tr>
               <td>Untaxed Amount:</td>
               <td> {total?.formatted_amount_untaxed}</td>
@@ -113,7 +122,7 @@ const Products = ({ data, total }) => {
                 </td>
               </tr>)
             }) : ""}
-            <tr style={{ borderTop: "1px solid black" }}>
+            <tr style={{ borderTop: "1px solid black" }} >
               <td>Total: </td>
               <td>{total?.formatted_amount_total}</td>
             </tr>

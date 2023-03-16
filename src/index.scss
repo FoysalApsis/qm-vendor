@@ -1,29 +1,24 @@
 @font-face {
-  font-family: "FuturaBold";
-  src: local("FuturaBold"),
-    url("./fonts/Futura Bold font.ttf") format("truetype");
+  font-family: "Segoe";
+  src: local("Segoe"),
+    url("./fonts/Segoe UI.woff") format("truetype");
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "FuturaLight";
-  src: local("FuturaLight"),
-    url("./fonts/futura light bt.ttf") format("truetype");
-  font-weight: lighter;
+  font-family: "SegoeBold";
+  src: local("SegoeBold"),
+    url("./fonts/Segoe UI Bold.woff") format("truetype");
 }
 
-@font-face {
-  font-family: "FuturaMedium";
-  src: local("FuturaMedium"),
-    url("./fonts/futura medium bt.ttf") format("truetype");
-  font-weight: normal;
-}
 
 body {
   margin: 0;
-  font-family: "FuturaMedium", sans-serif;
+  font-family: "Segoe", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #CFCFCF;
+  
 }
 
 * {
@@ -41,16 +36,12 @@ body {
 }
 
 // ######################### Font Classes #####################
-.font-light {
-  font-family: "FuturaLight";
+.segoe-normal {
+  font-family: "Segoe" !important;
 }
 
-.font-medium {
-  font-family: "FuturaMedium";
-}
-
-.font-bold {
-  font-family: "FuturaBold";
+.segoe-bold {
+  font-family: "SegoeBold" !important;
 }
 
 // ########################################## Common Components ##################################
@@ -133,11 +124,19 @@ body {
 
 // ######################### main container #################################
 
+// .main-container {
+//   min-height: calc(100vh - 210px);
+//   width: calc(100vw - 330px);
+//   margin: 130px 0px 80px 250px;
+//   padding: 0em 2em;
+// }
 .main-container {
   min-height: calc(100vh - 210px);
-  width: calc(100vw - 330px);
-  margin: 130px 0px 80px 250px;
+  // width: calc(100vw - 330px);
+  // margin: 130px 0px 80px 250px;
+  display: flex;
   padding: 0em 2em;
+  gap: 14px;
 }
 
 @media screen and (max-width: 900px) {
@@ -193,3 +192,42 @@ body {
 .accordion-button:not(.collapsed) {
   color: #000;
 }
+
+// ########################## Custom QM ##############################
+
+.page-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  /* identical to box height, or 133% */
+
+  display: flex;
+  align-items: center;
+
+  color: #6b1d73;
+}
+
+.table-title {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  /* identical to box height, or 138% */
+
+  display: flex;
+  align-items: center;
+
+  /* Type colors / Secondary */
+
+  color: #605e5c;
+}
+
+.MuiListItemText-primary{
+  font-family: "Segoe" !important;
+  
+} 
+
+// .MuiSvgIcon-root{
+//   background-color: "#6B1D73" !important 
+// }

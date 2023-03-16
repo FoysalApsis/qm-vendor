@@ -1,27 +1,109 @@
-import React, { useContext } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import PageLayout from "../../components/layout/pageLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import DashboardBlock from "../../components/layout/dashboardBlock";
 import "./Dashboard.scss";
-import { Alert, Grid } from "@mui/material";
+import { Alert, Box, Card, CardContent, Grid, Typography } from "@mui/material";
 import useDashboard from "./useDashboard";
 import AuthContext from "../../context/authContext/AuthContext";
+import MainLayout from "../../components/layout/mainLayout";
+import DashboardCards from "./Cards";
+import FactCheckIcon from "@mui/icons-material/FactCheck";
+import CreditCardIcon from "@mui/icons-material/CreditCard";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import InvoiceTable from "./InvoiceTable";
+import PoTable from "../purchase-orders/PoTable";
+import serverAPI from "../../config/serverAPI";
+import { useNavigate } from "react-router-dom";
+import InvoiceStatusTable from "../Invoice/InvoiceStatusTable";
 
 const Dashboard = ({ isTab, isMobile }) => {
-  // const { dashboardData, delegateData } = useDashboard();
-  // const delegated_users = delegateData?.my_delegated_user;
-  // const delegated_to_me = delegateData?.users_delegated_to_me;
-  const { user } = useContext(AuthContext);
+  const [dashboardData, setDashboardData] = useState();
+
+  const navigate = useNavigate();
+  const getDashboard = useCallback(async () => {
+    const user = JSON.parse(localStorage.getItem("userObj"));
+    const body = { jsonrpc: "2.0", params: { id: user.id } };
+    await serverAPI
+      .post(`get-dashboard`, body)
+      .then((res) => {
+        setDashboardData(res?.data?.response);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, []);
+
+  useEffect(() => {
+    getDashboard();
+  }, []);
+
+  console.log(dashboardData);
   return (
     <>
-     <div className='main-container'>
-      <PageLayout />
-      <PageHeader title="Dashboard" />
-      <div className="w-100 h-100" style={{display:"grid",placeContent:"center",fontSize:"25px"}}>
-        Coming Soon...
-      </div>
+      <MainLayout pageTitle={`Dashboard`}>
+        <Box className="flex mb-6">
+          <DashboardCards title="Purchase Order" icon={FactCheckIcon} navigate={() => navigate('/my-purchase-order')}>
+            <Typography className="text-center ">
+              <div className="text-primaryColor segoe-bold text-xl">
+                {dashboardData?.po}
+              </div>
 
-     </div>
+            </Typography>
+            {/* <Typography className="text-center me-3">
+              <div>3</div>
+              <div>Confirmed</div>
+            </Typography>
+            <Typography className="text-center">
+              <div>3</div>
+              <div>Confirmed</div>
+            </Typography> */}
+          </DashboardCards>
+          <DashboardCards title="Submitted Invoices" icon={FactCheckIcon} navigate={() => navigate('/invoice')}>
+            <Typography className="text-center">
+              <div className="text-primaryColor segoe-bold text-xl">
+                {dashboardData?.bill}
+              </div>
+            </Typography>
+          </DashboardCards>
+          <DashboardCards title="Payment Receipt" icon={CreditCardIcon} navigate={() => navigate('/my-payment-receipt')}>
+            <Typography className="text-center ">
+              <div className="text-primaryColor segoe-bold text-xl">
+                {dashboardData?.payment}
+              </div>
+            </Typography>
+          </DashboardCards>
+        </Box>
+
+        <Box className="mb-6">
+          <Box className="flex justify-between">
+            <Typography className="mb-3">Purchase Orders </Typography>
+            <Typography
+              className="text-[#605E5C] text-xs cursor-pointer"
+              fontSize={14}
+              onClick={() => navigate('/my-purchase-order')}
+            >
+              Details{" "}
+              <ArrowForwardIcon sx={{ fontSize: 14 }}></ArrowForwardIcon>
+            </Typography>
+          </Box>
+          <PoTable isDashboard></PoTable>
+        </Box>
+        <Box className="mb-6">
+          <Box className="flex justify-between">
+            <Typography className="mb-3">Invoice Status </Typography>
+            <Typography
+              className="text-[#605E5C] text-xs cursor-pointer"
+              fontSize={14}
+              onClick={() => navigate('/invoice')}
+            >
+              Details{" "}
+              <ArrowForwardIcon sx={{ fontSize: 14 }}></ArrowForwardIcon>
+            </Typography>
+          </Box>
+          <InvoiceStatusTable isDashboard></InvoiceStatusTable>
+        </Box>
+      </MainLayout>
 
       {/* <div className="dashboard-container">
         {(delegated_users && Object.keys(delegated_users).length !== 0) ||

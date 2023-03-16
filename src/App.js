@@ -20,6 +20,7 @@ import Invoices from "./pages/Invoice";
 import CreateBill from "./pages/Invoice/CreateBill";
 import PaymentReceipts from "./pages/payment-receipts";
 import SinglePR from "./pages/payment-receipts/SinglePR";
+import NewLogin from "./pages/login/NewLogin";
 
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
@@ -33,11 +34,11 @@ function App() {
             path="/sign-in"
             element={
               <PublicRoute restricted={true}>
-                {process.env.REACT_APP_ENVIRONMENT === "development" ?
+                {/* {process.env.REACT_APP_ENVIRONMENT === "development" ?
                     <Login isTab={isTab} /> : 
                     <LoginMSAL isTab={isTab} />
-                }
-                
+                } */}
+                <NewLogin></NewLogin>
               </PublicRoute>
             }
           />

@@ -6,12 +6,11 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import PageLayout from "../../components/layout/pageLayout";
-import PageHeader from "../../components/layout/pageHeader";
 import serverAPI from "../../config/serverAPI";
-import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
+import MainLayout from "../../components/layout/mainLayout";
+import InvoiceStatusTable from "./InvoiceStatusTable";
 
 const Invoices = () => {
   const [bills, setBills] = useState([{}]);
@@ -124,21 +123,16 @@ const Invoices = () => {
   }, []);
 
   return (
-    <div className="main-container">
-      <PageLayout />
-      <PageHeader title={"Invoices"}>
-        <Button
+    <MainLayout pageTitle={"My Invoices"} buttonName={"Submit Invoice"} onButtonClick={handleCreateBill} >
+        {/* <Button
           type="submit"
           color="secondary"
           variant="contained"
           onClick={handleCreateBill}
         >
           Submit Invoice
-        </Button>
-      </PageHeader>
-
-      <div>
-        <div>Submitted Invoices</div>
+        </Button> */}
+        <div className="table-title mb-3">Submitted Invoices</div>
         <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead
@@ -178,8 +172,8 @@ const Invoices = () => {
                   <TableRow
                     key={row?.id}
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    // onClick={() => navigator(row?.id)}
-                    style={{backgroundColor:"#F8F8F8"}}
+                    className="bg-[#F8F8F8]"
+
                   >
                     <TableCell component="th" scope="row">
                       {row?.date_of_submission}
@@ -200,8 +194,9 @@ const Invoices = () => {
             </TableBody>
           </Table>
         </TableContainer>
-        <div>Invoice Status</div>
-        <TableContainer component={Paper}>
+        <div className="table-title mb-3">Invoice Status</div>
+        <InvoiceStatusTable ></InvoiceStatusTable>
+        {/* <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead
               sx={{
@@ -252,7 +247,8 @@ const Invoices = () => {
                   key={row?.id}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   // onClick={() => navigator(row?.id)}
-                  style={{backgroundColor:"#F8F8F8"}}
+                  // style={{backgroundColor:"#F8F8F8"}}
+                  className="bg-[#F8F8F8]"
                 >
                   <TableCell component="th" scope="row">
                     {row?.name}
@@ -273,9 +269,8 @@ const Invoices = () => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
-      </div>
-    </div>
+        </TableContainer> */}
+        </MainLayout>
   );
 };
 

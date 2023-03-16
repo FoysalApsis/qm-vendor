@@ -7,6 +7,9 @@ import qmlogo from "../../../images/respond.png";
 import { Avatar, IconButton, Stack, useMediaQuery } from "@mui/material";
 import { GridMenuIcon } from "@mui/x-data-grid";
 import AuthContext from "../../../context/authContext/AuthContext";
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
+import SettingsIcon from '@mui/icons-material/Settings';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
 
 const NavbarContainer = ({ handleDrawerToggle }) => {
   const sideBar = useMediaQuery("(max-width: 900px)");
@@ -14,16 +17,17 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
   const user = JSON.parse(localStorage.getItem("userObj"));
   
   return (
+    // <></>
     <Navbar
       variant="light"
-      fixed="top"
       style={{
         display: "inline-block",
         zIndex: "20 !important",
         width: "100%",
         height: "56px",
-        backgroundColor: `${sideBar ? "rgba(255, 235, 209, 1)" : "#fff"}`,
         boxShadow: `${sideBar ? " 0px 4px 4px rgba(0, 0, 0, 0.25)" : "none"}`,
+        padding:"20px 70px",
+        color:"#FFFFFF"
       }}
     >
       <Row
@@ -34,7 +38,7 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             : "d-flex justify-content-between"
         }`}
       >
-        <Col xs={2} md={2} lg={2} className="d-flex align-items-center">
+        {/* <Col xs={2} md={2} lg={2} className="d-flex align-items-center">
           {!sideBar && (
             <Navbar.Brand href="/">
               <img
@@ -62,7 +66,7 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
           >
             <GridMenuIcon />
           </IconButton>
-        </Col>
+        </Col> */}
         {!sideBar && (
           <Col
             xs={8}
@@ -70,16 +74,18 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             lg={8}
             style={{
               display: "flex",
-              justifyContent: "center",
+              justifyContent: "start",
               alignItems: "center",
             }}
           >
             <h5
-              className="medium"
+              className="medium segoe-bold text-xl"
               style={{
                 marginBottom: "0px",
+
                 fontWeight: "700",
                 textTransform: "uppercase",
+                
               }}
             >
               QM Vendor Portal
@@ -97,6 +103,21 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             alignItems: "center",
           }}
         >
+          {/* <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-end"
+            className="font-light"
+            style={{
+              fontSize: "0.75rem",
+              marginRight: "20px",
+              color: "#FFFFFF",
+              fontWeight: "500",
+              width: `${isTab ? (sideBar ? "" : "130%") : "150%"}`,
+            }}
+          >
+            <NotificationsNoneIcon ></NotificationsNoneIcon>
+          </Stack>
           <Stack
             direction="column"
             justifyContent="center"
@@ -104,19 +125,29 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             className="font-light"
             style={{
               fontSize: "0.75rem",
-              marginRight: "10px",
-              color: "#828282",
+              marginRight: "20px",
+              color: "#FFFFFF",
               fontWeight: "500",
               width: `${isTab ? (sideBar ? "" : "130%") : "150%"}`,
             }}
           >
-            <p className="text-truncate m-0" style={{ maxWidth: "100%" }}>
-              Welcome
-            </p>
-            <p className="text-truncate m-0" style={{ maxWidth: "100%" }}>
-            {user?.name ? user.name : "Username"}
-            </p>
+            <SettingsIcon ></SettingsIcon>
           </Stack>
+          <Stack
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-end"
+            className="font-light"
+            style={{
+              fontSize: "0.75rem",
+              marginRight: "20px",
+              color: "#FFFFFF",
+              fontWeight: "500",
+              width: `${isTab ? (sideBar ? "" : "130%") : "150%"}`,
+            }}
+          >
+            <QuestionMarkIcon ></QuestionMarkIcon>
+          </Stack> */}
           <DropDown>
             <Avatar
               sx={{

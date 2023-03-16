@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import MainLayout from "../../components/layout/mainLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
@@ -8,8 +9,7 @@ import serverAPI from "../../config/serverAPI";
 const SinglePR = () => {
   const [singlePR, setSinglePR] = useState();
   let { id } = useParams();
-  const [loading,setLoading] = useState(false)
-
+  const [loading, setLoading] = useState(false);
 
   const getSinglePR = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
@@ -32,24 +32,28 @@ const SinglePR = () => {
   }, []);
 
   const getPDF = useCallback(async (args) => {
-    setLoading(true)
-    const body = { jsonrpc: "2.0", 
-    params: { 
-      id,
-      file_name : `Payment Receipts-${args}.pdf`
-    } 
-  }
+    setLoading(true);
+    const body = {
+      jsonrpc: "2.0",
+      params: {
+        id,
+        file_name: `Payment Receipts-${args}.pdf`,
+      },
+    };
     await serverAPI
       .post(`get-payment-receipt-pdf`, body)
       .then((res) => {
-        console.log(res,"ress");
-        if(res?.data?.fileArrived) {
+        console.log(res, "ress");
+        if (res?.data?.fileArrived) {
           let a = document.createElement("a");
-          a.setAttribute("download",true)
-          a.setAttribute("target","_blank")
-          a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
-          a.click()
-          setLoading(false)
+          a.setAttribute("download", true);
+          a.setAttribute("target", "_blank");
+          a.setAttribute(
+            "href",
+            `${process.env.REACT_APP_API_URL}/${res?.data?.data}`
+          );
+          a.click();
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -62,31 +66,39 @@ const SinglePR = () => {
   }, []);
 
   return (
-    <div className="main-container">
-      <PageLayout />
-      <PageHeader
-        title={`Payment Receipt: ${
-          singlePR?.[0]?.name ? singlePR?.[0]?.name : ""
-        }`}
-      >
-        <Button
-          type="submit"
-          color="secondary"
-          variant="contained"
-          onClick={() => getPDF(singlePR?.[0]?.name)}
-        >
-          Download Purchase Receipt
-        </Button>
-      </PageHeader>
+    // <div className="main-container">
+    //   <PageLayout />
+    //   <PageHeader
+    //     title={`Payment Receipt: ${
+    //       singlePR?.[0]?.name ? singlePR?.[0]?.name : ""
+    //     }`}
+    //   >
+    //     <Button
+    //       type="submit"
+    //       color="secondary"
+    //       variant="contained"
+    //       onClick={() => getPDF(singlePR?.[0]?.name)}
+    //     >
+    //       Download Purchase Receipt
+    //     </Button>
+    //   </PageHeader>
+    <MainLayout
+      pageTitle={`Payment Receipt: ${
+        singlePR?.[0]?.name ? singlePR?.[0]?.name : ""
+      }`}
+      buttonName={"Download Payment Receipt"}
+      onButtonClick={() => getPDF(singlePR?.[0]?.name)}
+      loading={loading}
+    >
       <form>
         {/* <div className="row">
         </div> */}
         <div className="row mt-2 justify-content-between">
-          <div className="row col-6 mb-2">
-            <div className="col-3">
+          <div className="row col-6 mb-2 segoe-bold">
+            <div className="col-12">
               <label htmlFor="name">Vendor:</label>
             </div>
-            <div className="col-9">
+            <div className="col-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -105,7 +117,7 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-4">
+            {/* <div className="col-4">
               <label htmlFor="name">Journal:</label>
             </div>
             <div className="col-8">
@@ -124,13 +136,13 @@ const SinglePR = () => {
                   // onChange={handleChange}
                 />
               </div>
-            </div>
+            </div> */}
           </div>
           <div className="row col-6">
-            <div className="col-3 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Amount:</label>
             </div>
-            <div className="col-9 mt-2">
+            <div className="col-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -145,10 +157,10 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-4 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Funds available&nbsp;on:</label>
             </div>
-            <div className="col-8 mt-2">
+            <div className="col-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -167,10 +179,10 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-3 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Date:</label>
             </div>
-            <div className="col-9 mt-2">
+            <div className="col-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -185,10 +197,10 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-4 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Payment Method:</label>
             </div>
-            <div className="col-8 mt-2">
+            <div className="col-12">
               <div className="form-group">
                 <input
                   type="text"
@@ -207,10 +219,10 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-3 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Memo</label>
             </div>
-            <div className="col-9 mt-2">
+            <div className="col-12 ">
               <div className="form-group">
                 <input
                   type="text"
@@ -225,10 +237,10 @@ const SinglePR = () => {
             </div>
           </div>
           <div className="row col-6">
-            <div className="col-4 mt-2">
+            <div className="col-12 mt-3 segoe-bold">
               <label htmlFor="name">Vendor Bank Account</label>
             </div>
-            <div className="col-8 mt-2">
+            <div className="col-12 ">
               <div className="form-group">
                 <input
                   type="text"
@@ -248,7 +260,7 @@ const SinglePR = () => {
           </div>
         </div>
       </form>
-    </div>
+    </MainLayout>
   );
 };
 

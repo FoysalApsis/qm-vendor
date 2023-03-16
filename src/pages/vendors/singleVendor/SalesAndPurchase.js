@@ -49,13 +49,12 @@ const SalesAndPurchase = (props) => {
   return (
     <>
       <div className="row" style={{ maxWidth: "700px" }}>
-        <div className="mt-2">
-          <div className="col-8">
+          <div className="col-6">
             <div className="row">
-              <div className="col-4 mt-2">
+              <div className="col-12 mt-2 segoe-bold">
                 <label htmlFor="paymentTerms">Payment Terms:</label>
               </div>
-              <div className="col-6">
+              <div className="col-12">
                 <Autocomplete
                   size="small"
                   disablePortal
@@ -81,17 +80,17 @@ const SalesAndPurchase = (props) => {
                 />
               </div>
             </div>
-          </div>
-          <div className="col-4"></div>
+
+          {/* <div className="col-4"></div> */}
         </div>
-        <div className="mt-2">
+        {/* <div className="mt-2"> */}
           {" "}
-          <div className="col-8">
+          <div className="col-6">
             <div className="row">
-              <div className="col-4 mt-2">
+              <div className="col-12 mt-2 segoe-bold">
                 <label htmlFor="paymentTerms">Payment Method:</label>
               </div>
-              <div className="col-6">
+              <div className="col-12">
                 <Autocomplete
                   disablePortal
                   size="small"
@@ -115,9 +114,9 @@ const SalesAndPurchase = (props) => {
               </div>
             </div>
           </div>
-          <div className="col-4"></div>
+          {/* <div className="col-4"></div> */}
         </div>
-      </div>
+      {/* </div> */}
     </>
   );
 };

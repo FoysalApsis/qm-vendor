@@ -91,12 +91,12 @@ const Accounting = (props) => {
     <>
       {values?.map((item, index) => {
         return (
-          <div key={index} className="mb-2">
-            <div className="row" style={{ maxWidth: "778px" }}>
-              <div className=" col-3 mt-3 text-end">
+          <div key={index} className="mb-2 row">
+            <div className="row col-6" style={{ maxWidth: "778px" }}>
+              <div className=" col-12 mt-3 segoe-bold">
                 <label htmlFor="">Name of the Bank</label>
               </div>
-              <div className="col-9 mt-2">
+              <div className="col-12">
                 <input
                   // id="standard-basic"
                   name="bank_name"
@@ -109,10 +109,10 @@ const Accounting = (props) => {
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </div>
-              <div className=" col-3 mt-3 text-end">
+              <div className=" col-12 mt-3 segoe-bold">
                 <label htmlFor="">Bank Identifier Code</label>
               </div>
-              <div className="col-9 mt-2">
+              <div className="col-12">
                 <input
                   id="standard-basic"
                   className="form-control"
@@ -127,11 +127,12 @@ const Accounting = (props) => {
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </div>
-
-              <div className=" col-3 mt-3 text-end">
+            </div>
+            <div className="row col-6">
+              <div className=" col-12 mt-3 segoe-bold">
                 <label htmlFor="">Transit Number</label>
               </div>
-              <div className="col-9 mt-2">
+              <div className="col-12">
                 <input
                   id="standard-basic"
                   className="form-control"
@@ -147,10 +148,10 @@ const Accounting = (props) => {
                   onChange={(e) => handleInputChange(e, index)}
                 />
               </div>
-              <div className=" col-3 mt-3 text-end">
+              <div className=" col-12 mt-3 segoe-bold">
                 <label htmlFor="">Account Number</label>
               </div>
-              <div className="col-9 mt-2">
+              <div className="col-12">
                 <input
                   id="standard-basic"
                   className="form-control"

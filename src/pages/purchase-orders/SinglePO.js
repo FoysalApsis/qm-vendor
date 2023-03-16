@@ -2,6 +2,7 @@ import { Button, CircularProgress } from "@mui/material";
 import { idID } from "@mui/material/locale";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import MainLayout from "../../components/layout/mainLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
@@ -14,7 +15,7 @@ const SinglePO = () => {
   const [company, setCompany] = useState();
   const [tax, setTax] = useState();
   const [data, setData] = useState(null);
-  const [loading,setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   let { id } = useParams();
@@ -46,7 +47,6 @@ const SinglePO = () => {
   //     }
   //   }
 
-
   const getSinglePO = useCallback(async () => {
     const body = { jsonrpc: "2.0", params: { id } };
     await serverAPI
@@ -68,28 +68,32 @@ const SinglePO = () => {
         );
       })
       .catch((err) => {
-        console.log(err.message)
-      })
-  }, [])
+        console.log(err.message);
+      });
+  }, []);
   const getPDF = useCallback(async (args) => {
-    setLoading(true)
-    const body = { jsonrpc: "2.0", 
-    params: { 
-      id,
-      file_name : `Purchase Order-${args}.pdf`
-    } 
-  }
+    setLoading(true);
+    const body = {
+      jsonrpc: "2.0",
+      params: {
+        id,
+        file_name: `Purchase Order-${args}.pdf`,
+      },
+    };
     await serverAPI
       .post(`get-pdf`, body)
       .then((res) => {
-        console.log(res,"ress");
-        if(res?.data?.fileArrived) {
+        console.log(res, "ress");
+        if (res?.data?.fileArrived) {
           let a = document.createElement("a");
-          a.setAttribute("download",true)
-          a.setAttribute("target","_blank")
-          a.setAttribute("href",`${process.env.REACT_APP_API_URL}/${res?.data?.data}`);
-          a.click()
-          setLoading(false)
+          a.setAttribute("download", true);
+          a.setAttribute("target", "_blank");
+          a.setAttribute(
+            "href",
+            `${process.env.REACT_APP_API_URL}/${res?.data?.data}`
+          );
+          a.click();
+          setLoading(false);
         }
       })
       .catch((err) => {
@@ -158,153 +162,158 @@ const SinglePO = () => {
     [SinglePO]
   );
 
-
   useEffect(() => {
     getSinglePO();
     getPoProducts();
   }, []);
 
   return (
-    <div className="main-container">
-      <PageLayout />
-      <PageHeader title={`PO:  ${ singlePO?.[0] ? singlePO?.[0]?.display_name : ""} `}>
-      {" "}
-            <Button
-              type="submit"
-              color="secondary"
-              variant="contained"
-              onClick={()=>getPDF(singlePO?.[0]?.name)}
-            >
-              Download PO
-            </Button>
-        { loading && <CircularProgress color="secondary" className="ms-3"/>}
+    // <div className="main-container">
+    // <PageLayout />
+    // <PageHeader title={`PO:  ${ singlePO?.[0] ? singlePO?.[0]?.display_name : ""} `}>
+    // {" "}
+    //       <Button
+    //         type="submit"
+    //         color="secondary"
+    //         variant="contained"
+    //         onClick={()=>getPDF(singlePO?.[0]?.name)}
+    //       >
+    //         Download PO
+    //       </Button>
+    //   { loading && <CircularProgress color="secondary" className="ms-3"/>}
 
-      </PageHeader>
+    // </PageHeader>
+    <MainLayout
+      pageTitle={`PO:  ${singlePO?.[0] ? singlePO?.[0]?.display_name : ""} `}
+      buttonName={"Download PO"}
+      onButtonClick={() => getPDF(singlePO?.[0]?.name)}
+      loading={loading}
+    >
       <form>
         {/* <div className="row">
         </div> */}
         <div className="row mt-2 justify-content-between">
           <div className="row col-6">
-          <div className="col-3">
-            <label htmlFor="name">Vendor:</label>
-          </div>
-          <div className="col-9">
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                id="partner_id"
-                name="partner_id"
-                value={
-                  singlePO?.[0]?.partner_id ? singlePO?.[0]?.partner_id[1] : ""
-                }
-                disabled
-                onChange={handleChange}
-              />
+            <div className="col-12 segoe-bold">
+              <label htmlFor="name">Vendor:</label>
             </div>
-          </div>
-
+            <div className="col-12">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="partner_id"
+                  name="partner_id"
+                  value={
+                    singlePO?.[0]?.partner_id
+                      ? singlePO?.[0]?.partner_id[1]
+                      : ""
+                  }
+                  disabled
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
           </div>
           <div className="row col-6">
-          <div
-            className="col-3"
-            style={{ display: "grid", placeContent: "center" }}
-          >
-            <label htmlFor="name">Order Date:</label>
-          </div>
-          <div className="col-9">
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                id="date_order"
-                name="date_order"
-                value={singlePO?.[0]?.date_order ? singlePO[0]?.date_order : ""}
-                onChange={handleChange}
-                disabled
-
-              />
+            <div className="col-12 segoe-bold">
+              <label htmlFor="address">Vendor Reference:</label>
+            </div>
+            <div className="col-12 ">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="partner_ref"
+                  name="partner_ref"
+                  disabled
+                  value={
+                    singlePO?.[0]?.partner_ref ? singlePO[0].partner_ref : ""
+                  }
+                  //   value={data?.street ? data?.street : ""}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-
+          <div className="row col-6 mt-3">
+            <div
+              className="col-12 segoe-bold"
+              
+            >
+              <label htmlFor="name">Order Date:</label>
+            </div>
+            <div className="col-12">
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="date_order"
+                  name="date_order"
+                  value={
+                    singlePO?.[0]?.date_order ? singlePO[0]?.date_order : ""
+                  }
+                  onChange={handleChange}
+                  disabled
+                />
+              </div>
+            </div>
           </div>
+          
           <div className="row col-6">
-
-          <div className="col-3 mt-2">
-            <label htmlFor="address">Vendor Reference:</label>
-          </div>
-          <div className="col-9 mt-2">
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                id="partner_ref"
-                name="partner_ref"
-                disabled
-                value={
-                  singlePO?.[0]?.partner_ref ? singlePO[0].partner_ref : ""
-                }
-                //   value={data?.street ? data?.street : ""}
-                onChange={handleChange}
-              />
+            <div
+              className="col-12 mt-3 segoe-bold"
+            >
+              <label htmlFor="phone">Expected Arrival:</label>
             </div>
-          </div>
-          </div>
-          <div className="row col-6">
-
-          <div className="col-3 mt-2"
-           style={{ display: "grid", placeContent: "center" }}
-          >
-            <label htmlFor="phone">Expected Arrival:</label>
-          </div>
-          <div className="col-9 mt-2">
-            {" "}
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                id="date_planned"
-                name="date_planned"
-                disabled
-                value={
-                  singlePO?.[0]?.date_planned ? singlePO[0].date_planned : ""
-                }
-                //   value={data?.phone ? data?.phone : ""}
-                onChange={handleChange}
-              />
+            <div className="col-12 ">
+              {" "}
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="date_planned"
+                  name="date_planned"
+                  disabled
+                  value={
+                    singlePO?.[0]?.date_planned ? singlePO[0].date_planned : ""
+                  }
+                  //   value={data?.phone ? data?.phone : ""}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
-          </div>
           </div>
           <div className="row col-xl-6 col-lg-12">
-
-          <div className="col-3 mt-2 mb-5">
-            <label htmlFor="phone">Purchase Representative:</label>
-          </div>
-          <div className="col-9 mt-2">
-            {" "}
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                id="po_approver_id"
-                name="po_approver_id"
-                disabled
-                value={singlePO?.[0]?.user_id ? singlePO[0].user_id[1] : ""}
-                //   value={data?.mobile ? data?.mobile : ""}
-                onChange={handleChange}
-              />
+            <div className="col-12 mt-3 segoe-bold">
+              <label htmlFor="phone">Purchase Representative:</label>
+            </div>
+            <div className="col-12 mb-5">
+              {" "}
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  id="po_approver_id"
+                  name="po_approver_id"
+                  disabled
+                  value={singlePO?.[0]?.user_id ? singlePO[0].user_id[1] : ""}
+                  //   value={data?.mobile ? data?.mobile : ""}
+                  onChange={handleChange}
+                />
+              </div>
             </div>
           </div>
-          </div>
           <div className="row col-xl-6 col-lg-12">
-
-          <div className="col-6"></div>
+            <div className="col-6"></div>
           </div>
 
-          <div className="col-1 mt-2">
+        <div className="row col-6">
+
+        <div className="col-12 mt-2 segoe-bold">
             <label htmlFor="phone">Vendor Address</label>
           </div>
-          <div className="col-11 mt-2">
+          <div className="col-12 mt-2">
             <div className="form-group">
               <input
                 type="text"
@@ -318,8 +327,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 mt-2"></div>
-          <div className="col-11 mt-2">
+          <div className="col-12 mt-2">
             <div className="form-group">
               <input
                 type="text"
@@ -333,8 +341,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 mt-2"></div>
-          <div className="col-3 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -349,7 +356,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -364,7 +371,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-2 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -379,7 +386,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2 mb-5">
+          <div className="col-6 mt-2 mb-5">
             {" "}
             <div className="form-group">
               <input
@@ -394,10 +401,13 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 mt-2">
+        </div>
+        <div className="row col-6">
+
+          <div className="col-6 mt-2 segoe-bold">
             <label htmlFor="phone">Shipping Address</label>
           </div>
-          <div className="col-11 mt-2">
+          <div className="col-12 mt-2">
             <div className="form-group">
               <input
                 type="text"
@@ -417,8 +427,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 mt-2"></div>
-          <div className="col-11 mt-2">
+          <div className="col-12 mt-2">
             <div className="form-group">
               <input
                 type="text"
@@ -438,8 +447,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 mt-2"></div>
-          <div className="col-3 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -460,7 +468,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -481,7 +489,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-2 mt-2">
+          <div className="col-6 mt-2">
             {" "}
             <div className="form-group">
               <input
@@ -502,7 +510,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-3 mt-2">
+          <div className="col-6 mt-2 mb-5">
             {" "}
             <div className="form-group">
               <input
@@ -523,8 +531,7 @@ const SinglePO = () => {
               />
             </div>
           </div>
-          <div className="col-1 "></div>
-        
+        </div>
         </div>
       </form>
       <hr />
@@ -545,7 +552,7 @@ const SinglePO = () => {
           </Button>
         </div>
       </div> */}
-    </div>
+    </MainLayout>
   );
 };
 
