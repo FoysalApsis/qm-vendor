@@ -5,6 +5,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
+  TablePagination,
   TableRow,
 } from "@mui/material";
 import React, { useCallback, useEffect, useState } from "react";
@@ -16,13 +17,26 @@ import serverAPI from "../../config/serverAPI";
 
 const PaymentReceipts = () => {
   const [paymentReceipt, setPaymentReceipt] = useState([]);
-  const rows = [...paymentReceipt];
+  const rows = [
+    ...paymentReceipt
+  ];
 
   const navigate = useNavigate()
 
   const navigator = (id)=>{
     navigate(`/my-payment-receipt/${id}`)
   }
+
+  const [page, setPage] =useState(0);
+  const [rowsPerPage, setRowsPerPage] =useState(10);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const getPayments = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
@@ -106,7 +120,7 @@ const PaymentReceipts = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows?.map((row) => (
+            {rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
               <TableRow
                 key={row?.id}
                 sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
@@ -129,6 +143,18 @@ const PaymentReceipts = () => {
             ))}
           </TableBody>
         </Table>
+        {rows.length > 0 && 
+        <TablePagination
+          className="bg-[#F8F8F8]"
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          
+          />}
       </TableContainer>
       </MainLayout >
   );

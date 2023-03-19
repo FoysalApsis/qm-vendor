@@ -11,17 +11,31 @@ import { useNavigate } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
 import MainLayout from "../../components/layout/mainLayout";
 import InvoiceStatusTable from "./InvoiceStatusTable";
+import { TablePagination } from "@mui/material";
 
 const Invoices = () => {
   const [bills, setBills] = useState([{}]);
   const [submittedInvoice, setSubmittedInvoice] = useState([{}]);
   const rows = [...bills];
-  let submittedRows = [ ...submittedInvoice];
- 
+  let submittedRows = [
+    ...submittedInvoice
+  ];
+
   const navigate = useNavigate();
 
   const handleCreateBill = () => {
     navigate("/invoice/create-bill");
+  };
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   const getBills = useCallback(async () => {
@@ -50,7 +64,7 @@ const Invoices = () => {
       .then((res) => {
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
-            console.log(elm,"elm[0");
+            console.log(elm, "elm[0");
             return {
               ...elm[0],
             };
@@ -122,9 +136,17 @@ const Invoices = () => {
     getSubmittedInvoice();
   }, []);
 
+  console.log(submittedRows
+    ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    .map((row) => {}))
+
   return (
-    <MainLayout pageTitle={"My Invoices"} buttonName={"Submit Invoice"} onButtonClick={handleCreateBill} >
-        {/* <Button
+    <MainLayout
+      pageTitle={"My Invoices"}
+      buttonName={"Submit Invoice"}
+      onButtonClick={handleCreateBill}
+    >
+      {/* <Button
           type="submit"
           color="secondary"
           variant="contained"
@@ -132,71 +154,83 @@ const Invoices = () => {
         >
           Submit Invoice
         </Button> */}
-        <div className="table-title mb-3">Submitted Invoices</div>
-        <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead
+      <div className="table-title mb-3">Submitted Invoices</div>
+      <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead
+            sx={{
+              "&.MuiTableHead-root": {
+                backgroundColor: "#323130",
+              },
+            }}
+          >
+            <TableRow
               sx={{
-                "&.MuiTableHead-root": {
-                  backgroundColor: "#323130",
+                "&.MuiTableRow-root": {
+                  color: "#F8F8F8",
                 },
               }}
             >
-              <TableRow
-                sx={{
-                  "&.MuiTableRow-root": {
-                    color: "#F8F8F8",
-                  },
-                }}
-              >
-                <TableCell >
-                  {" "}
-                  <b style={{ color: "white" }}> Date of Submission </b>
-                </TableCell>
-                <TableCell align="center">
-                  {" "}
-                  <b style={{ color: "white" }}> PO Number </b>
-                </TableCell>
-                <TableCell align="center">
-                  <b style={{ color: "white" }}>Invoice Number</b>
-                </TableCell>
-                <TableCell align="center">
-                  {" "}
-                  <b style={{ color: "white" }}>Invoice Copy </b>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {Object.entries(submittedRows[0]).length ?
-                submittedRows?.map((row) => (
-                  <TableRow
-                    key={row?.id}
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    className="bg-[#F8F8F8]"
-
-                  >
-                    <TableCell component="th" scope="row">
-                      {row?.date_of_submission}
-                    </TableCell>
-                    <TableCell align="center">{row?.po_id[1]}</TableCell>
-                    <TableCell align="center">{row?.invoice_number}</TableCell>
-                    <TableCell align="center">
-                      <span> {row?.document_name} </span>
-                      <span
-                        onClick={() => downloadPDF(row?.pdf_name)}
-                        style={{ cursor: "pointer" }}
-                      >
-                        <DownloadIcon />
-                      </span>
-                    </TableCell>
-                  </TableRow>
-                )): ""}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <div className="table-title mb-3">Invoice Status</div>
-        <InvoiceStatusTable ></InvoiceStatusTable>
-        {/* <TableContainer component={Paper}>
+              <TableCell>
+                {" "}
+                <b style={{ color: "white" }}> Date of Submission </b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}> PO Number </b>
+              </TableCell>
+              <TableCell align="center">
+                <b style={{ color: "white" }}>Invoice Number</b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}>Invoice Copy </b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {submittedRows
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map((row) => (
+                <TableRow
+                  key={row?.id}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  className="bg-[#F8F8F8]"
+                >
+                  <TableCell component="th" scope="row">
+                    {row?.date_of_submission}
+                  </TableCell>
+                  <TableCell align="center">{row?.po_id[1]}</TableCell>
+                  <TableCell align="center">{row?.invoice_number}</TableCell>
+                  <TableCell align="center">
+                    <span> {row?.document_name} </span>
+                    <span
+                      onClick={() => downloadPDF(row?.pdf_name)}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <DownloadIcon />
+                    </span>
+                  </TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+        {submittedRows.length > 0 && (
+          <TablePagination
+            className="bg-[#F8F8F8]"
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={submittedRows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        )}
+      </TableContainer>
+      <div className="table-title mb-3">Invoice Status</div>
+      <InvoiceStatusTable></InvoiceStatusTable>
+      {/* <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead
               sx={{
@@ -270,7 +304,7 @@ const Invoices = () => {
             </TableBody>
           </Table>
         </TableContainer> */}
-        </MainLayout>
+    </MainLayout>
   );
 };
 

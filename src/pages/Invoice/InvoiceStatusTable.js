@@ -7,6 +7,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import serverAPI from "../../config/serverAPI";
+import { TablePagination } from "@mui/material";
 
 const InvoiceStatusTable = ({isDashboard=false}) => {
 
@@ -16,6 +17,17 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
       getBills();
     }, []);
 
+    const [page, setPage] =useState(0);
+    const [rowsPerPage, setRowsPerPage] =useState(10);
+    const handleChangePage = (event, newPage) => {
+      setPage(newPage);
+    };
+  
+    const handleChangeRowsPerPage = event => {
+      setRowsPerPage(parseInt(event.target.value, 10));
+      setPage(0);
+    };
+  
     
 
     const getBills = useCallback(async () => {
@@ -63,7 +75,18 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
       }
     };
   
-    const rows = [...bills];
+    const rows = [
+      ...bills
+    ];
+ 
+
+    const amount = (int)=>{
+      console.log("isme aaya");
+      if(int){
+        return parseInt(int).toFixed(0)
+      }
+    }
+
     return (
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -111,7 +134,8 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row,index) => (
+            {
+            rows?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)?.map((row,index) => (
             isDashboard ? index < 3 &&
               <TableRow
                 key={row?.id}
@@ -129,7 +153,7 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
                 <TableCell align="center">{row?.invoice_date}</TableCell>
                 <TableCell align="center">{row?.invoice_date_due}</TableCell>
                 <TableCell align="center">
-                  {parseInt(row?.tax_totals?.amount_total).toFixed(0)}
+                  {  amount(row?.tax_totals?.amount_total) }
                 </TableCell>
                 <TableCell align="center">
                   {getPaymentStatus(row?.payment_state)}
@@ -162,6 +186,17 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
             ))}
           </TableBody>
         </Table>
+        {rows.length > 0 && (!isDashboard &&  <TablePagination
+          className="bg-[#F8F8F8]"
+            rowsPerPageOptions={[5, 10, 25]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          
+          />)}
       </TableContainer>
     );
   };
