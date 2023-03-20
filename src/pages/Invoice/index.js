@@ -200,7 +200,7 @@ const Invoices = () => {
                   <TableCell component="th" scope="row">
                     {row?.date_of_submission}
                   </TableCell>
-                  <TableCell align="center">{row?.po_id[1]}</TableCell>
+                  <TableCell align="center">{row?.po_id?.[1]}</TableCell>
                   <TableCell align="center">{row?.invoice_number}</TableCell>
                   <TableCell align="center">
                     <span> {row?.document_name} </span>
