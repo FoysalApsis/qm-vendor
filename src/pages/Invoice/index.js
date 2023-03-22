@@ -204,12 +204,12 @@ const Invoices = () => {
                   <TableCell align="center">{row?.invoice_number}</TableCell>
                   <TableCell align="center">
                     <span> {row?.document_name} </span>
-                    <span
+                   {row?.document_name && <span
                       onClick={() => downloadPDF(row?.pdf_name)}
                       style={{ cursor: "pointer" }}
                     >
                       <DownloadIcon />
-                    </span>
+                    </span>}
                   </TableCell>
                 </TableRow>
               ))}
