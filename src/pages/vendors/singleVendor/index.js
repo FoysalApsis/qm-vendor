@@ -3,10 +3,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import Alert from "@mui/material/Alert";
 import React, { useEffect, useState, useCallback } from "react";
-import PageHeader from "../../../components/layout/pageHeader";
-import PageLayout from "../../../components/layout/pageLayout";
 import serverAPI from "../../../config/serverAPI";
-import uploadlogo from "../../../images/upload.png";
 import VendorTabs from "./VendorTabs";
 import MainLayout from "../../../components/layout/mainLayout";
 const iconStyles = {
@@ -66,12 +63,10 @@ const SingleVendor = () => {
         label: user?.property_payment_method_id?.[1],
       });
     }
-    console.log(user, "user");
   };
 
   const handleChange = (e) => {
     const { name, value, type } = e.target;
-    console.log(name, value, "val");
     if (type === "file") {
       setData({
         ...data,
@@ -101,8 +96,19 @@ const SingleVendor = () => {
           })
         );
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(async (err) => {
+        await serverAPI
+          .post(`get-country`, body)
+          .then((res) => {
+            setCountries(
+              res?.data?.response.map((elm) => {
+                return { id: elm[0].id, label: elm[0].display_name };
+              })
+            );
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       });
   }, []);
 
@@ -117,8 +123,19 @@ const SingleVendor = () => {
           })
         );
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(async (err) => {
+        await serverAPI
+          .post(`get-state`, body)
+          .then((res) => {
+            setStates(
+              res?.data.response.map((elm) => {
+                return { id: elm[0].id, label: elm[0].display_name };
+              })
+            );
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       });
   };
 
@@ -133,8 +150,19 @@ const SingleVendor = () => {
           })
         );
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(async (err) => {
+        await serverAPI
+          .post(`get-payment-terms`, body)
+          .then((res) => {
+            setPaymentTermOptions(
+              res?.data?.response.map((elm) => {
+                return { id: elm[0].id, label: elm[0].display_name };
+              })
+            );
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       });
   }, []);
   const getPaymentMethod = useCallback(async () => {
@@ -148,8 +176,19 @@ const SingleVendor = () => {
           })
         );
       })
-      .catch((err) => {
-        console.log(err.message);
+      .catch(async (err) => {
+        await serverAPI
+          .post(`get-payment-method`, body)
+          .then((res) => {
+            setPaymentMethodOptions(
+              res?.data?.response.map((elm) => {
+                return { id: elm[0].id, label: elm[0].display_name };
+              })
+            );
+          })
+          .catch((err) => {
+            console.log(err.message);
+          });
       });
   }, []);
   const getTitle = useCallback(async () => {
