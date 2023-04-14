@@ -3266,6 +3266,11 @@
   "resolved" "https://registry.npmjs.org/big.js/-/big.js-5.2.2.tgz"
   "version" "5.2.2"
 
+"bignumber.js@^8.1.1":
+  "integrity" "sha512-QD46ppGintwPGuL1KqmwhR0O+N2cZUg8JG/VzwI2e28sM9TqHjQB10lI4QAaMHVbLzwVLLAwEglpKPViWX+5NQ=="
+  "resolved" "https://registry.npmjs.org/bignumber.js/-/bignumber.js-8.1.1.tgz"
+  "version" "8.1.1"
+
 "binary-extensions@^2.0.0":
   "integrity" "sha512-jDctJ/IVQbZoJykoeHbhXpOlNBqGNcwXJKJog42E5HDPUwQTSdjCHdihjj0DlnheQ7blbT6dHOafNAiS8ooQKA=="
   "resolved" "https://registry.npmjs.org/binary-extensions/-/binary-extensions-2.2.0.tgz"
@@ -6987,6 +6992,13 @@
   "version" "2.1.1"
   dependencies:
     "boolbase" "^1.0.0"
+
+"numbro@^2.3.6":
+  "integrity" "sha512-pxpoTT3hVxQGaOA2RTzXR/muonQNd1K1HPJbWo7QOmxPwiPmoFCFfsG9XXgW3uqjyzezJ0P9IvCPDXUtJexjwg=="
+  "resolved" "https://registry.npmjs.org/numbro/-/numbro-2.3.6.tgz"
+  "version" "2.3.6"
+  dependencies:
+    "bignumber.js" "^8.1.1"
 
 "nwsapi@^2.2.0":
   "integrity" "sha512-h2AatdwYH+JHiZpv7pt/gSX1XoRGb7L/qSIeuqA6GwYoF9w1vP1cw42TO0aI2pNyshRK5893hNSl+1//vHK7hQ=="

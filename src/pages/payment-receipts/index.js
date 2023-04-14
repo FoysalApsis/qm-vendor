@@ -8,6 +8,7 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
+import numbro from "numbro";
 import React, { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import MainLayout from "../../components/layout/mainLayout";
@@ -110,6 +111,10 @@ const PaymentReceipts = () => {
                 {" "}
                 <b style={{ color: "white" }}> Total Amount </b>
               </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}> Currency </b>
+              </TableCell>
               {/* <TableCell align="center">
                 {" "}
                 <b style={{ color: "white" }}> Status </b>
@@ -137,8 +142,11 @@ const PaymentReceipts = () => {
                 <TableCell align="center">
                   {row?.payment_method_line_id?.[1]}
                 </TableCell>
-                <TableCell align="center">{row?.amount_total}</TableCell>
+                <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
                 {/* <TableCell align="center">{getStatus(row?.state)}</TableCell> */}
+                <TableCell align="center">
+                        {row?.currency_id?.[1]}
+                      </TableCell>
               </TableRow>
             ))}
           </TableBody>

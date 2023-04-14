@@ -113,7 +113,7 @@ const SingleVendor = () => {
   }, []);
 
   const getState = async () => {
-    const body = { jsonrpc: "2.0", params: {} };
+    const body = { jsonrpc: "2.0", params: {"country_id":data?.country_id} };
     await serverAPI
       .post(`get-state`, body)
       .then((res) => {
@@ -257,15 +257,23 @@ const SingleVendor = () => {
 
   useEffect(() => {
     getUserInfo();
-    getState();
     getCountries();
     getPaymentTerms();
     getTitle();
     getPartnerBank();
     getChildren();
     getPaymentMethod();
+    getState();
   }, [getCountries]);
 
+  useEffect(()=>{
+    setData({...data,state_id:false})
+    console.log(data,"data");
+    getState();
+
+  },[data?.country_id])
+  
+ 
   let submit_data = {};
 
   const handleSubmit = async (e) => {
@@ -517,17 +525,17 @@ const SingleVendor = () => {
                       name="country_id"
                       {...params}
                       label="Select a Country"
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {countries?.length < 2 ? (
-                              <CircularProgress color="inherit" size={20} />
-                            ) : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
+                      // InputProps={{
+                      //   ...params.InputProps,
+                      //   endAdornment: (
+                      //     <>
+                      //       {countries?.length < 2 ? (
+                      //         <CircularProgress color="inherit" size={20} />
+                      //       ) : null}
+                      //       {params.InputProps.endAdornment}
+                      //     </>
+                      //   ),
+                      // }}
                     />
                   )}
                 />
@@ -546,8 +554,8 @@ const SingleVendor = () => {
                       ? { id: user?.state_id[0], label: user?.state_id[1] }
                       : { id: "", label: "" }
                   }
-                  loading={states?.length < 2}
-                  loadingText={"Loading...."}
+                  // loading={states?.length < 2}
+                  // loadingText={"Loading...."}
                   getOptionLabel={(option) => option.label}
                   isOptionEqualToValue={(option, value) =>
                     option?.id === value?.id
@@ -563,17 +571,17 @@ const SingleVendor = () => {
                       name="state_id"
                       {...params}
                       label="Select a State"
-                      InputProps={{
-                        ...params.InputProps,
-                        endAdornment: (
-                          <>
-                            {states?.length < 2 ? (
-                              <CircularProgress color="inherit" size={20} />
-                            ) : null}
-                            {params.InputProps.endAdornment}
-                          </>
-                        ),
-                      }}
+                      // InputProps={{
+                      //   ...params.InputProps,
+                      //   endAdornment: (
+                      //     <>
+                      //       {states?.length < 2 ? (
+                      //         <CircularProgress color="inherit" size={20} />
+                      //       ) : null}
+                      //       {params.InputProps.endAdornment}
+                      //     </>
+                      //   ),
+                      // }}
                     />
                   )}
                 />

@@ -92,35 +92,35 @@ const SideBar = ({ handleClick, open }) => {
       <List className="px-2 pt-4">
         <CustomListItem
           title="Dashboard"
-          icon={CircleOutlinedIcon}
+          // icon={CircleOutlinedIcon}
           path="/"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Info"
-          icon={CircleOutlinedIcon}
+          // icon={CircleOutlinedIcon}
           path="/vendor"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Purchase Order"
-          icon={CircleOutlinedIcon}
+          // icon={CircleOutlinedIcon}
           path="/my-purchase-order"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Invoices"
-          icon={CircleOutlinedIcon}
+          // icon={CircleOutlinedIcon}
           path="/invoice"
           handleClick={handleClick}
           open={open}
         />
         <CustomListItem
           title="My Payment Receipt"
-          icon={CircleOutlinedIcon}
+          // icon={CircleOutlinedIcon}
           path="/my-payment-receipt"
           handleClick={handleClick}
           open={open}

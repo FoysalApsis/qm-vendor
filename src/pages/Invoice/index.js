@@ -64,7 +64,6 @@ const Invoices = () => {
       .then((res) => {
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
-            console.log(elm, "elm[0");
             return {
               ...elm[0],
             };

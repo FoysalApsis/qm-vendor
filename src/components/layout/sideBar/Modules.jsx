@@ -84,7 +84,7 @@ export const CustomListItem = ({
             onClick={() => handleClick(title)}
           >
             <ListItemIcon className="text-primaryColor" style={{color: "#6B1D73"}}>
-              <Icon />
+              {/* <Icon /> */}
             </ListItemIcon>
             <ListItemText className="segoe-normal"  sx={sx} primary={title} style={{ color: '#201F1E' }}/>
           </ListItemButton>
@@ -101,7 +101,7 @@ export const CustomListItem = ({
           onClick={() => handleClick(title)}
         >
           <ListItemIcon className="text-primary">
-            <Icon className="text-primary"  sx={{ color: "#6B1D73" }}/>
+            {/* <Icon className="text-primary"  sx={{ color: "#6B1D73" }}/> */}
           </ListItemIcon>
           <ListItemText sx={sx} primary={title} style={{ color: '#FFFFFF' }}/>
           {subItemList && (

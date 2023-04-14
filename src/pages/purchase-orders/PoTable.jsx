@@ -8,6 +8,8 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import serverAPI from "../../config/serverAPI";
 import { useNavigate } from "react-router-dom";
+// var numbro = require("numbro");
+import numbro from "numbro";
 import {
   Box,
   IconButton,
@@ -76,6 +78,7 @@ const PoTable = ({ isDashboard = false }) => {
               date_order: elm[0].date_order,
               amount_total: elm[0].tax_totals.amount_total,
               state: elm[0].state,
+              currency_id:elm[0].currency_id
             };
           })
         );
@@ -88,6 +91,7 @@ const PoTable = ({ isDashboard = false }) => {
   useEffect(() => {
     getMyPO();
   }, []);
+
   return (
     <>
       <TableContainer component={Paper}>
@@ -127,6 +131,10 @@ const PoTable = ({ isDashboard = false }) => {
               </TableCell>
               <TableCell align="center">
                 {" "}
+                <b style={{ color: "white" }}> Currency </b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
                 <b style={{ color: "white" }}> Status </b>
               </TableCell>
               {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
@@ -155,8 +163,11 @@ const PoTable = ({ isDashboard = false }) => {
                       <TableCell align="center">
                         {row?.date_order?.split(" ")[0]}
                       </TableCell>
-                      <TableCell align="center">{row.amount_total}</TableCell>
+                      <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
                       {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
+                      <TableCell align="center">
+                        {row?.currency_id?.[1]}
+                      </TableCell>
                       <TableCell align="center">
                         {getStatus(row.state)}
                       </TableCell>
@@ -181,7 +192,11 @@ const PoTable = ({ isDashboard = false }) => {
                     <TableCell align="center">
                       {row?.date_order?.split(" ")[0]}
                     </TableCell>
-                    <TableCell align="center">{row.amount_total}</TableCell>
+                    {/* <TableCell align="center">{row?.amount_total?.toFixed(2)}</TableCell> */}
+                    <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
+                    <TableCell align="center">
+                        {row?.currency_id?.[1]}
+                      </TableCell>
                     {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
                     <TableCell align="center">{getStatus(row.state)}</TableCell>
                     {/* <TableCell align="right">{row.fat}</TableCell>

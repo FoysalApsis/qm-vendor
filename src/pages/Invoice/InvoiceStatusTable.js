@@ -8,6 +8,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import serverAPI from "../../config/serverAPI";
 import { TablePagination } from "@mui/material";
+import numbro from "numbro";
 
 const InvoiceStatusTable = ({isDashboard=false}) => {
 
@@ -38,6 +39,7 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
         .then((res) => {
           setBills(
             res?.data?.response.map((elm) => {
+              console.log(elm,"elelelel")
               return {
                 ...elm,
               };
@@ -81,7 +83,6 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
  
 
     const amount = (int)=>{
-      console.log("isme aaya");
       if(int){
         return parseInt(int).toFixed(0)
       }
@@ -125,6 +126,10 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
               </TableCell>
               <TableCell align="center">
                 {" "}
+                <b style={{ color: "white" }}> Currency </b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
                 <b style={{ color: "white" }}> Payment Status </b>
               </TableCell>
               <TableCell align="center">
@@ -153,8 +158,12 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
                 <TableCell align="center">{row?.invoice_date}</TableCell>
                 <TableCell align="center">{row?.invoice_date_due}</TableCell>
                 <TableCell align="center">
-                  {  amount(row?.tax_totals?.amount_total) }
+                  {/* {  amount(row?.tax_totals?.amount_total) } */}
+                  {numbro(row?.tax_totals?.amount_total).format({thousandSeparated:true,mantissa:2})}
                 </TableCell>
+                <TableCell align="center">
+                        {row?.currency_id?.[1]}
+                      </TableCell>
                 <TableCell align="center">
                   {getPaymentStatus(row?.payment_state)}
                 </TableCell>
@@ -176,8 +185,13 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
               <TableCell align="center">{row?.invoice_date}</TableCell>
               <TableCell align="center">{row?.invoice_date_due}</TableCell>
               <TableCell align="center">
-                {parseInt(row?.tax_totals?.amount_total).toFixed(0)}
+                {/* {parseInt(row?.tax_totals?.amount_total).toFixed(0)} */}
+                {numbro(row?.tax_totals?.amount_total).format({thousandSeparated:true,mantissa:2})}
+
               </TableCell>
+              <TableCell align="center">
+                        {row?.currency_id?.[1]}
+                      </TableCell>
               <TableCell align="center">
                 {getPaymentStatus(row?.payment_state)}
               </TableCell>
