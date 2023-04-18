@@ -215,7 +215,6 @@ const SingleVendor = () => {
       .then((res) => {
         setChilds(
           res?.data?.response.map((elm) => {
-            console.log(elm[0], "childsds");
             return {
               id: elm[0]?.id,
               name: elm[0]?.name,
@@ -268,7 +267,6 @@ const SingleVendor = () => {
 
   useEffect(()=>{
     setData({...data,state_id:false})
-    console.log(data,"data");
     getState();
 
   },[data?.country_id])
@@ -310,7 +308,6 @@ const SingleVendor = () => {
     return await serverAPI
       .post("/auth-vendor", res, {})
       .then((res) => {
-        console.log(res, "auth vendopr");
         localStorage.setItem("userObj", JSON.stringify(res?.data[0]));
       })
       .catch((err) => {

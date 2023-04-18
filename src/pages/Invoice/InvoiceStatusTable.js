@@ -39,7 +39,6 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
         .then((res) => {
           setBills(
             res?.data?.response.map((elm) => {
-              console.log(elm,"elelelel")
               return {
                 ...elm,
               };
@@ -162,7 +161,7 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
                   {numbro(row?.tax_totals?.amount_total).format({thousandSeparated:true,mantissa:2})}
                 </TableCell>
                 <TableCell align="center">
-                        {row?.currency_id?.[1]}
+                        {row?.currency_id}
                       </TableCell>
                 <TableCell align="center">
                   {getPaymentStatus(row?.payment_state)}
@@ -190,7 +189,7 @@ const InvoiceStatusTable = ({isDashboard=false}) => {
 
               </TableCell>
               <TableCell align="center">
-                        {row?.currency_id?.[1]}
+                        {row?.currency_id}
                       </TableCell>
               <TableCell align="center">
                 {getPaymentStatus(row?.payment_state)}

@@ -53,9 +53,7 @@ const Accounting = (props) => {
 
   const numberTypeHandler = (e, index) => {
     const { name, value } = e.target;
-    console.log(name, value);
     let newValue = value?.split("").filter(Number).join("");
-    console.log(newValue, "val");
     setIndex(index);
     let newArray = values?.map((item, itemIndex) =>
       index === itemIndex ? { ...item, [name]: newValue } : item

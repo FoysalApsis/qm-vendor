@@ -13,7 +13,6 @@ const CreateBill = () => {
   const [invoiceNumber, setInvoiceNumber] = useState();
 
   const user = JSON.parse(localStorage.getItem("userObj"));
-  console.log(user, "user");
   const uploadPdfFile = (e) => {
     if (e.target.files[0].size < 2000000) {
       setFile(e.target.files[0]);
@@ -101,7 +100,6 @@ const CreateBill = () => {
         });
       })
       .catch((err) => {
-        console.log(err, "error");
         toast.error(err?.response?.data?.msg, {
           position: "bottom-center",
           autoClose: 5000,
@@ -150,7 +148,6 @@ const CreateBill = () => {
     setDateSubmission(`${year}/${month}/${day}`)
   }, []);
 
-  console.log( selectedPO,"ddd");
   return (
     <MainLayout pageTitle={"Submit Invoice"}>
       <div className="row mt-2" style={{ maxWidth: "900px" }}>

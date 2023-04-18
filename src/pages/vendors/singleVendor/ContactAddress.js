@@ -83,7 +83,6 @@ const ContactAddress = (props) => {
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
 
-    console.log(name,value);
 
     if (name === "email") {
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -186,7 +185,6 @@ const ContactAddress = (props) => {
     setChildData(null);
     handleClose();
   };
-console.log(childData,"<====childData");
   return (
     <div>
       <ToastContainer

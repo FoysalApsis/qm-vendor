@@ -11,7 +11,6 @@ const DeliveryAddress = (props) => {
     childData,
   } = props;
 
-  console.log(childData, "childdaa");
   return (
     <>
       {" "}

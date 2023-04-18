@@ -19,7 +19,6 @@ const SinglePR = () => {
       .then((res) => {
         setSinglePR(
           res?.data?.response.map((elm) => {
-            console.log(elm, "elm");
             return {
               ...elm[0],
             };
@@ -43,7 +42,6 @@ const SinglePR = () => {
     await serverAPI
       .post(`get-payment-receipt-pdf`, body)
       .then((res) => {
-        console.log(res, "ress");
         if (res?.data?.fileArrived) {
           let a = document.createElement("a");
           a.setAttribute("download", true);
@@ -94,8 +92,8 @@ const SinglePR = () => {
         {/* <div className="row">
         </div> */}
         <div className="row mt-2 justify-content-between">
-          <div className="row col-6 mb-2 segoe-bold">
-            <div className="col-12">
+          <div className="row col-6 mb-2 ">
+            <div className="col-12 segoe-bold">
               <label htmlFor="name">Vendor:</label>
             </div>
             <div className="col-12">

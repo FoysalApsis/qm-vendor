@@ -83,7 +83,6 @@ const SinglePO = () => {
     await serverAPI
       .post(`get-pdf`, body)
       .then((res) => {
-        console.log(res, "ress");
         if (res?.data?.fileArrived) {
           let a = document.createElement("a");
           a.setAttribute("download", true);

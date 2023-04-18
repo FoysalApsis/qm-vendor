@@ -30,7 +30,6 @@ const SalesAndPurchase = (props) => {
 
   useEffect(() => {
     if (paymentTerm != null ) {
-      console.log(paymentTerm.id,"paymentTerm");
       setData({
         ...data,
         property_supplier_payment_term_id: paymentTerm["id"],
