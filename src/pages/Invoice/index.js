@@ -64,6 +64,7 @@ const Invoices = () => {
       .then((res) => {
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
+            console.log(elm[0], ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             return {
               ...elm[0],
             };
@@ -109,6 +110,16 @@ const Invoices = () => {
       return <span>Draft</span>;
     } else if (status === "posted") {
       return <span>Posted</span>;
+    } else if (status === "cancel") {
+      return <span>Cancelled</span>;
+    }
+  };
+
+  const getInvoiceStatus = (status) => {
+    if (status === "done") {
+      return <span>Approved</span>;
+    } else if (status === "pending") {
+      return <span>Pending</span>;
     } else if (status === "cancel") {
       return <span>Cancelled</span>;
     }
@@ -185,6 +196,14 @@ const Invoices = () => {
                 {" "}
                 <b style={{ color: "white" }}>Invoice Copy </b>
               </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}>Status </b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}>Notes</b>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -210,6 +229,8 @@ const Invoices = () => {
                       <DownloadIcon />
                     </span>}
                   </TableCell>
+                  <TableCell align="center">{getInvoiceStatus(row?.state)}</TableCell>
+                  <TableCell align="center">{row?.notes}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
