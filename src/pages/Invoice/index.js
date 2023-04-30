@@ -117,11 +117,11 @@ const Invoices = () => {
 
   const getInvoiceStatus = (status) => {
     if (status === "done") {
-      return <span>Approved</span>;
+      return <span>Accepted</span>;
     } else if (status === "pending") {
-      return <span>Pending</span>;
+      return <span>Pending Review</span>;
     } else if (status === "cancel") {
-      return <span>Cancelled</span>;
+      return <span>Rejected</span>;
     }
   };
 
