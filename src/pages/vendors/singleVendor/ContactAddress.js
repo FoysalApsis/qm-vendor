@@ -67,19 +67,6 @@ const ContactAddress = (props) => {
   const [myType, setType] = useState("contact");
   const [isEmailValid, setEmailValid] = useState(false);
 
-  // useEffect(() => {
-  //   data?.child_ids?.forEach((e) => {
-
-  //     if (e[0] === 0) {
-  //       console.log(e[2],childEmail.includes(e[2].email));
-  //       if (!childEmail.includes(e[2].email)) {
-  //         setChildEmail((prev) => [...prev, e[2].email]);
-  //         setChildListData((prev) => [...prev, { ...e[2] }]);
-  //       }
-  //     }
-  //   });
-  // }, [childListDatas]);
-
   const handleChildChange = (e) => {
     const { name, value, type } = e.target;
 

@@ -30,6 +30,8 @@ const SingleVendor = () => {
   const [childEmail, setChildEmail] = useState([]);
 
   const getUserInfo = () => {
+    console.log(user,"user obj")
+    console.log(user ? "true" : "false");
     if (user) {
       setData({
         id: user?.id,
@@ -54,6 +56,7 @@ const SingleVendor = () => {
         transit_no: user?.transit_no,
         acc_no: user?.acc_no,
       });
+      console.log(data,"yeh data inside effects")
       setPaymentTerm({
         id: user?.property_supplier_payment_term_id?.[0],
         label: user?.property_supplier_payment_term_id?.[1],
@@ -113,6 +116,9 @@ const SingleVendor = () => {
   }, []);
 
   const getState = async () => {
+        // setData({...data,state_id:true})
+        // return;
+
     const body = { jsonrpc: "2.0", params: {"country_id":data?.country_id} };
     await serverAPI
       .post(`get-state`, body)
@@ -209,7 +215,7 @@ const SingleVendor = () => {
 
   const getChildren = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
-    const body = { jsonrpc: "2.0", params: { child_ids: user.child_ids } };
+    const body = { jsonrpc: "2.0", params: { child_ids: user?.child_ids } };
     await serverAPI
       .post(`get-vendor-children`, body)
       .then((res) => {
@@ -266,8 +272,11 @@ const SingleVendor = () => {
   }, [getCountries]);
 
   useEffect(()=>{
-    setData({...data,state_id:false})
-    getState();
+    console.log(data,"yeh")
+    if(data){
+      setData({...data,state_id:false})
+      getState();
+    }
 
   },[data?.country_id])
   
@@ -323,6 +332,7 @@ const SingleVendor = () => {
     setAlert(false);
   };
 
+  console.log(data,"data")
   return (
     <>
       {" "}
