@@ -263,16 +263,15 @@ const SingleVendor = () => {
   useEffect(() => {
     getUserInfo();
     getCountries();
-    getPaymentTerms();
+    // getPaymentTerms();
     getTitle();
     getPartnerBank();
     getChildren();
-    getPaymentMethod();
+    // getPaymentMethod();
     getState();
   }, [getCountries]);
 
   useEffect(()=>{
-    console.log(data,"yeh")
     if(data){
       setData({...data,state_id:false})
       getState();
