@@ -363,6 +363,7 @@ const SingleVendor = () => {
               <div className="col-12">
                 <div className="form-group">
                   <input
+                    readOnly
                     type="text"
                     className="form-control"
                     id="name"
@@ -490,6 +491,7 @@ const SingleVendor = () => {
                 {" "}
                 <div className="form-group">
                   <input
+                    readOnly
                     type="text"
                     className="form-control"
                     id="email"

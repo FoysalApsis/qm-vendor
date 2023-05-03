@@ -54,15 +54,14 @@ const SalesAndPurchase = (props) => {
                 <label htmlFor="paymentTerms">Payment Terms:</label>
               </div>
               <div className="col-12">
-                <Autocomplete
+                {/* <Autocomplete
+                    readOnly
+
                   size="small"
                   disablePortal
                   onChange={handlePaymentTermChange}
                   id="property_supplier_payment_term_id"
                   options={paymentTermOptions}
-                  // isOptionEqualToValue={(option, value) =>
-                  //   option.id === value.id
-                  // }
                   sx={{ width: 300 }}
                   name="property_supplier_payment_term_id"
                   renderInput={(params) => (
@@ -73,10 +72,21 @@ const SalesAndPurchase = (props) => {
                       ? data?.property_supplier_payment_term_id[1]
                       : paymentTerm?.["label"]
                   }
-                  // defaultValue = {
-                  //   data?.property_supplier_payment_term_id[1]
-                  // }
-                />
+                /> */}
+                 <input
+                    readOnly
+                    type="text"
+                    className="form-control"
+                    id="property_supplier_payment_term_id"
+                    name="property_supplier_payment_term_id"
+                    // value={data?.email ? data?.email : ""}
+                    value={
+                      Array.isArray(data?.property_supplier_payment_term_id)
+                        ? data?.property_supplier_payment_term_id[1]
+                        : paymentTerm?.["label"]
+                    }
+                    // onChange={handleChange}
+                  />
               </div>
             </div>
 
@@ -90,15 +100,12 @@ const SalesAndPurchase = (props) => {
                 <label htmlFor="paymentTerms">Payment Method:</label>
               </div>
               <div className="col-12">
-                <Autocomplete
+                {/* <Autocomplete
                   disablePortal
                   size="small"
                   onChange={handlePaymentMethodChange}
                   id="property_payment_method_id"
                   options={paymentMethodOptions}
-                  // isOptionEqualToValue={(option, value) =>
-                  //   option.id === value.id
-                  // }
                   sx={{ width: 300 }}
                   name="property_payment_method_id"
                   renderInput={(params) => (
@@ -109,7 +116,21 @@ const SalesAndPurchase = (props) => {
                       ? data?.property_payment_method_id[1]
                       : paymentMethod?.["label"]
                   }
-                />
+                /> */}
+                 <input
+                    readOnly
+                    type="text"
+                    className="form-control"
+                    id="property_payment_method_id"
+                    name="property_payment_method_id"
+                    // value={data?.email ? data?.email : ""}
+                    value={
+                      Array.isArray(data?.property_payment_method_id)
+                        ? data?.property_payment_method_id[1]
+                        : paymentMethod?.["label"]
+                    }
+                    // onChange={handleChange}
+                  />
               </div>
             </div>
           </div>

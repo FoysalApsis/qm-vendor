@@ -85,7 +85,7 @@ const SideBar = ({ handleClick, open }) => {
       <div className="grid place-content-center mt-6">
         <img
           src={qmlogo}
-          className="d-inline-block align-top w-32 h-14 m-auto "
+          className="d-inline-block align-top w-32 h-14 mb-4 "
           alt="Logo"
         />
       </div>

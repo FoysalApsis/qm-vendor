@@ -18,8 +18,9 @@ const AuthState = ({ children }) => {
   const [state, dispatch] = useReducer(AuthReducer, InitialState);
 
   const Login = (data) => {
-    setAuthToken(data.access_token);
+    setAuthToken(data?.access_token);
     // setCookie(data.session_id)
+    console.log(data,"auth ")
     localStorage.setItem("userObj", JSON.stringify(data[0]));
     localStorage.setItem("token", data?.access_token);
     dispatch({ type: SET_LOGIN, payload: data?.userObj });

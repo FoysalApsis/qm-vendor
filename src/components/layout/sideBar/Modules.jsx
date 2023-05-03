@@ -80,13 +80,13 @@ export const CustomListItem = ({
           <ListItemButton
             component="li"
             className={open === title ? "active-sidenavbar" : ""}
-            sx={{ borderRadius: "6px !important", marginBottom: "10px" }}
+            sx={{ borderRadius: "6px !important", marginBottom: "10px", }}
             onClick={() => handleClick(title)}
           >
-            <ListItemIcon className="text-primaryColor" style={{color: "#6B1D73"}}>
+            {/* <ListItemIcon className="text-primaryColor" style={{color: "#6B1D73"}}> */}
               {/* <Icon /> */}
-            </ListItemIcon>
-            <ListItemText className="segoe-normal"  sx={sx} primary={title} style={{ color: '#201F1E' }}/>
+            {/* </ListItemIcon> */}
+            <ListItemText className="segoe-normal"  sx={sx} primary={title} style={{ color: '#201F1E',paddingLeft:"20px" }}/>
           </ListItemButton>
         </Link>
       ) : (

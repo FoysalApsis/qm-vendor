@@ -13,6 +13,7 @@ const useLogin = () => {
   const defaultState = {
     email: "",
     password: "",
+    auth_code: "",
   };
 
   const SignInValidations = Yup.object().shape({
@@ -35,11 +36,11 @@ const useLogin = () => {
       //     navigate("/");
       //   }
       // }
+      console.log(data?.data?.[0]?.vendor_auth_code,"login data")
       if (data?.data?.length >0) {
-        const LoggedIn = Login(data?.data);
-        if (LoggedIn) {
-          navigate("/");
-        }
+        // if (LoggedIn) {
+        //   navigate("/");
+        // }
       }
       else{
         toast.error(`Credentials are incorrect`, {

@@ -34,6 +34,7 @@ const NavbarContainer = ({ handleDrawerToggle }) => {
             ? "d-flex justify-content-between pe-1"
             : "d-flex justify-content-between"
         }`}
+        style={{justifyContent:"space-between"}}
       >
         {/* <Col xs={2} md={2} lg={2} className="d-flex align-items-center">
           {!sideBar && (
