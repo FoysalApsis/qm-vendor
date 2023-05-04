@@ -618,11 +618,12 @@ const SingleVendor = () => {
 
             <div className="row col-6">
               <div className="col-12 mt-2 segoe-bold">
-                <label htmlFor="vat">Tax ID</label>
+                <label htmlFor="vat">GST-HST Registration #</label>
               </div>
               <div className="col-12 ">
                 <div className="form-group">
                   <input
+                  readOnly
                     type="text"
                     className="form-control"
                     id="vat"

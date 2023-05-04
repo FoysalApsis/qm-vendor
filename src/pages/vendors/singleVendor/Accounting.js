@@ -31,7 +31,7 @@ const Accounting = (props) => {
   };
 
   const handleInputChange = (e, index) => {
-    const { name, value,type } = e.target;
+    const { name, value, type } = e.target;
     setIndex(index);
     let newArray = values?.map((item, itemIndex) =>
       index === itemIndex ? { ...item, [name]: value } : item
@@ -96,6 +96,7 @@ const Accounting = (props) => {
               </div>
               <div className="col-12">
                 <input
+                  readOnly
                   // id="standard-basic"
                   name="bank_name"
                   // variant="outlined"
@@ -112,6 +113,7 @@ const Accounting = (props) => {
               </div>
               <div className="col-12">
                 <input
+                  readOnly
                   id="standard-basic"
                   className="form-control"
                   name="bank_ic"
@@ -119,7 +121,6 @@ const Accounting = (props) => {
                   color="secondary"
                   defaultValue={user?.bank_ic ? user.bank_ic : ""}
                   maxLength={3}
-                  
                   InputProps={{ inputProps: { minlength: 3, maxlength: 3 } }}
                   size={"small"}
                   onChange={(e) => handleInputChange(e, index)}
@@ -132,6 +133,7 @@ const Accounting = (props) => {
               </div>
               <div className="col-12">
                 <input
+                  readOnly
                   id="standard-basic"
                   className="form-control"
                   name="transit_no"
@@ -151,6 +153,7 @@ const Accounting = (props) => {
               </div>
               <div className="col-12">
                 <input
+                  readOnly
                   id="standard-basic"
                   className="form-control"
                   name="acc_number"

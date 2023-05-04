@@ -156,7 +156,7 @@ const NewLogin = () => {
               </Form>
             </Formik>
             <Box className="flex flex-col justify-start mt-4">
-            <Typography className="!text-xs"> <a href="mailto:qmenv@example.com?Subject=Issue%20with%20vendor%20portal%20login" className="text-[#0a58ca]"> Contact Us </a> if facing any issue</Typography>
+            <Typography className="!text-xs"> Please <a href="mailto:qmenv@example.com?Subject=Issue%20with%20vendor%20portal%20login" className="text-[#0a58ca]"> Contact Us </a> for login issues.</Typography>
           </Box>
           </Box>
         </CardContent>
