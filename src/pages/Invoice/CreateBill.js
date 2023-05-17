@@ -32,8 +32,7 @@ const CreateBill = () => {
 
   const sendFile = () => {
     if (selectedPO) {
-      if(file){
-
+      if (file) {
         const formData = new FormData();
         formData.append("document", file);
         formData.append("po_id", selectedPO["id"]);
@@ -41,9 +40,12 @@ const CreateBill = () => {
         formData.append("invoice_number", invoiceNumber);
         formData.append("vendor_id", user?.id);
         formData.append("pdf_name", file?.["name"]);
-        uploadFile(formData);
-      }
-      else{
+        if (selectedPO["id"] == 999) {
+          uploadCustomBill(formData);
+        } else {
+          uploadFile(formData);
+        }
+      } else {
         toast.error("Please Upload Invoice File", {
           position: "bottom-center",
           autoClose: 5000,
@@ -72,7 +74,11 @@ const CreateBill = () => {
     let { name, value, type } = e.target;
     if (name === "purchase_order") {
       value = JSON.parse(value);
-      setSelectedPO({ id: value?.id, label: value?.display_name });
+      if (value != 999) {
+        setSelectedPO({ id: value?.id, label: value?.display_name });
+      } else {
+        setSelectedPO({ id: 999, label: "custom" });
+      }
     } else if (name === "date") {
       setDateSubmission(value);
     } else if (name === "invoice_number") {
@@ -84,6 +90,39 @@ const CreateBill = () => {
     const body = args;
     await serverAPI
       .post(`/upload-file-to-po`, body)
+      .then((res) => {
+        // setSelectedPO({id:"",label:""});
+        // setInvoiceNumber();
+        setFile();
+        toast.success(res?.data?.msg, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch((err) => {
+        toast.error(err?.response?.data?.msg, {
+          position: "bottom-center",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      });
+  }, []);
+
+  const uploadCustomBill = useCallback(async (args) => {
+    const body = args;
+    await serverAPI
+      .post(`/upload-file-to-custom-bill`, body)
       .then((res) => {
         // setSelectedPO({id:"",label:""});
         // setInvoiceNumber();
@@ -145,7 +184,7 @@ const CreateBill = () => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
 
-    setDateSubmission(`${year}/${month}/${day}`)
+    setDateSubmission(`${year}/${month}/${day}`);
   }, []);
 
   return (
@@ -171,6 +210,7 @@ const CreateBill = () => {
               // }
             >
               <option value="1">Select Purchase Order</option>
+              <option value="999">Invoice without PO</option>
               {purchaseOrders?.map((item, index) => (
                 <option
                   value={JSON.stringify(item)}
@@ -183,9 +223,7 @@ const CreateBill = () => {
             </select>
           </div>
         </div>
-        <div className="row col-6 mt-3">
-          
-        </div>
+        <div className="row col-6 mt-3"></div>
         <div className="row col-6 ">
           <div className="col-12 mt-2 segoe-bold">
             <label htmlFor="Po">Invoice Number:</label>
@@ -204,9 +242,7 @@ const CreateBill = () => {
             </div>
           </div>
         </div>
-        <div className="row col-6 mt-3">
-          
-        </div>
+        <div className="row col-6 mt-3"></div>
 
         <div className="row col-6 mt-2">
           <div className="col-12 mt-2 mb-2 segoe-bold">
@@ -218,18 +254,14 @@ const CreateBill = () => {
               name="date"
               type="date"
               label="Date of Submission"
-              
               defaultValue={dateSubmission ? dateSubmission : "2020/01/01"}
-
-              value={dateSubmission ? dateSubmission : "" }
+              value={dateSubmission ? dateSubmission : ""}
               // sx={{ width: 220 }}
               onChange={(e) => handleChange(e)}
             />
           </div>
         </div>
-        <div className="row col-6 mt-3">
-          
-        </div>
+        <div className="row col-6 mt-3"></div>
 
         <div className="row col-6 mt-2">
           <div className="col-12 mt-2 segoe-bold">

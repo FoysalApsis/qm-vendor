@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import minus from "../../../images/minus.png";
 import add from "../../../images/add.png";
-import { Input } from "@mui/material";
+import { Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
+import serverAPI from "../../../config/serverAPI";
 
 // const regex = /^[0-9\b]+$/;
 const Accounting = (props) => {
@@ -17,77 +18,80 @@ const Accounting = (props) => {
     },
   ]);
   const [index, setIndex] = useState(null);
+  const [banksList, setBanksList] = useState(null);
 
-  const handleAddClick = () => {
-    setValues([
-      ...values,
-      { bank_name: "", acc_number: "", bank_ic: "", transit_no: "" },
-    ]);
-  };
-  const handleRemoveClick = (index) => {
-    const list = [...values];
-    list.splice(index, 1);
-    setValues(list);
-  };
+  // const handleInputChange = (e, index) => {
+  //   const { name, value, type } = e.target;
+  //   setIndex(index);
+  //   let newArray = values?.map((item, itemIndex) =>
+  //     index === itemIndex ? { ...item, [name]: value } : item
+  //   );
+  //   setValues(newArray);
+  //   // newArray = newArray.map((e)=>{
+  //   //   return {
+  //   //     "bank_info":e.bank_name + e.bank_ic + e.transit_no,
+  //   //     "acc_number":e.acc_number
+  //   //   }
+  //   // })
+  //   // console.log(newArray);
+  //   // const list = [...values];
+  //   // // console.log(list);
+  //   // list[index][2][name] =
+  //   //   type === "select-one" ? parseInt(e.target.value) : e.target.value;
+  //   // setValues(list);
+  // };
 
-  const handleInputChange = (e, index) => {
-    const { name, value, type } = e.target;
-    setIndex(index);
-    let newArray = values?.map((item, itemIndex) =>
-      index === itemIndex ? { ...item, [name]: value } : item
-    );
-    setValues(newArray);
-    // newArray = newArray.map((e)=>{
-    //   return {
-    //     "bank_info":e.bank_name + e.bank_ic + e.transit_no,
-    //     "acc_number":e.acc_number
-    //   }
-    // })
-    // console.log(newArray);
-    // const list = [...values];
-    // // console.log(list);
-    // list[index][2][name] =
-    //   type === "select-one" ? parseInt(e.target.value) : e.target.value;
-    // setValues(list);
-  };
-
-  const numberTypeHandler = (e, index) => {
-    const { name, value } = e.target;
-    let newValue = value?.split("").filter(Number).join("");
-    setIndex(index);
-    let newArray = values?.map((item, itemIndex) =>
-      index === itemIndex ? { ...item, [name]: newValue } : item
-    );
-    setValues(newArray);
-  };
-  useEffect(() => {
-    if (
-      values[0]["bank_name"] !== "" ||
-      values[0]["acc_number"] != "" ||
-      values[0]["bank_ic"] !== "" ||
-      values[0]["transit_no"] !== ""
-    ) {
-      let newArr = values.map((e) => {
-        return {
-          bank_name: e.bank_name,
-          bank_ic: e.bank_ic,
-          transit_no: e.transit_no,
-          acc_no: e.acc_number,
-        };
+  const getPartnerBank = useCallback(async () => {
+    const user = JSON.parse(localStorage.getItem("userObj"));
+    console.log("get partner");
+    const body = { jsonrpc: "2.0", params: {"id":user?.id} };
+    await serverAPI
+      .post(`get-bank-accounts`, body)
+      .then((res) => {
+        setBanksList(res?.data?.response.map((elm) =>{return{bank_name:elm[2],acc_number:elm[1]}}))
+        // setBanks(
+        //   res?.data?.response.map((elm) => {
+        //     return { id: elm[0].id, label: elm[0].display_name };
+        //   })
+        // );
+      })
+      .catch((err) => {
+        console.log(err.message);
       });
-      setData({
-        ...data,
-        bank_name: newArr[0]["bank_name"],
-        bank_ic: newArr[0]["bank_ic"],
-        transit_no: newArr[0]["transit_no"],
-        acc_no: newArr[0]["acc_no"],
-      });
-    }
-  }, [values]);
+  }, []);
+
+  // useEffect(() => {
+  //   if (
+  //     values[0]["bank_name"] !== "" ||
+  //     values[0]["acc_number"] != "" ||
+  //     values[0]["bank_ic"] !== "" ||
+  //     values[0]["transit_no"] !== ""
+  //   ) {
+  //     let newArr = values.map((e) => {
+  //       return {
+  //         bank_name: e.bank_name,
+  //         bank_ic: e.bank_ic,
+  //         transit_no: e.transit_no,
+  //         acc_no: e.acc_number,
+  //       };
+  //     });
+  //     setData({
+  //       ...data,
+  //       bank_name: newArr[0]["bank_name"],
+  //       bank_ic: newArr[0]["bank_ic"],
+  //       transit_no: newArr[0]["transit_no"],
+  //       acc_no: newArr[0]["acc_no"],
+  //     });
+  //   }
+  // }, [values]);
+
+  useEffect(()=>{
+    getPartnerBank()
+  },[])
 
   return (
     <>
-      {values?.map((item, index) => {
+      {/* {values?.map((item, index) => {
         return (
           <div key={index} className="mb-2 row">
             <div className="row col-6" style={{ maxWidth: "778px" }}>
@@ -172,7 +176,57 @@ const Accounting = (props) => {
             </div>
           </div>
         );
-      })}
+      })} */}
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <TableHead
+            sx={{
+              "&.MuiTableHead-root": {
+                backgroundColor: "#323130",
+              },
+            }}
+          >
+            <TableRow
+              sx={{
+                "&.MuiTableRow-root": {
+                  color: "#F8F8F8",
+                },
+              }}
+            >
+              <TableCell>
+                {" "}
+                <b style={{ color: "white" }}>Bank Name </b>
+              </TableCell>
+              <TableCell align="center">
+                {" "}
+                <b style={{ color: "white" }}> Account Number </b>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {banksList?.map((row)=>{
+
+              return (
+
+          <TableRow
+                // key={row?.id}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                // onClick={() => navigator(row?.id)}
+                // style={{backgroundColor:"#F8F8F8"}}
+                className="bg-[#F8F8F8]"
+              >
+                <TableCell component="th" scope="row">
+                  {row?.bank_name}
+                </TableCell>
+                <TableCell align="center">
+                  {row?.acc_number}
+                </TableCell>
+              </TableRow>
+              )
+              })}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </>
   );
 };

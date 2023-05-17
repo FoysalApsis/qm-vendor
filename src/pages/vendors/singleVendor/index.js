@@ -30,8 +30,6 @@ const SingleVendor = () => {
   const [childEmail, setChildEmail] = useState([]);
 
   const getUserInfo = () => {
-    console.log(user,"user obj")
-    console.log(user ? "true" : "false");
     if (user) {
       setData({
         id: user?.id,
@@ -56,7 +54,6 @@ const SingleVendor = () => {
         transit_no: user?.transit_no,
         acc_no: user?.acc_no,
       });
-      console.log(data,"yeh data inside effects")
       setPaymentTerm({
         id: user?.property_supplier_payment_term_id?.[0],
         label: user?.property_supplier_payment_term_id?.[1],
@@ -259,6 +256,7 @@ const SingleVendor = () => {
         console.log(err.message);
       });
   }, []);
+  
 
   useEffect(() => {
     getUserInfo();
