@@ -2,9 +2,12 @@ import React, { useContext } from "react";
 import { Menu, MenuItem, Box } from "@mui/material";
 import AuthContext from "../../../context/authContext/AuthContext";
 import LogoutIcon from "../../../images/logout.png";
+import LockResetIcon from '@mui/icons-material/LockReset';
+import ChangePassword from "./ChangePassword";
 
 const DropDown = ({ children }) => {
   const authContext = useContext(AuthContext);
+  const [open, setOpen] = React.useState(false);
 
   const { Logout } = authContext;
 
@@ -15,6 +18,9 @@ const DropDown = ({ children }) => {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleCloseDialog = () => {
+    setOpen(false);
   };
 
   return (
@@ -31,6 +37,7 @@ const DropDown = ({ children }) => {
       >
         {children}
       </Box>
+      <ChangePassword open={open} onClose={handleCloseDialog} setOpen={setOpen}></ChangePassword>
       <Menu
         id="basic-menu"
         anchorEl={anchorEl}
@@ -53,7 +60,7 @@ const DropDown = ({ children }) => {
               display: "block",
               position: "absolute",
               top: 0,
-              right: 23,
+              right: 60,
               width: 10,
               height: 10,
               backgroundColor: "#f19fff",
@@ -63,6 +70,23 @@ const DropDown = ({ children }) => {
           },
         }}
       >
+        <MenuItem
+        className="dark"
+        onClick={()=>setOpen(true)}
+        sx={{
+          cursor: "pointer",
+          fontSize: 14,
+          padding: "1px 8px",
+          color: "#828282",
+          backgroundColor: "#f19fff",
+          "&:hover": {
+            backgroundColor: "#9c27b0",
+            color: "white"
+          },
+        }}>
+          <LockResetIcon style={{color:"black", marginRight:"8px"}}></LockResetIcon>
+          Change Password
+        </MenuItem>
         <MenuItem
           className="dark"
           sx={{

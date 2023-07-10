@@ -30,17 +30,9 @@ const useLogin = () => {
   // getHeader();
   const Mutation = useMutation(PostLogin, {
     onSuccess: (data) => {
-      // if (data?.data?.result?.response?.length >0) {
-      //   const LoggedIn = Login(data?.data?.result?.response);
-      //   if (LoggedIn) {
-      //     navigate("/");
-      //   }
-      // }
-      console.log(data?.data?.[0]?.vendor_auth_code,"login data")
+   
       if (data?.data?.length >0) {
-        // if (LoggedIn) {
-        //   navigate("/");
-        // }
+
       }
       else{
         toast.error(`Credentials are incorrect`, {

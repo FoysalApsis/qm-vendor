@@ -20,30 +20,9 @@ const Accounting = (props) => {
   const [index, setIndex] = useState(null);
   const [banksList, setBanksList] = useState(null);
 
-  // const handleInputChange = (e, index) => {
-  //   const { name, value, type } = e.target;
-  //   setIndex(index);
-  //   let newArray = values?.map((item, itemIndex) =>
-  //     index === itemIndex ? { ...item, [name]: value } : item
-  //   );
-  //   setValues(newArray);
-  //   // newArray = newArray.map((e)=>{
-  //   //   return {
-  //   //     "bank_info":e.bank_name + e.bank_ic + e.transit_no,
-  //   //     "acc_number":e.acc_number
-  //   //   }
-  //   // })
-  //   // console.log(newArray);
-  //   // const list = [...values];
-  //   // // console.log(list);
-  //   // list[index][2][name] =
-  //   //   type === "select-one" ? parseInt(e.target.value) : e.target.value;
-  //   // setValues(list);
-  // };
 
   const getPartnerBank = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
-    console.log("get partner");
     const body = { jsonrpc: "2.0", params: {"id":user?.id} };
     await serverAPI
       .post(`get-bank-accounts`, body)

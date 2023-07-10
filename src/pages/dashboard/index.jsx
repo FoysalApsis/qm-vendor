@@ -38,7 +38,6 @@ const Dashboard = ({ isTab, isMobile }) => {
     getDashboard();
   }, []);
 
-  console.log(dashboardData);
   return (
     <>
       <MainLayout pageTitle={`Dashboard`}>

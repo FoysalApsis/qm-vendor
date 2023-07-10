@@ -41,7 +41,6 @@ const DateInput = ({
   };
 
   const inputRef = useRef(null);
-  console.log(inputRef);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>

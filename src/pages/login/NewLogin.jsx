@@ -42,11 +42,8 @@ const NewLogin = () => {
               validationSchema={SignInValidations}
               onSubmit={async (values, { resetForm }) => {
                 if (values?.auth_code != "" && values.auth_code != undefined ) {
-                  console.log(values,"yeh pass");
-                  console.log(values.auth_code,"auth pass");
                   delete values["password"];
                 } else {
-                  console.log(values,"else");
                   delete values["auth_code"];
                 }
                 // if(values?.auth_code?.length >= 0 ){

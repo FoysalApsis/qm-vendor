@@ -64,7 +64,6 @@ const Invoices = () => {
       .then((res) => {
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
-            console.log(elm[0], ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
             return {
               ...elm[0],
             };
@@ -145,10 +144,6 @@ const Invoices = () => {
     getBills();
     getSubmittedInvoice();
   }, []);
-
-  // console.log(submittedRows
-  //   ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-  //   .map((row) => {}))
 
   return (
     <MainLayout
