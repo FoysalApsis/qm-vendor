@@ -10,6 +10,8 @@ import {
 import { width } from "@mui/system"
 import { ClientConfigurationError } from "msal"
 import React, { useEffect, useState } from "react"
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 const Products = ({ data, total }) => {
   const rows = data
@@ -32,45 +34,67 @@ const Products = ({ data, total }) => {
     <div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        
+
           <TableHead
             sx={{
               "&.MuiTableHead-root": {
-                backgroundColor: "#323130",
+                backgroundColor: "#F5F5F5",
               },
             }}
           >
-            <TableRow 
-            
+            <TableRow
+              sx={{
+                "&.MuiTableRow-root": {
+                  color: "#5F6D7E",
+                },
+              }}
             >
-              {/* <TableCell  > <b style={{color:"white"}}> Product </b></TableCell> */}
-              <TableCell align="left">
-                {" "}
-                <b style={{ color: "white" }}>Description </b>{" "}
+              <TableCell sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Description </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Date Req. </b>{" "}
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Date Req. </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              {/* <TableCell align="center"> <b style={{color:"white"}}> Tasks </b> </TableCell> */}
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Quantity </b>{" "}
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Quantity </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> UoM </b>{" "}
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> UoM </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Unit&nbsp;Price </b>{" "}
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Unit&nbsp;Price </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Taxes </b>{" "}
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+
+
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Taxes </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Subtotal </b>{" "}
+              <TableCell   >
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Subtotal </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -86,13 +110,13 @@ const Products = ({ data, total }) => {
                 {row?.display_name}
               </TableCell> */}
                 <TableCell align="left">{row?.display_name}</TableCell>
-                <TableCell align="center">{row?.date_planned}</TableCell>
-                {/* <TableCell align="center">{row.task_id}</TableCell> */}
-                <TableCell align="center">{row?.product_qty}</TableCell>
-                <TableCell align="center">{row?.product_uom}</TableCell>
-                <TableCell align="center">{row?.price_unit}</TableCell>
-                <TableCell align="center">{row?.tax_name}</TableCell>
-                <TableCell align="center">$ {row?.price_subtotal}</TableCell>
+                <TableCell  >{row?.date_planned}</TableCell>
+                {/* <TableCell  >{row.task_id}</TableCell> */}
+                <TableCell  >{row?.product_qty}</TableCell>
+                <TableCell  >{row?.product_uom}</TableCell>
+                <TableCell  >{row?.price_unit}</TableCell>
+                <TableCell  >{row?.tax_name}</TableCell>
+                <TableCell  >$ {row?.price_subtotal}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -111,8 +135,8 @@ const Products = ({ data, total }) => {
               <td>Untaxed Amount:</td>
               <td> {total?.formatted_amount_untaxed}</td>
             </tr>
-            { total?.groups_by_subtotal["Untaxed Amount"] ? total?.groups_by_subtotal?.["Untaxed Amount"]?.map((e) => {
-             return( <tr>
+            {total?.groups_by_subtotal["Untaxed Amount"] ? total?.groups_by_subtotal?.["Untaxed Amount"]?.map((e) => {
+              return (<tr>
                 <td>{e?.tax_group_name}:</td>
                 <td>
                   ${" "}

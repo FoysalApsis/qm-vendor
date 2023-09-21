@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Typography } from "@mui/material";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useEffect, useState } from "react";
 import useLogin from "./useLogin";
 import QmLogo from "../../images/respond.png";
 import InvoiceLogo from "../../images/rafiki.png";
@@ -8,12 +8,37 @@ import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext/AuthContext";
 import { toast } from "react-toastify";
+import serverAPI from "../../config/serverAPI";
 
 const NewLogin = () => {
   const { Login } = useContext(AuthContext);
   const { SignInValidations, defaultState, mutate } = useLogin();
   const [authState, setAuthState] = useState(false);
   const navigate = useNavigate();
+  const googleLogin = useCallback(
+    async (arg) => {
+      await serverAPI
+        .post(`authenticate`, arg)
+        .then((res) => {
+          console.log(res)
+         if(res?.data?.success){
+          console.log("first")
+          localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
+          localStorage.setItem('token',"a")
+          navigate('/')
+         }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    },
+    []
+  );
+  useEffect(()=>{
+    console.log(window.location.href.split('token=')[1],"--------location")
+    const body = {jsonrpc:'2.0',params:{idToken:window.location.href.split('token=')[1]}}
+    googleLogin(body)
+  },[])
 
   return (
     <Box className="h-[100vh] grid place-content-center bg-primaryColor">

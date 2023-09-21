@@ -7,6 +7,7 @@ import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
 import PurchaseTabs from "./PurchaseTabs";
+import SectionHeading from "../../components/layout/SectionHeading";
 
 const SinglePO = () => {
   const [singlePO, setSinglePO] = useState();
@@ -188,6 +189,23 @@ const SinglePO = () => {
       onButtonClick={() => getPDF(singlePO?.[0]?.name)}
       loading={loading}
     >
+      <SectionHeading title={`PO:  ${singlePO?.[0] ? singlePO?.[0]?.display_name : ""} `} divider={false}> <Button
+          type="submit"
+          variant="contained"
+          onClick={() => getPDF(singlePO?.[0]?.name)}
+          className="h-8 segoe-normal capitalize !bg-[#0D3875]"
+          style={{
+            backgroundColor: "#6B1D73",
+            textTransform: "capitalize",
+          }}
+          startIcon={
+            loading && (
+              <CircularProgress color="inherit" size={"16px"} />
+            )
+          }
+        >
+         Download PO
+        </Button></SectionHeading>
       <form>
         {/* <div className="row">
         </div> */}

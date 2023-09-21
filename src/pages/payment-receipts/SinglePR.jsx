@@ -5,6 +5,7 @@ import MainLayout from "../../components/layout/mainLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
+import SectionHeading from "../../components/layout/SectionHeading";
 
 const SinglePR = () => {
   const [singlePR, setSinglePR] = useState();
@@ -88,6 +89,24 @@ const SinglePR = () => {
       onButtonClick={() => getPDF(singlePR?.[0]?.id)}
       loading={loading}
     >
+       <SectionHeading title={`Payment Receipt: ${
+        singlePR?.[0]?.name ? singlePR?.[0]?.name : ""
+      }`} divider={false}> <Button
+          type="submit"
+          variant="contained"
+          onClick={() => getPDF(singlePR?.[0]?.id)}
+          className="h-8 segoe-normal capitalize !bg-[#0D3875]"
+          style={{
+            textTransform: "capitalize",
+          }}
+          startIcon={
+            loading && (
+              <CircularProgress color="inherit" size={"16px"} />
+            )
+          }
+        >
+         Download PO
+        </Button></SectionHeading>
       <form>
         {/* <div className="row">
         </div> */}

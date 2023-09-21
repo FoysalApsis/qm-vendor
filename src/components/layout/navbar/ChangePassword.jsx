@@ -83,12 +83,19 @@ const ChangePassword = ({ onClose, selectedValue, open, setOpen }) => {
 
             <DialogActions>
 
-              <Button type="button" color="primary" variant="contained" onClick={() => setOpen(false)} >
+              <Button type="button"  variant="outlined" onClick={() => setOpen(false)}  className="h-8 segoe-normal">
                 Cancel
               </Button>
-              <Button type="submit" color="secondary" variant="contained" >
+              <Button type="submit"  variant="contained" className='!bg-[#0D3875] h-8 segoe-normal' >
                 Save
               </Button>
+
+              {/* <Button onClick={handleCloseChildData} variant="outlined" className="h-8 segoe-normal">
+            Discard
+          </Button>
+          <Button onClick={handleAdd} variant="contained"  className="h-8 segoe-normal capitalize  ">
+            Save
+          </Button> */}
 
             </DialogActions>
           </Form>

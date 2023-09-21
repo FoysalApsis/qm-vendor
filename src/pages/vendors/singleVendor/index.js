@@ -6,6 +6,7 @@ import React, { useEffect, useState, useCallback } from "react";
 import serverAPI from "../../../config/serverAPI";
 import VendorTabs from "./VendorTabs";
 import MainLayout from "../../../components/layout/mainLayout";
+import SectionHeading from "../../../components/layout/SectionHeading";
 const iconStyles = {
   width: "30px",
   height: "30px",
@@ -350,8 +351,8 @@ const SingleVendor = () => {
             Update Successfully
           </Alert>
         </Snackbar>
-
-        <form className="mb-5">
+        <SectionHeading title={`My Information `}> </SectionHeading>
+        <form className="mb-5 mt-8">
           <div className="row ">
             <div className="row col-6">
               <div className="col-12 segoe-bold">

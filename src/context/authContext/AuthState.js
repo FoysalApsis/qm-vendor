@@ -31,13 +31,18 @@ const AuthState = ({ children }) => {
   const queryClient = useQueryClient();
 
   const Logout = () => {
-    setAuthToken(null);
+    // setAuthToken(null);
     
-    dispatch({ type: UNSET_LOGIN });
-    navigate("/sign-in");
-    location.pathname = "/";
-    location.search = "";
-    queryClient.removeQueries();
+    // dispatch({ type: UNSET_LOGIN });
+    // navigate("/sign-in");
+    
+    // location.pathname = "/";
+    // location.search = "";
+    // queryClient.removeQueries();
+    // console.log(`${process.env.REACT_APP_ANGULAR_API_URL}/auth/login`)
+    localStorage.clear()
+    window.location.href=`${process.env.REACT_APP_ANGULAR_API_URL}/auth/login`
+
   };
 
   useEffect(() => {

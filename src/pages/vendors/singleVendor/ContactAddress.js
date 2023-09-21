@@ -201,6 +201,7 @@ const ContactAddress = (props) => {
       >
         <DialogTitle
           color="secondary"
+          className="blue-dark"
           style={{ textTransform: "uppercase", fontWeight: "600" }}
         >
           {"Contacts"}
@@ -216,7 +217,7 @@ const ContactAddress = (props) => {
             >
               <FormControlLabel
                 value="contact"
-                control={<Radio />}
+                control={<Radio color="primary" />}
                 label="Contact"
               />
               <FormControlLabel
@@ -274,10 +275,10 @@ const ContactAddress = (props) => {
           })()}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseChildData} variant="outlined">
+          <Button onClick={handleCloseChildData} variant="outlined" className="h-8 segoe-normal">
             Discard
           </Button>
-          <Button onClick={handleAdd} variant="contained" color="secondary">
+          <Button onClick={handleAdd} variant="contained"  className="h-8 segoe-normal capitalize !bg-[#0D3875]">
             Save
           </Button>
         </DialogActions>

@@ -50,7 +50,7 @@ const DropDown = ({ children }) => {
         PaperProps={{
           elevation: 0,
           sx: {
-            backgroundColor: "#f19fff",
+            backgroundColor: "#f2f2f2",
             paddingTop: 0,
             overflow: "visible",
             filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
@@ -60,17 +60,17 @@ const DropDown = ({ children }) => {
               display: "block",
               position: "absolute",
               top: 0,
-              right: 60,
+              right: 10,
               width: 10,
               height: 10,
-              backgroundColor: "#f19fff",
+              backgroundColor: "#f2f2f2",
               transform: "translateY(-50%) rotate(45deg)",
               zIndex: 0,
             },
           },
         }}
       >
-        <MenuItem
+        {/* <MenuItem
         className="dark"
         onClick={()=>setOpen(true)}
         sx={{
@@ -78,15 +78,15 @@ const DropDown = ({ children }) => {
           fontSize: 14,
           padding: "1px 8px",
           color: "#828282",
-          backgroundColor: "#f19fff",
+          backgroundColor: "#f2f2f2",
           "&:hover": {
-            backgroundColor: "#9c27b0",
+            backgroundColor: "#1661CA",
             color: "white"
           },
         }}>
           <LockResetIcon style={{color:"black", marginRight:"8px"}}></LockResetIcon>
           Change Password
-        </MenuItem>
+        </MenuItem> */}
         <MenuItem
           className="dark"
           sx={{
@@ -94,9 +94,9 @@ const DropDown = ({ children }) => {
             fontSize: 14,
             padding: "1px 8px",
             color: "#828282",
-            backgroundColor: "#f19fff",
+            backgroundColor: "#f2f2f2",
             "&:hover": {
-              backgroundColor: "#9c27b0",
+              backgroundColor: "#1661CA",
               color: "white"
             },
           }}

@@ -293,10 +293,9 @@ const CreateBill = () => {
         <div className="col-11 mt-2">
           {" "}
           <Button
-            className="capitalize mt-5"
+            className="capitalize mt-5 !bg-primaryColor"
             size="small"
             variant="contained"
-            color="secondary"
             onClick={sendFile}
           >
             Submit Invoice{" "}

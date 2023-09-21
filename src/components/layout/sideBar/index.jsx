@@ -1,5 +1,5 @@
 import { List } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { CustomListItem } from "./Modules";
 // import "./SideBar.scss";
 import qmlogo from "../../../images/respond.png";
@@ -20,8 +20,9 @@ import InventoryOutlinedIcon from "@mui/icons-material/InventoryOutlined";
 import GridViewOutlinedIcon from "@mui/icons-material/GridViewOutlined";
 import CircleOutlinedIcon from '@mui/icons-material/CircleOutlined';
 
-const SideBar = ({ handleClick, open }) => {
+const SideBar = ({ handleClick, open, selectedName, setSelectedName }) => {
   const { user } = useContext(AuthContext);
+  // const [selectedName,setSelectedName]=useState('Dashboard')
   const reimbursementRequests = [
     {
       path: "/reimbursement-request/create-request",
@@ -80,6 +81,7 @@ const SideBar = ({ handleClick, open }) => {
     },
   ];
 
+
   return (
     <div className="sidebar">
       <div className="grid place-content-center mt-6">
@@ -93,6 +95,8 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="Dashboard"
           // icon={CircleOutlinedIcon}
+          setSelectedName={setSelectedName}
+          selectedName={selectedName}
           path="/"
           handleClick={handleClick}
           open={open}
@@ -100,6 +104,8 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="My Info"
           // icon={CircleOutlinedIcon}
+          setSelectedName={setSelectedName}
+          selectedName={selectedName}
           path="/vendor"
           handleClick={handleClick}
           open={open}
@@ -107,6 +113,8 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="My Purchase Order"
           // icon={CircleOutlinedIcon}
+          setSelectedName={setSelectedName}
+          selectedName={selectedName}
           path="/my-purchase-order"
           handleClick={handleClick}
           open={open}
@@ -114,6 +122,8 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="My Invoices"
           // icon={CircleOutlinedIcon}
+          setSelectedName={setSelectedName}
+          selectedName={selectedName}
           path="/invoice"
           handleClick={handleClick}
           open={open}
@@ -121,6 +131,8 @@ const SideBar = ({ handleClick, open }) => {
         <CustomListItem
           title="My Payment Receipt"
           // icon={CircleOutlinedIcon}
+          setSelectedName={setSelectedName}
+          selectedName={selectedName}
           path="/my-payment-receipt"
           handleClick={handleClick}
           open={open}

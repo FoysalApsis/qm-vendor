@@ -44,14 +44,14 @@ const InvoiceTable = ({ isDashboard = false }) => {
         <TableHead
           sx={{
             "&.MuiTableHead-root": {
-              backgroundColor: "#323130",
+              backgroundColor: "#F5F5F5",
             },
           }}
         >
           <TableRow
             sx={{
               "&.MuiTableRow-root": {
-                color: "#F8F8F8",
+                color: "#5F6D7E",
               },
             }}
           >
@@ -59,26 +59,26 @@ const InvoiceTable = ({ isDashboard = false }) => {
               {" "}
               <b style={{ color: "white" }}>Invoice Number </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               {" "}
               <b style={{ color: "white" }}> Vendor </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               <b style={{ color: "white" }}> Bill Date </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               {" "}
               <b style={{ color: "white" }}> Due Date </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               {" "}
               <b style={{ color: "white" }}> Total Amount </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               {" "}
               <b style={{ color: "white" }}> Payment Status </b>
             </TableCell>
-            <TableCell align="center">
+            <TableCell  >
               {" "}
               <b style={{ color: "white" }}> Status </b>
             </TableCell>
@@ -96,18 +96,18 @@ const InvoiceTable = ({ isDashboard = false }) => {
               <TableCell component="th" scope="row">
                 {row?.name}
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {row?.invoice_partner_display_name}
               </TableCell>
-              <TableCell align="center">{row?.invoice_date}</TableCell>
-              <TableCell align="center">{row?.invoice_date_due}</TableCell>
-              <TableCell align="center">
+              <TableCell  >{row?.invoice_date}</TableCell>
+              <TableCell  >{row?.invoice_date_due}</TableCell>
+              <TableCell  >
                 {parseInt(row?.tax_totals?.amount_total).toFixed(0)}
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {getPaymentStatus(row?.payment_state)}
               </TableCell>
-              <TableCell align="center">{getStatus(row?.state)}</TableCell>
+              <TableCell  >{getStatus(row?.state)}</TableCell>
             </TableRow>
           ))}
         </TableBody>

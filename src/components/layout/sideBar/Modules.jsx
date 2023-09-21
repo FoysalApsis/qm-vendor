@@ -15,7 +15,7 @@ import "./newSideBar.scss";
 const sx = {
   "& .css-10hburv-MuiTypography-root ": {
     fontWeight: 600,
-    fontSize: "14px",
+    fontSize: "15px",
   },
   fontSize: 12,
   color: "#000",
@@ -23,7 +23,7 @@ const sx = {
 const classes = {
   item: {
     "&:hover": {
-      color: "#1F73B7",
+      // color: "#1F73B7",x
       borderBottom: "1px #1F73B7 solid",
     },
   },
@@ -66,27 +66,33 @@ export const SiderbarItem = ({ onClick, title = "Item text here" }) => {
 export const CustomListItem = ({
   title,
   icon: Icon,
+  pageTitle,
   subItemList = null,
   path,
   open,
   handleClick,
+ 
 }) => {
-  const location = useLocation();
 
   return (
     <>
       {!subItemList ? (
-        <Link to={path} className="mb-2" style={{ textDecoration: "none" }}>
+        <Link to={path} className="mb-2" style={{ textDecoration: "none" }} >
           <ListItemButton
             component="li"
-            className={open === title ? "active-sidenavbar" : ""}
-            sx={{ borderRadius: "6px !important", marginBottom: "10px", }}
-            onClick={() => handleClick(title)}
+            // className={open === title ? "active-sidenavbar" : ""}
+            // sx={{  marginBottom: "10px", }}
+            // onClick={() =>{ 
+            //   // handleClick(title)
+            //   console.log(title,"iiiiiiiiiii")
+            //   setSelectedName(title)
+            // }}
+            className={pageTitle === title ? "!bg-[#F5F5F5] !border-l-4 !border-solid !border-[#0D3875]":""}
           >
             {/* <ListItemIcon className="text-primaryColor" style={{color: "#6B1D73"}}> */}
               {/* <Icon /> */}
             {/* </ListItemIcon> */}
-            <ListItemText className="segoe-normal"  sx={sx} primary={title} style={{ color: '#201F1E',paddingLeft:"20px" }}/>
+            <ListItemText className={pageTitle === title ? "!font-semibold !text-[15px] segoe-bold text-[#0D3875]" :"!font-semibold !text-[15px] segoe-bold text-[#5F6D7E]"}   primary={title} style={{ paddingLeft:"20px" }}/>
           </ListItemButton>
         </Link>
       ) : (

@@ -16,6 +16,7 @@ import PoTable from "../purchase-orders/PoTable";
 import serverAPI from "../../config/serverAPI";
 import { useNavigate } from "react-router-dom";
 import InvoiceStatusTable from "../Invoice/InvoiceStatusTable";
+import SectionHeading from "../../components/layout/SectionHeading";
 
 const Dashboard = ({ isTab, isMobile }) => {
   const [dashboardData, setDashboardData] = useState();
@@ -41,6 +42,9 @@ const Dashboard = ({ isTab, isMobile }) => {
   return (
     <>
       <MainLayout pageTitle={`Dashboard`}>
+
+      <SectionHeading title={"Dashboard"} mb={'mb-8'} ></SectionHeading>
+
         <Box className="flex mb-6">
           <DashboardCards title="Purchase Order" icon={FactCheckIcon} navigate={() => navigate('/my-purchase-order')}>
             <Typography className="text-center ">
@@ -74,9 +78,10 @@ const Dashboard = ({ isTab, isMobile }) => {
           </DashboardCards>
         </Box>
 
-        <Box className="mb-6">
+        <Box className="mb-10">
           <Box className="flex justify-between">
-            <Typography className="mb-3">Purchase Orders </Typography>
+      <SectionHeading title={"Purchase Orders"} divider={false} mb={'mb-2'}></SectionHeading>
+
             <Typography
               className="text-[#605E5C] text-xs cursor-pointer"
               fontSize={14}
@@ -88,9 +93,11 @@ const Dashboard = ({ isTab, isMobile }) => {
           </Box>
           <PoTable isDashboard></PoTable>
         </Box>
-        <Box className="mb-6">
+        <Box className="mb-3">
           <Box className="flex justify-between">
-            <Typography className="mb-3">Invoice Status </Typography>
+            {/* <Typography className="mb-3">Invoice Status </Typography> */}
+      <SectionHeading title={"Invoice Status"} divider={false} mb={'mb-2'}></SectionHeading>
+
             <Typography
               className="text-[#605E5C] text-xs cursor-pointer"
               fontSize={14}

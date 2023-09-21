@@ -13,10 +13,12 @@ const PurchaseTabs = ({data,total}) => {
             <TabList
             //   onChange={handleTabChange}
               aria-label="lab API tabs example"
-              textColor="secondary"
-              indicatorColor="secondary"
+              indicatorColor="primary"
+              // sx={{color:'#0D3875'}}
             >
-              <Tab label="Products" value="1" />
+              <Tab label="Products" value="1" 
+              style={{color:'#0D3875'}}
+              />
               {/* <Tab label="Purchase Information" value="2" />
               <Tab label="Accounting Information" value="3" /> */}
             </TabList>
@@ -26,38 +28,9 @@ const PurchaseTabs = ({data,total}) => {
               <Products
                 data = {data}
                 total={total}
-                // setData={setData}
-                // data={data}
-                // handleChange={handleChange}
-                // titles={titles}
-                // states={states}
-                // countries={countries}
-                // childs={childs}
-                // handleClickOpen={handleClickOpen}
-                // handleClose={handleClose}
-                // open={open}
+               
               />
             </TabPanel>
-                        {/*
-            <TabPanel value="2">
-              <SalesAndPurchase
-                setData={setData}
-                data={data}
-                handleChange={handleChange}
-                paymentTerm={paymentTerm}
-                setPaymentTerm={setPaymentTerm}
-                paymentTermOptions={paymentTermOptions}
-                setPaymentTermOptions={setPaymentTermOptions}
-              />
-            </TabPanel>
-            <TabPanel value="3">
-              <Accounting
-                setData={setData}
-                data={data}
-                handleChange={handleChange}
-                banks={banks}
-              />
-            </TabPanel> */}
           </TabContext>
       
         </>

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
 @font-face {
   font-family: "Segoe";
   src: local("Segoe"),
@@ -14,7 +16,8 @@
 
 body {
   margin: 0;
-  font-family: "Segoe", sans-serif;
+  // font-family: "Segoe", sans-serif;
+  font-family: "Inter";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: #CFCFCF;
@@ -25,6 +28,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Inter" !important;
 }
 
 :root {
@@ -37,11 +41,12 @@ body {
 
 // ######################### Font Classes #####################
 .segoe-normal {
-  font-family: "Segoe" !important;
+  font-family: "Inter" !important;
 }
 
 .segoe-bold {
-  font-family: "SegoeBold" !important;
+  font-family: "Inter" !important;
+  font-weight: 600 ;
 }
 
 // ########################################## Common Components ##################################
@@ -224,10 +229,23 @@ body {
 }
 
 .MuiListItemText-primary{
-  font-family: "Segoe" !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
   
 } 
+
+.blue-dark{
+  color:#0D3875 !important
+}
+.blue-dark-bg{
+  background-color:#0D3875 !important
+}
 
 // .MuiSvgIcon-root{
 //   background-color: "#6B1D73" !important 
 // }
+.css-16ac5r2-MuiButtonBase-root-MuiListItemButton-root:hover{
+  background-color: #f2f2f2 !important;
+}
+
+.MuiDrawer-docked{}

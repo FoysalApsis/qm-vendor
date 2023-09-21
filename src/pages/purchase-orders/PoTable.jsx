@@ -11,20 +11,11 @@ import { useNavigate } from "react-router-dom";
 // var numbro = require("numbro");
 import numbro from "numbro";
 import {
-  Box,
-  IconButton,
-  TableFooter,
   TablePagination,
-  Typography,
-  useTheme,
 } from "@mui/material";
 // import TablePagination from "@material-ui/core/TablePagination";
-import MainLayout from "../../components/layout/mainLayout";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-import { DataGrid } from "@mui/x-data-grid";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 const PoTable = ({ isDashboard = false }) => {
   const [purchaseOrders, setPurchaseOrders] = useState([{}]);
@@ -96,7 +87,7 @@ const PoTable = ({ isDashboard = false }) => {
     <>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead
+           {/* <TableHead
             sx={{
               "&.MuiTableHead-root": {
                 backgroundColor: "#323130",
@@ -114,34 +105,94 @@ const PoTable = ({ isDashboard = false }) => {
                 {" "}
                 <b style={{ color: "white" }}> PO Number </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Vendor </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 <b style={{ color: "white" }}> Order From </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Order Deadline </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Total Amount </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Currency </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Status </b>
               </TableCell>
-              {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+              
             </TableRow>
-          </TableHead>
+          </TableHead>  */}
+          <TableHead
+          sx={{
+            "&.MuiTableHead-root": {
+              backgroundColor: "#F5F5F5",
+            },
+          }}
+        >
+          <TableRow
+            sx={{
+              "&.MuiTableRow-root": {
+                color: "#5F6D7E",
+              },
+            }}
+          >
+            <TableCell sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> PO Number </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Vendor </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}>  Order From </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Order Deadline </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Total Amount </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+
+
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Currency </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   >
+              <div className="flex justify-between items-center">
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Status </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+          </TableRow>
+        </TableHead>
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -158,17 +209,17 @@ const PoTable = ({ isDashboard = false }) => {
                       <TableCell component="th" scope="row">
                         {row.display_name}
                       </TableCell>
-                      <TableCell align="center">{row.partner_id}</TableCell>
-                      <TableCell align="center">{row.company_id}</TableCell>
-                      <TableCell align="center">
+                      <TableCell  >{row.partner_id}</TableCell>
+                      <TableCell  >{row.company_id}</TableCell>
+                      <TableCell  >
                         {row?.date_order?.split(" ")[0]}
                       </TableCell>
-                      <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
-                      {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
-                      <TableCell align="center">
+                      <TableCell  >{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
+                      {/* <TableCell  >{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
+                      <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
-                      <TableCell align="center">
+                      <TableCell  >
                         {getStatus(row.state)}
                       </TableCell>
                       {/* <TableCell align="right">{row.fat}</TableCell>
@@ -187,18 +238,18 @@ const PoTable = ({ isDashboard = false }) => {
                     <TableCell component="th" scope="row">
                       {row.display_name}
                     </TableCell>
-                    <TableCell align="center">{row.partner_id}</TableCell>
-                    <TableCell align="center">{row.company_id}</TableCell>
-                    <TableCell align="center">
+                    <TableCell  >{row.partner_id}</TableCell>
+                    <TableCell  >{row.company_id}</TableCell>
+                    <TableCell  >
                       {row?.date_order?.split(" ")[0]}
                     </TableCell>
-                    {/* <TableCell align="center">{row?.amount_total?.toFixed(2)}</TableCell> */}
-                    <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
-                    <TableCell align="center">
+                    {/* <TableCell  >{row?.amount_total?.toFixed(2)}</TableCell> */}
+                    <TableCell  >{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
+                    <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
-                    {/* <TableCell align="center">{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
-                    <TableCell align="center">{getStatus(row.state)}</TableCell>
+                    {/* <TableCell  >{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
+                    <TableCell  >{getStatus(row.state)}</TableCell>
                     {/* <TableCell align="right">{row.fat}</TableCell>
            <TableCell align="right">{row.carbs}</TableCell>
            <TableCell align="right">{row.protein}</TableCell> */}

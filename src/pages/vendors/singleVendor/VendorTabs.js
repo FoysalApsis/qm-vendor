@@ -49,8 +49,7 @@ const VendorTabs = (props) => {
         <TabList
           onChange={handleTabChange}
           aria-label="lab API tabs example"
-          textColor="secondary"
-          indicatorColor="secondary"
+          
         >
           <Tab label="Contacts" value="1" />
           <Tab label="Purchase Information" value="2" />

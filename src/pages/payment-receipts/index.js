@@ -15,6 +15,9 @@ import MainLayout from "../../components/layout/mainLayout";
 import PageHeader from "../../components/layout/pageHeader";
 import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import SectionHeading from "../../components/layout/SectionHeading";
+
 
 const PaymentReceipts = () => {
   const [paymentReceipt, setPaymentReceipt] = useState([]);
@@ -75,10 +78,11 @@ const PaymentReceipts = () => {
 
   return (
     <MainLayout pageTitle={"My Payment Receipts"} >
+         <SectionHeading title={"My Payment Receipts"} divider={false} ></SectionHeading>
 
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead
+          {/* <TableHead
             sx={{
               "&.MuiTableHead-root": {
                 backgroundColor: "#323130",
@@ -96,32 +100,73 @@ const PaymentReceipts = () => {
                 {" "}
                 <b style={{ color: "white" }}> Date </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}>Receipt Number </b>
               </TableCell>
-              {/* <TableCell align="center">
+              {/* <TableCell  >
                 <b style={{ color: "white" }}> Journal </b>
-              </TableCell> */}
-              <TableCell align="center">
+              </TableCell> 
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Payment Method </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Total Amount </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> Currency </b>
               </TableCell>
-              {/* <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Status </b>
-              </TableCell> */}
-              {/* <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
-            <TableCell align="right">Protein&nbsp;(g)</TableCell> */}
+            </TableRow>
+          </TableHead> */}
+          <TableHead
+            sx={{
+              "&.MuiTableHead-root": {
+                backgroundColor: "#F5F5F5",
+              },
+            }}
+          >
+            <TableRow
+              sx={{
+                "&.MuiTableRow-root": {
+                  color: "#5F6D7E",
+                },
+              }}
+            >
+              <TableCell sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Date </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Receipt Number </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Payment Method </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Total Amount </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Currency </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -137,14 +182,14 @@ const PaymentReceipts = () => {
                 <TableCell component="th" scope="row">
                   {row?.date}
                 </TableCell>
-                <TableCell align="center">{row?.name}</TableCell>
-                {/* <TableCell align="center">{row?.journal_id?.[1]}</TableCell> */}
-                <TableCell align="center">
+                <TableCell  >{row?.name}</TableCell>
+                {/* <TableCell  >{row?.journal_id?.[1]}</TableCell> */}
+                <TableCell  >
                   {row?.payment_method_line_id?.[1]}
                 </TableCell>
-                <TableCell align="center">{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
-                {/* <TableCell align="center">{getStatus(row?.state)}</TableCell> */}
-                <TableCell align="center">
+                <TableCell  >{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
+                {/* <TableCell  >{getStatus(row?.state)}</TableCell> */}
+                <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
               </TableRow>

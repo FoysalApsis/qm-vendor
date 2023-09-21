@@ -11,15 +11,15 @@ import { useNavigate } from "react-router-dom";
 import DownloadIcon from "@mui/icons-material/Download";
 import MainLayout from "../../components/layout/mainLayout";
 import InvoiceStatusTable from "./InvoiceStatusTable";
-import { TablePagination } from "@mui/material";
+import { Button, CircularProgress, TablePagination } from "@mui/material";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import SectionHeading from "../../components/layout/SectionHeading";
 
 const Invoices = () => {
   const [bills, setBills] = useState([{}]);
   const [submittedInvoice, setSubmittedInvoice] = useState([{}]);
   const rows = [...bills];
-  let submittedRows = [
-    ...submittedInvoice
-  ];
+  let submittedRows = [...submittedInvoice];
 
   const navigate = useNavigate();
 
@@ -74,24 +74,7 @@ const Invoices = () => {
         console.log(err.message);
       });
   }, []);
-  // const getSubmittedInvoice = useCallback(async () => {
-  //   const body = { jsonrpc: "2.0", params: { submit_invoice } };
-  //   await serverAPI
-  //     .post(`get-submitted-invoice`, body)
-  //     .then((res) => {
-  //       setBills(
-  //         res?.data?.response.map((elm) => {
-  //           return {
-  //             ...elm,
-  //           };
-  //         })
-  //       );
-  //     })
-  //     .catch((err) => {
-  //       console.log(err.message);
-  //     });
-  // }, []);
-
+  
   const downloadPDF = (arg) => {
     const fileName = arg?.replace(/ /g, "-");
     let a = document.createElement("a");
@@ -159,10 +142,25 @@ const Invoices = () => {
         >
           Submit Invoice
         </Button> */}
-      <div className="table-title mb-3">Submitted Invoices</div>
+        <SectionHeading title={"Submitted Invoices"} divider={false}> <Button
+          type="submit"
+          variant="contained"
+          onClick={handleCreateBill}
+          className="h-8 segoe-normal capitalize !bg-[#0D3875]"
+          style={{
+            textTransform: "capitalize",
+          }}
+        >
+          Submit Invoice
+        </Button></SectionHeading>
+      {/* <div className=" flex justify-between items-center mb-3">
+        <div className="table-title ">Submitted Invoices</div>
+       
+      </div> */}
+
       <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          <TableHead
+          {/* <TableHead
             sx={{
               "&.MuiTableHead-root": {
                 backgroundColor: "#323130",
@@ -180,24 +178,110 @@ const Invoices = () => {
                 {" "}
                 <b style={{ color: "white" }}> Date of Submission </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}> PO Number </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 <b style={{ color: "white" }}>Invoice Number</b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}>Invoice Copy </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}>Status </b>
               </TableCell>
-              <TableCell align="center">
+              <TableCell  >
                 {" "}
                 <b style={{ color: "white" }}>Notes</b>
+              </TableCell>
+            </TableRow>
+          </TableHead> */}
+          <TableHead
+            sx={{
+              "&.MuiTableHead-root": {
+                backgroundColor: "#F5F5F5",
+              },
+            }}
+          >
+            <TableRow
+              sx={{
+                "&.MuiTableRow-root": {
+                  color: "#5F6D7E",
+                },
+              }}
+            >
+              <TableCell sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    Date of Submission{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    PO Number{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    Invoice Number{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    Invoice Copy{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    Status
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    Notes{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
               </TableCell>
             </TableRow>
           </TableHead>
@@ -213,19 +297,23 @@ const Invoices = () => {
                   <TableCell component="th" scope="row">
                     {row?.date_of_submission}
                   </TableCell>
-                  <TableCell align="center">{row?.po_id?.[1]}</TableCell>
-                  <TableCell align="center">{row?.invoice_number}</TableCell>
-                  <TableCell align="center">
+                  <TableCell  >{row?.po_id?.[1]}</TableCell>
+                  <TableCell  >{row?.invoice_number}</TableCell>
+                  <TableCell  >
                     <span> {row?.document_name} </span>
-                   {row?.document_name && <span
-                      onClick={() => downloadPDF(row?.pdf_name)}
-                      style={{ cursor: "pointer" }}
-                    >
-                      <DownloadIcon />
-                    </span>}
+                    {row?.document_name && (
+                      <span
+                        onClick={() => downloadPDF(row?.pdf_name)}
+                        style={{ cursor: "pointer" }}
+                      >
+                        <DownloadIcon />
+                      </span>
+                    )}
                   </TableCell>
-                  <TableCell align="center">{getInvoiceStatus(row?.state)}</TableCell>
-                  <TableCell align="center">{row?.notes}</TableCell>
+                  <TableCell  >
+                    {getInvoiceStatus(row?.state)}
+                  </TableCell>
+                  <TableCell  >{row?.notes}</TableCell>
                 </TableRow>
               ))}
           </TableBody>
@@ -243,7 +331,7 @@ const Invoices = () => {
           />
         )}
       </TableContainer>
-      <div className="table-title mb-3">Invoice Status</div>
+      <SectionHeading title={"Invoice Status"} divider={false} ></SectionHeading>
       <InvoiceStatusTable></InvoiceStatusTable>
       {/* <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -265,26 +353,26 @@ const Invoices = () => {
                   {" "}
                   <b style={{ color: "white" }}>Invoice Number </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {" "}
                   <b style={{ color: "white" }}> Vendor </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   <b style={{ color: "white" }}> Bill Date </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {" "}
                   <b style={{ color: "white" }}> Due Date </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {" "}
                   <b style={{ color: "white" }}> Total Amount </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {" "}
                   <b style={{ color: "white" }}> Payment Status </b>
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {" "}
                   <b style={{ color: "white" }}> Status </b>
                 </TableCell>
@@ -302,18 +390,18 @@ const Invoices = () => {
                   <TableCell component="th" scope="row">
                     {row?.name}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell  >
                     {row?.invoice_partner_display_name}
                   </TableCell>
-                  <TableCell align="center">{row?.invoice_date}</TableCell>
-                  <TableCell align="center">{row?.invoice_date_due}</TableCell>
-                  <TableCell align="center">
+                  <TableCell  >{row?.invoice_date}</TableCell>
+                  <TableCell  >{row?.invoice_date_due}</TableCell>
+                  <TableCell  >
                     {parseInt(row?.tax_totals?.amount_total).toFixed(0)}
                   </TableCell>
-                  <TableCell align="center">
+                  <TableCell  >
                     {getPaymentStatus(row?.payment_state)}
                   </TableCell>
-                  <TableCell align="center">{getStatus(row?.state)}</TableCell>
+                  <TableCell  >{getStatus(row?.state)}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

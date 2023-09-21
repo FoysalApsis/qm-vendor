@@ -4,6 +4,8 @@ import minus from "../../../images/minus.png";
 import add from "../../../images/add.png";
 import { Input, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import serverAPI from "../../../config/serverAPI";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+
 
 // const regex = /^[0-9\b]+$/;
 const Accounting = (props) => {
@@ -158,30 +160,38 @@ const Accounting = (props) => {
       })} */}
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
+        
           <TableHead
+          sx={{
+            "&.MuiTableHead-root": {
+              backgroundColor: "#F5F5F5",
+            },
+          }}
+        >
+          <TableRow
             sx={{
-              "&.MuiTableHead-root": {
-                backgroundColor: "#323130",
+              "&.MuiTableRow-root": {
+                color: "#5F6D7E",
               },
             }}
           >
-            <TableRow
-              sx={{
-                "&.MuiTableRow-root": {
-                  color: "#F8F8F8",
-                },
-              }}
-            >
-              <TableCell>
-                {" "}
-                <b style={{ color: "white" }}>Bank Name </b>
-              </TableCell>
-              <TableCell align="center">
-                {" "}
-                <b style={{ color: "white" }}> Account Number </b>
-              </TableCell>
-            </TableRow>
-          </TableHead>
+            <TableCell sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Bank Name </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+            <TableCell   sx={{borderRight:'1px solid white'}}>
+              <div className="flex justify-between items-center">
+
+                <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Account Number </b>
+                <MoreVertIcon fontSize="small" sx={{color:"#5F6D7E"}}></MoreVertIcon>
+              </div>
+            </TableCell>
+           
+          </TableRow>
+        </TableHead>
           <TableBody>
             {banksList?.map((row)=>{
 
@@ -197,7 +207,7 @@ const Accounting = (props) => {
                 <TableCell component="th" scope="row">
                   {row?.bank_name}
                 </TableCell>
-                <TableCell align="center">
+                <TableCell  >
                   {row?.acc_number}
                 </TableCell>
               </TableRow>
