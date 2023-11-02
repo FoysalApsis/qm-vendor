@@ -87,7 +87,7 @@ import Divider from '@mui/material/Divider';
 // import ListItemText from '@mui/material/ListItemText';
 // import InboxIcon from '@mui/icons-material/MoveToInbox';
 // import MailIcon from '@mui/icons-material/Mail';
-import { Card, Drawer } from '@mui/material';
+import { Button, Card, Drawer } from '@mui/material';
 import BackwardIcon from '../../../images/backward2.svg'
 import QmLogo from '../../../images/respond.png'
 import { CustomListItem } from '../sideBar/Modules';
@@ -189,9 +189,16 @@ export default function MainLayout({
             <Typography noWrap component="div" className='!text-lg !font-medium' style={{ color: "#161616" }}>
               Vendor Portal
             </Typography>
+           
           </div>
 
           <div className='flex items-center gap-3'>
+            <a href={`${process.env.REACT_APP_ANGULAR_API_URL}/vendor`}>
+          <Button variant="contained" className='!bg-[#0D3875] h-8 segoe-normal ' >
+            
+              Go To Vendor Onboarding
+              </Button>
+              </a>
             <div className='text-[#161616] text-sm'>
               <div>
               {user.name}
