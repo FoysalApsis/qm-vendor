@@ -193,7 +193,7 @@ export default function MainLayout({
           </div>
 
           <div className='flex items-center gap-3'>
-            <a href={`${process.env.REACT_APP_ANGULAR_API_URL}/vendor`}>
+            <a href={ localStorage.getItem('qual-type') == 'admin' ? `${process.env.REACT_APP_ANGULAR_API_URL}` : `${process.env.REACT_APP_ANGULAR_API_URL}/vendor` }>
           <Button variant="contained" className='!bg-[#0D3875] h-8 segoe-normal ' >
             
               Go To Vendor Onboarding

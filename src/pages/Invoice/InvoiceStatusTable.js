@@ -51,13 +51,15 @@ const InvoiceStatusTable = ({ isDashboard = false }) => {
       });
   }, []);
 
-  const getStatus = (status) => {
+  const getStatus = (status,payment_status) => {
     if (status === "draft") {
-      return <span>Draft</span>;
+      return <span style={{color:"#17A2B8"}}>In Progress</span>;
     } else if (status === "posted") {
-      return <span>Posted</span>;
+      return <span style={{color:"#17A2B8"}}>In Progress</span>;
     } else if (status === "cancel") {
-      return <span>Cancelled</span>;
+      return <span style={{color:"#DC3545"}}>Cancelled</span>;
+    } else if (payment_status === "paid") {
+      return <span style={{color:"#28A745"}}>Complete</span>;
     }
   };
 
@@ -190,7 +192,7 @@ const InvoiceStatusTable = ({ isDashboard = false }) => {
                   <TableCell  >
                     {getPaymentStatus(row?.payment_state)}
                   </TableCell>
-                  <TableCell  >{getStatus(row?.state)}</TableCell>
+                  <TableCell  >{getStatus(row?.state,row?.payment_state)}</TableCell>
                 </TableRow>
                 : <TableRow
                   key={row?.id}

@@ -20,12 +20,18 @@ const NewLogin = () => {
       await serverAPI
         .post(`authenticate`, arg)
         .then((res) => {
-          console.log(res)
+         
          if(res?.data?.success){
-          console.log("first")
+        
           localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
           localStorage.setItem('token',"a")
+          localStorage.setItem('qual-type',arg?.params?.type)
           navigate('/')
+          return
+         }
+         if(res?.data.message === 'Data not found' || res?.data.status === 404 ){
+          googleLoginForAdmin(arg)
+          return
          }
         })
         .catch((err) => {
@@ -34,13 +40,37 @@ const NewLogin = () => {
     },
     []
   );
+
+  const googleLoginForAdmin = useCallback(
+    async (arg) => {
+      await serverAPI
+        .post(`authenticate-admin`, arg)
+        .then((res) => {
+          console.log(res)
+         if(res?.data?.success){
+          localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
+          localStorage.setItem('token',"a")
+          localStorage.setItem('qual-type',arg?.params?.type)
+          navigate('/')
+          return
+         }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    },
+    []
+  );
+
   useEffect(()=>{
     const body = {jsonrpc:'2.0',params:{
-      idToken:window.location.href.split('token=')[1],
-      id:window.location.href.split('id=')[1].split('&&')[0],
-      email:window.location.href.split('email=')[1].split('&&')[0]
+      idToken:window.location.href?.split('token=')[1],
+      id:window.location.href?.split('id=')[1]?.split('&&')[0],
+      email:window.location.href?.split('email=')[1]?.split('&&')[0],
+      type:window.location.href?.split('type=')[1]?.split('&&')[0]
     }}
-    console.log(body)
+    // console.log(body?.params?.type)
+    // console.log(body)
     googleLogin(body)
   },[])
 

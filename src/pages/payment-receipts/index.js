@@ -62,13 +62,24 @@ const PaymentReceipts = () => {
   }, []);
 
 
+  // const getStatus = (status) => {
+  //   if (status === "draft") {
+  //     return <span>Draft</span>;
+  //   } else if (status === "posted") {
+  //     return <span>Posted</span>;
+  //   } else if (status === "cancel") {
+  //     return <span>Cancelled</span>;
+  //   }
+  // };
+
+  
   const getStatus = (status) => {
     if (status === "draft") {
-      return <span>Draft</span>;
+      return <span style={{color:"#17A2B8"}}>In Progress</span>;
     } else if (status === "posted") {
-      return <span>Posted</span>;
+      return <span style={{color:"#17A2B8"}}>In Progress</span>;
     } else if (status === "cancel") {
-      return <span>Cancelled</span>;
+      return <span style={{color:"#DC3545"}}>Cancelled</span>;
     }
   };
 
@@ -167,6 +178,12 @@ const PaymentReceipts = () => {
                   <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
                 </div>
               </TableCell>
+              <TableCell   sx={{ borderRight: '1px solid white' }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}> Status  </b>
+                  <MoreVertIcon fontSize="small" sx={{ color: "#5F6D7E" }}></MoreVertIcon>
+                </div>
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -192,6 +209,7 @@ const PaymentReceipts = () => {
                 <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
+                      <TableCell  >{getStatus(row?.state)}</TableCell>
               </TableRow>
             ))}
           </TableBody>
