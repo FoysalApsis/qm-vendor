@@ -77,22 +77,14 @@ import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-// import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
-// import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-// import ChevronRightIcon from '@mui/icons-material/ChevronRight';
-// import ListItem from '@mui/material/ListItem';
-// import ListItemButton from '@mui/material/ListItemButton';
-// import ListItemIcon from '@mui/material/ListItemIcon';
-// import ListItemText from '@mui/material/ListItemText';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
-// import MailIcon from '@mui/icons-material/Mail';
 import { Button, Card, Drawer } from '@mui/material';
 import BackwardIcon from '../../../images/backward2.svg'
 import QmLogo from '../../../images/respond.png'
 import { CustomListItem } from '../sideBar/Modules';
 import DropDown from '../navbar/DropDown';
 import PersonIcon from '@mui/icons-material/Person';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 const drawerWidth = 240;
@@ -151,8 +143,10 @@ export default function MainLayout({
   // selectedName,
   // setSelectedName
 }) {
+
   const theme = useTheme();
   const [open, setOpen] = React.useState(true);
+  const navigate = useNavigate();
 
   const [user,setUser] = React.useState(JSON.parse(localStorage.getItem('userObj')))
 
@@ -167,6 +161,13 @@ export default function MainLayout({
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  useEffect(()=>{
+    if(!user){
+      window.location.href = `${process.env.REACT_APP_ANGULAR_API_URL}/auth/login`;
+      
+    }
+  },[])
   // const [selectedName,setSelectedName]=React.useState('Dashboard')
   return (
     <Box sx={{ display: 'flex' }}>
@@ -201,10 +202,10 @@ export default function MainLayout({
               </a>
             <div className='text-[#161616] text-sm'>
               <div>
-              {user.name}
+              {user?.name}
               </div>
               <div className='text-[#5F6D7E] text-xs'>
-                {user.email}
+                {user?.email}
               </div>
             </div>
           <DropDown>

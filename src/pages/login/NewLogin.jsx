@@ -7,7 +7,6 @@ import QmLines from "../../images/QMlines.png";
 import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext/AuthContext";
-import { toast } from "react-toastify";
 import serverAPI from "../../config/serverAPI";
 
 const NewLogin = () => {
@@ -22,7 +21,6 @@ const NewLogin = () => {
         .then((res) => {
          
          if(res?.data?.success){
-        
           localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
           localStorage.setItem('token',"a")
           localStorage.setItem('qual-type',arg?.params?.type)
@@ -48,6 +46,7 @@ const NewLogin = () => {
         .then((res) => {
           console.log(res)
          if(res?.data?.success){
+          
           localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
           localStorage.setItem('token',"a")
           localStorage.setItem('qual-type',arg?.params?.type)
@@ -71,6 +70,11 @@ const NewLogin = () => {
     }}
     // console.log(body?.params?.type)
     // console.log(body)
+    if(body?.type == 'admin'){
+      console.log("--------------------first")
+      googleLoginForAdmin(body)
+      return
+    }
     googleLogin(body)
   },[])
 

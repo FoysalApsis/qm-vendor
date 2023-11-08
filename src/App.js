@@ -33,7 +33,7 @@ function App() {
           <Route
             path="/sign-in"
             element={
-              <PublicRoute restricted={true}>
+              <PublicRoute restricted={false}>
                 {/* {process.env.REACT_APP_ENVIRONMENT === "development" ?
                     <Login isTab={isTab} /> : 
                     <LoginMSAL isTab={isTab} />
