@@ -113,7 +113,7 @@ const Products = ({ data, total }) => {
                 <TableCell  >{row?.date_planned}</TableCell>
                 {/* <TableCell  >{row.task_id}</TableCell> */}
                 <TableCell  >{row?.product_qty}</TableCell>
-                <TableCell  >{row?.product_uom}</TableCell>
+                <TableCell  >{row?.product_uom?.[1]}</TableCell>
                 <TableCell  >{row?.price_unit}</TableCell>
                 <TableCell  >{row?.tax_name}</TableCell>
                 <TableCell  >$ {row?.price_subtotal}</TableCell>

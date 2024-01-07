@@ -436,8 +436,8 @@ const SinglePO = () => {
                 value={
                   vendor?.[0]?.street
                     ? vendor?.[0]?.street
-                    : company?.[0]?.street1
-                    ? company?.[0]?.street1
+                    : company?.[0]?.street
+                    ? company?.[0]?.street
                     : ""
                 }
                 onChange={handleChange}
