@@ -210,7 +210,7 @@ const CreateBill = () => {
               // }
             >
               <option value="1">Select Purchase Order</option>
-              <option value="999">Invoice without PO</option>
+              {/* <option value="999">Invoice without PO</option> */}
               {purchaseOrders?.map((item, index) => (
                 <option
                   value={JSON.stringify(item)}
