@@ -1,16 +1,19 @@
-import { Button, TextField } from "@mui/material";
+import { Button, Input, TextField } from "@mui/material";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { toast } from "react-toastify";
 import MainLayout from "../../components/layout/mainLayout";
 import serverAPI from "../../config/serverAPI";
+import moment from "moment";
+
 
 const CreateBill = () => {
   const [purchaseOrders, setPurchaseOrders] = useState([{}]);
   const fileInput = useRef(null);
   const [file, setFile] = useState(null);
   const [selectedPO, setSelectedPO] = useState();
-  const [dateSubmission, setDateSubmission] = useState();
+  const [dateSubmission, setDateSubmission] = useState( moment().format('YYYY-MM-DD') );
   const [invoiceNumber, setInvoiceNumber] = useState();
+  const [invoiceAmount, setinvoiceAmount] = useState();
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   const uploadPdfFile = (e) => {
@@ -31,6 +34,19 @@ const CreateBill = () => {
   };
 
   const sendFile = () => {
+    if(!invoiceAmount || !invoiceNumber){
+      toast.error( invoiceAmount ? "Please Enter Invoice Number" : "Please Enter Invoice Amount" , {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
     if (selectedPO) {
       if (file) {
         const formData = new FormData();
@@ -38,6 +54,7 @@ const CreateBill = () => {
         formData.append("po_id", selectedPO["id"]);
         formData.append("date_of_submission", dateSubmission);
         formData.append("invoice_number", invoiceNumber);
+        formData.append("invoice_amount", invoiceAmount);
         formData.append("vendor_id", user?.id);
         formData.append("pdf_name", file?.["name"]);
         if (selectedPO["id"] == 999) {
@@ -72,6 +89,7 @@ const CreateBill = () => {
   };
   const handleChange = (e) => {
     let { name, value, type } = e.target;
+    console.log(name,value)
     if (name === "purchase_order") {
       value = JSON.parse(value);
       if (value != 999) {
@@ -83,6 +101,9 @@ const CreateBill = () => {
       setDateSubmission(value);
     } else if (name === "invoice_number") {
       setInvoiceNumber(value);
+    }
+     else if (name === "invoice_amount") {
+      setinvoiceAmount(value);
     }
   };
 
@@ -192,7 +213,7 @@ const CreateBill = () => {
       <div className="row mt-2" style={{ maxWidth: "900px" }}>
         <div className="row col-6">
           <div className="col-12 mt-2 segoe-bold">
-            <label htmlFor="Po">PO Number:</label>
+            <label htmlFor="Po">PO Number: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12">
             <select
@@ -226,7 +247,7 @@ const CreateBill = () => {
         <div className="row col-6 mt-3"></div>
         <div className="row col-6 ">
           <div className="col-12 mt-2 segoe-bold">
-            <label htmlFor="Po">Invoice Number:</label>
+            <label htmlFor="Po">Invoice Number: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12 ">
             <div className="form-group">
@@ -244,28 +265,50 @@ const CreateBill = () => {
         </div>
         <div className="row col-6 mt-3"></div>
 
-        <div className="row col-6 mt-2">
-          <div className="col-12 mt-2 mb-2 segoe-bold">
-            <label htmlFor="Po">Date of Submission:</label>
+        <div className="row col-6 ">
+          <div className="col-12 mt-2 segoe-bold">
+            <label htmlFor="Po">Invoice Amount: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12 ">
-            <TextField
+            <div className="form-group">
+              <input
+                type="number"
+                className="form-control"
+                id="invoice_amount"
+                name="invoice_amount"
+                // value={data?.mobile ? data?.mobile : ""}
+                onChange={(e) => handleChange(e)}
+                // value={invoiceNumber ? invoiceNumber : "" }
+              />
+            </div>
+          </div>
+        </div>
+        <div className="row col-6 mt-3"></div>
+        <div className="row col-6 mt-2">
+          <div className="col-12 mt-2 mb-2 segoe-bold">
+            <label htmlFor="Po">Date of Submission: <span style={{color:"red"}}>*</span> </label>
+          </div>
+          <div className="col-12 ">
+            <TextField  
               id="date"
               name="date"
               type="date"
-              label="Date of Submission"
-              defaultValue={dateSubmission ? dateSubmission : "2020/01/01"}
-              value={dateSubmission ? dateSubmission : ""}
+              InputLabelProps={{ shrink: true, required: true }}
+              disabled
+              // label="Date of Submission"
+              defaultValue={dateSubmission}
+              // value={"2017-05-24"}
               // sx={{ width: 220 }}
-              onChange={(e) => handleChange(e)}
+              // onChange={(e) => handleChange(e)}
             />
+            {/* {console.log(dateSubmission,"-----------")} */}
           </div>
         </div>
         <div className="row col-6 mt-3"></div>
 
         <div className="row col-6 mt-2">
           <div className="col-12 mt-2 segoe-bold">
-            <label htmlFor="Po">Invoice Copy:</label>
+            <label htmlFor="Po">Invoice Copy: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12 ">
             <div>

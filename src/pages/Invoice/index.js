@@ -69,6 +69,7 @@ const Invoices = () => {
             };
           })
         );
+        console.log(res)
       })
       .catch((err) => {
         console.log(err.message);
@@ -252,6 +253,42 @@ const Invoices = () => {
                 <div className="flex justify-between items-center">
                   <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
                     {" "}
+                    Invoice Amount{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    Approve Amount{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
+                    Dispute Amount{" "}
+                  </b>
+                  <MoreVertIcon
+                    fontSize="small"
+                    sx={{ color: "#5F6D7E" }}
+                  ></MoreVertIcon>
+                </div>
+              </TableCell>
+              <TableCell   sx={{ borderRight: "1px solid white" }}>
+                <div className="flex justify-between items-center">
+                  <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
+                    {" "}
                     Invoice Copy{" "}
                   </b>
                   <MoreVertIcon
@@ -299,6 +336,9 @@ const Invoices = () => {
                   </TableCell>
                   <TableCell  >{row?.po_id?.[1]}</TableCell>
                   <TableCell  >{row?.invoice_number}</TableCell>
+                  <TableCell  >{row?.invoice_amount}</TableCell>
+                  <TableCell  >{row?.approve_amount}</TableCell>
+                  <TableCell  >{row?.dispute_amount}</TableCell>
                   <TableCell  >
                     <span> {row?.document_name} </span>
                     {row?.document_name && (
