@@ -11,6 +11,7 @@ import { width } from "@mui/system"
 import { ClientConfigurationError } from "msal"
 import React, { useEffect, useState } from "react"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
+import moment from "moment";
 
 
 const Products = ({ data, total }) => {
@@ -110,7 +111,7 @@ const Products = ({ data, total }) => {
                 {row?.display_name}
               </TableCell> */}
                 <TableCell align="left">{row?.display_name}</TableCell>
-                <TableCell  >{row?.date_planned}</TableCell>
+                <TableCell  >{moment(row?.date_planned).format("YYYY-MM-DD")}</TableCell>
                 {/* <TableCell  >{row.task_id}</TableCell> */}
                 <TableCell  >{row?.product_qty}</TableCell>
                 <TableCell  >{row?.product_uom?.[1]}</TableCell>

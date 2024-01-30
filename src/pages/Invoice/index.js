@@ -14,6 +14,7 @@ import InvoiceStatusTable from "./InvoiceStatusTable";
 import { Button, CircularProgress, TablePagination } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SectionHeading from "../../components/layout/SectionHeading";
+import moment from "moment";
 
 const Invoices = () => {
   const [bills, setBills] = useState([{}]);
@@ -265,7 +266,7 @@ const Invoices = () => {
                 <div className="flex justify-between items-center">
                   <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
                     {" "}
-                    Approve Amount{" "}
+                    Approved Amount{" "}
                   </b>
                   <MoreVertIcon
                     fontSize="small"
@@ -277,7 +278,7 @@ const Invoices = () => {
                 <div className="flex justify-between items-center">
                   <b className="text-[13px]" style={{ color: "#5F6D7E" }}>
                     {" "}
-                    Dispute Amount{" "}
+                    Disputed Amount{" "}
                   </b>
                   <MoreVertIcon
                     fontSize="small"
@@ -332,7 +333,7 @@ const Invoices = () => {
                   className="bg-[#F8F8F8]"
                 >
                   <TableCell component="th" scope="row">
-                    {row?.date_of_submission}
+                    {moment(row?.date_of_submission).format("YYYY-MM-DD")}
                   </TableCell>
                   <TableCell  >{row?.po_id?.[1]}</TableCell>
                   <TableCell  >{row?.invoice_number}</TableCell>
@@ -373,80 +374,7 @@ const Invoices = () => {
       </TableContainer>
       <SectionHeading title={"Invoice Status"} divider={false} ></SectionHeading>
       <InvoiceStatusTable></InvoiceStatusTable>
-      {/* <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead
-              sx={{
-                "&.MuiTableHead-root": {
-                  backgroundColor: "#323130",
-                },
-              }}
-            >
-              <TableRow
-                sx={{
-                  "&.MuiTableRow-root": {
-                    color: "#F8F8F8",
-                  },
-                }}
-              >
-                <TableCell >
-                  {" "}
-                  <b style={{ color: "white" }}>Invoice Number </b>
-                </TableCell>
-                <TableCell  >
-                  {" "}
-                  <b style={{ color: "white" }}> Vendor </b>
-                </TableCell>
-                <TableCell  >
-                  <b style={{ color: "white" }}> Bill Date </b>
-                </TableCell>
-                <TableCell  >
-                  {" "}
-                  <b style={{ color: "white" }}> Due Date </b>
-                </TableCell>
-                <TableCell  >
-                  {" "}
-                  <b style={{ color: "white" }}> Total Amount </b>
-                </TableCell>
-                <TableCell  >
-                  {" "}
-                  <b style={{ color: "white" }}> Payment Status </b>
-                </TableCell>
-                <TableCell  >
-                  {" "}
-                  <b style={{ color: "white" }}> Status </b>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows?.map((row) => (
-                <TableRow
-                  key={row?.id}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                  // onClick={() => navigator(row?.id)}
-                  // style={{backgroundColor:"#F8F8F8"}}
-                  className="bg-[#F8F8F8]"
-                >
-                  <TableCell component="th" scope="row">
-                    {row?.name}
-                  </TableCell>
-                  <TableCell  >
-                    {row?.invoice_partner_display_name}
-                  </TableCell>
-                  <TableCell  >{row?.invoice_date}</TableCell>
-                  <TableCell  >{row?.invoice_date_due}</TableCell>
-                  <TableCell  >
-                    {parseInt(row?.tax_totals?.amount_total).toFixed(0)}
-                  </TableCell>
-                  <TableCell  >
-                    {getPaymentStatus(row?.payment_state)}
-                  </TableCell>
-                  <TableCell  >{getStatus(row?.state)}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer> */}
+     
     </MainLayout>
   );
 };

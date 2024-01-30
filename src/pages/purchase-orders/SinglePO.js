@@ -8,6 +8,7 @@ import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
 import PurchaseTabs from "./PurchaseTabs";
 import SectionHeading from "../../components/layout/SectionHeading";
+import moment from "moment";
 
 const SinglePO = () => {
   const [singlePO, setSinglePO] = useState();
@@ -268,7 +269,7 @@ const SinglePO = () => {
                   id="date_order"
                   name="date_order"
                   value={
-                    singlePO?.[0]?.date_order ? singlePO[0]?.date_order : ""
+                    singlePO?.[0]?.date_order ? moment(singlePO[0]?.date_order).format("YYYY-MM-DD")  : ""
                   }
                   onChange={handleChange}
                   disabled
@@ -293,7 +294,7 @@ const SinglePO = () => {
                   name="date_planned"
                   disabled
                   value={
-                    singlePO?.[0]?.date_planned ? singlePO[0].date_planned : ""
+                    singlePO?.[0]?.date_planned ? moment(singlePO[0].date_planned).format("YYYY-MM-DD") : ""
                   }
                   //   value={data?.phone ? data?.phone : ""}
                   onChange={handleChange}
