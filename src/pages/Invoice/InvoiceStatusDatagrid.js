@@ -135,9 +135,9 @@ const getPaymentStatus = (param) => {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {bills && (
-        <DatagridTable data={bills} columns={columns} />
-      )}
+      {/* {bills && ( */}
+        <DatagridTable data={bills || []} columns={columns} />
+      {/* )} */}
     </Box>
   );
 };

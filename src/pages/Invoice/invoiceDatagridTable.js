@@ -147,9 +147,9 @@ const InvoiceDatagridTable = () => {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {submittedInvoice && (
-        <DatagridTable data={submittedInvoice} columns={columns} />
-      )}
+      {/* {submittedInvoice && ( */}
+        <DatagridTable data={submittedInvoice || []} columns={columns} />
+       {/* )} */}
     </Box>
   );
 };

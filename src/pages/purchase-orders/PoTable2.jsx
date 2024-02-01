@@ -123,13 +123,13 @@ const PoTable2 = () => {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {purchaseOrders && (
+      {/* {purchaseOrders && ( */}
         <DatagridTable
-          data={purchaseOrders}
+          data={purchaseOrders || []}
           columns={columns}
           handleEvent={rowClickEvent}
         />
-      )}
+      {/* )} */}
     </Box>
   );
 };

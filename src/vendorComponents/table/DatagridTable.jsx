@@ -1,9 +1,10 @@
 import { DataGrid, GridToolbar } from '@mui/x-data-grid'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import CustomLoadingOverlay from '../../components/layout/table/LoadingOverlay'
 import CustomGridOverlay from '../../components/layout/table/GridOverlay'
 import CustomToolBar from '../../components/layout/table/CustomToolbar'
 import { makeStyles } from '@mui/styles'
+import { CircularProgress, LinearProgress } from '@mui/material'
 
 const escapeRegExp = (value) => {
     return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
@@ -95,9 +96,13 @@ const DatagridTable = ({data,columns,handleEvent}) => {
         setRows(filteredRows);
       };
   const classes = useStyles();
+
+  useEffect(()=>{
+    setRows(data||[])
+  },[data])
   return (
     <div style={{ height: "100%", width: '100%', }}>
-    <DataGrid
+    {rows?.length > 0 ? (<DataGrid
         className={classes.root}
         rows={rows}
         columns={columns}
@@ -125,7 +130,7 @@ const DatagridTable = ({data,columns,handleEvent}) => {
               searchText  
             },
           }}
-      />
+      />) :  <LinearProgress />}
     </div>
   )
 }

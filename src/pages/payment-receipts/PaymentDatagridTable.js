@@ -108,13 +108,13 @@ const PaymentDatagridTable = () => {
 
   return (
     <Box sx={{ height: 400, width: "100%" }}>
-      {paymentReceipt && (
+      {/* {paymentReceipt && ( */}
         <DatagridTable
-          data={paymentReceipt}
+          data={paymentReceipt || []}
           columns={columns}
           handleEvent={rowClickEvent}
         />
-      )}
+      {/* )} */}
     </Box>
   );
 };
