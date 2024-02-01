@@ -267,7 +267,7 @@ const CreateBill = () => {
 
         <div className="row col-6 ">
           <div className="col-12 mt-2 segoe-bold">
-            <label htmlFor="Po">Invoice Amount: <span style={{color:"red"}}>*</span> </label>
+            <label htmlFor="Po">Invoiced Amount: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12 ">
             <div className="form-group">

@@ -1,26 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import serverAPI from "../../config/serverAPI";
 import { useNavigate } from "react-router-dom";
-import DownloadIcon from "@mui/icons-material/Download";
 import MainLayout from "../../components/layout/mainLayout";
-import InvoiceStatusTable from "./InvoiceStatusTable";
 import { Button, CircularProgress, TablePagination } from "@mui/material";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import SectionHeading from "../../components/layout/SectionHeading";
 import moment from "moment";
+import InvoiceDatagridTable from "./invoiceDatagridTable";
+import InvoiceStatusDatagrid from "./InvoiceStatusDatagrid";
+
+
 
 const Invoices = () => {
+
+
   const [bills, setBills] = useState([{}]);
-  const [submittedInvoice, setSubmittedInvoice] = useState([{}]);
+  const [submittedInvoice, setSubmittedInvoice] = useState();
   const rows = [...bills];
-  let submittedRows = [...submittedInvoice];
 
   const navigate = useNavigate();
 
@@ -66,17 +61,18 @@ const Invoices = () => {
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
             return {
-              ...elm[0],
+              id: elm[0]?.id,
+              date_of_submission:  moment(elm[0]?.date_of_submission).format("YYYY-MM-DD"),
+              // po_id:elm[0]?.po_id[1]
             };
           })
         );
-        console.log(res)
       })
       .catch((err) => {
         console.log(err.message);
       });
   }, []);
-  
+
   const downloadPDF = (arg) => {
     const fileName = arg?.replace(/ /g, "-");
     let a = document.createElement("a");
@@ -125,10 +121,10 @@ const Invoices = () => {
     }
   };
 
-  useEffect(() => {
-    getBills();
-    getSubmittedInvoice();
-  }, []);
+  // useEffect(() => {
+  //   // getBills();
+  //   // getSubmittedInvoice();
+  // }, []);
 
   return (
     <MainLayout
@@ -144,7 +140,9 @@ const Invoices = () => {
         >
           Submit Invoice
         </Button> */}
-        <SectionHeading title={"Submitted Invoices"} divider={false}> <Button
+      <SectionHeading title={"Submitted Invoices"} divider={false}>
+        {" "}
+        <Button
           type="submit"
           variant="contained"
           onClick={handleCreateBill}
@@ -154,53 +152,16 @@ const Invoices = () => {
           }}
         >
           Submit Invoice
-        </Button></SectionHeading>
+        </Button>
+      </SectionHeading>
       {/* <div className=" flex justify-between items-center mb-3">
         <div className="table-title ">Submitted Invoices</div>
        
       </div> */}
 
-      <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
+      {/* <TableContainer component={Paper} style={{ marginBottom: "3rem" }}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          {/* <TableHead
-            sx={{
-              "&.MuiTableHead-root": {
-                backgroundColor: "#323130",
-              },
-            }}
-          >
-            <TableRow
-              sx={{
-                "&.MuiTableRow-root": {
-                  color: "#F8F8F8",
-                },
-              }}
-            >
-              <TableCell>
-                {" "}
-                <b style={{ color: "white" }}> Date of Submission </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}> PO Number </b>
-              </TableCell>
-              <TableCell  >
-                <b style={{ color: "white" }}>Invoice Number</b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}>Invoice Copy </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}>Status </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}>Notes</b>
-              </TableCell>
-            </TableRow>
-          </TableHead> */}
+    
           <TableHead
             sx={{
               "&.MuiTableHead-root": {
@@ -371,12 +332,72 @@ const Invoices = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
         )}
-      </TableContainer>
-      <SectionHeading title={"Invoice Status"} divider={false} ></SectionHeading>
-      <InvoiceStatusTable></InvoiceStatusTable>
+      </TableContainer> */}
+
+      <InvoiceDatagridTable></InvoiceDatagridTable>
      
+      <div className="mt-5"></div>
+      <SectionHeading title={"Invoice Status"} divider={false}></SectionHeading>
+     {/* <InvoiceStatusTable></InvoiceStatusTable> */}
+     <InvoiceStatusDatagrid></InvoiceStatusDatagrid>
     </MainLayout>
   );
 };
 
 export default Invoices;
+
+
+// const columns = [
+
+//   {
+//     field: "name",
+//     headerName: "QM Bill Number",
+//     width: 150,
+//     // valueGetter: (params) =>
+//     //   moment(params.row?.date_of_submission).format("YYYY-MM-DD"),
+//   },
+//   {
+//     field: "invoice_partner_display_name",
+//     headerName: "Vendor",
+//     width: 200,
+    
+//   },
+//   {
+//     field: "invoice_date",
+//     headerName: "Bill Date",
+//     width: 200,
+//   },
+//   {
+//     field: "invoice_date_due",
+//     headerName: "Due Date",
+//     width: 150,
+//   },
+//   {
+//     field: "tax_totals",
+//     headerName: "Total Amount",
+//     width: 150,
+//      valueGetter: (params) =>
+//      numbro(params?.row?.tax_totals?.amount_total).format({ thousandSeparated: true, mantissa: 2 }),
+//   },
+//   {
+//     field: "currency_id",
+//     headerName: "Currency",
+//     width: 150,
+//   },
+//   {
+//     field: "payment_state",
+//     headerName: "Payment Status",
+//     width: 350,
+//     renderCell: (params) => getPaymentStatus(params?.row?.payment_state)
+//   },
+
+//   {
+//     field: "state",
+//     headerName: "Status",
+//     width: 200,
+
+//     renderCell: (params) => getStatus(params?.row?.state,params?.row?.payment_state),
+//   },
+
+// ];
+ 

@@ -11,69 +11,69 @@ const escapeRegExp = (value) => {
   return value.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&");
 };
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    borderRadius: 5,
-    marginTop: "20px",
-    fontFamily: "FuturaLight",
-    fontSize: "15px",
-    marginRight: "20px",
-    minHeight: "500 !important",
-    "& .MuiTablePagination-root": {
-      marginBottom: "5rem",
-    },
-    "& .MuiTablePagination-selectLabel,& .MuiTablePagination-displayedRows,": {
-      marginBottom: 0,
-      color: "#495057",
-    },
-    "& .MuiTablePagination-toolbar": {
-      dispaly: "flex",
-      aligItems: "center",
-      justifyContent: "space-between",
-    },
-    "& .MuiCheckbox-root.Mui-checked": {
-      color: "#000",
-    },
-    "& .MuiDataGrid-columnsContainer.css-99lfi7-MuiDataGrid-columnsContainer": {
-      backgroundColor: "#ced4da",
-      border: "none !important",
-      height: "50px",
-      color: "#4C6371",
-      lineHeight: "50px !important",
-    },
-    "& .MuiButton-root": {
-      color: "#828282",
-      border: "2px solid #828282",
-      padding: "5px 10px",
-    },
-    "& .MuiDataGrid-columnHeader": {
-      fontFamily: "FuturaMedium",
-      backgroundColor: "var(--primary)",
-      fontSize: "16px",
-      fontWeight: "400 ",
-      margin: "0",
-      color: "#000",
-    },
-    "& .MuiDataGrid-columnHeaders": {
-      minHeight: "50px !important",
-      maxHeight: "50px !important",
-    },
-    "& .MuiDataGrid-overlay": {
-      top: "50px !important",
-    },
-    "& .MuiDataGrid-columnHeaderDraggableContainer": {
-      height: "50px",
-    },
-    "& .MuiDataGrid-columnSeparator": {
-      color: "#000",
-      "& .MuiSvgIcon-root": {
-        paddingLeft: "2px",
-      },
-    },
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   root: {
+//     borderRadius: 5,
+//     marginTop: "20px",
+//     fontFamily: "FuturaLight",
+//     fontSize: "15px",
+//     marginRight: "20px",
+//     minHeight: "500 !important",
+//     "& .MuiTablePagination-root": {
+//       marginBottom: "5rem",
+//     },
+//     "& .MuiTablePagination-selectLabel,& .MuiTablePagination-displayedRows,": {
+//       marginBottom: 0,
+//       color: "#495057",
+//     },
+//     "& .MuiTablePagination-toolbar": {
+//       dispaly: "flex",
+//       aligItems: "center",
+//       justifyContent: "space-between",
+//     },
+//     "& .MuiCheckbox-root.Mui-checked": {
+//       color: "#000",
+//     },
+//     "& .MuiDataGrid-columnsContainer.css-99lfi7-MuiDataGrid-columnsContainer": {
+//       backgroundColor: "#ced4da",
+//       border: "none !important",
+//       height: "50px",
+//       color: "#4C6371",
+//       lineHeight: "50px !important",
+//     },
+//     "& .MuiButton-root": {
+//       color: "#828282",
+//       border: "2px solid #828282",
+//       padding: "5px 10px",
+//     },
+//     "& .MuiDataGrid-columnHeader": {
+//       fontFamily: "FuturaMedium",
+//       backgroundColor: "var(--primary)",
+//       fontSize: "16px",
+//       fontWeight: "400 ",
+//       margin: "0",
+//       color: "#000",
+//     },
+//     "& .MuiDataGrid-columnHeaders": {
+//       minHeight: "50px !important",
+//       maxHeight: "50px !important",
+//     },
+//     "& .MuiDataGrid-overlay": {
+//       top: "50px !important",
+//     },
+//     "& .MuiDataGrid-columnHeaderDraggableContainer": {
+//       height: "50px",
+//     },
+//     "& .MuiDataGrid-columnSeparator": {
+//       color: "#000",
+//       "& .MuiSvgIcon-root": {
+//         paddingLeft: "2px",
+//       },
+//     },
+//   },
+// }));
 
-const Table = ({
+const DataTable = ({
   data,
   columns,
   loading,
@@ -133,7 +133,7 @@ const Table = ({
     setRows(filteredRows);
   };
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
   useEffect(() => {
     if (data) {
@@ -161,6 +161,8 @@ const Table = ({
         };
   };
 
+
+  
   return (
     <div
       style={{
@@ -171,7 +173,7 @@ const Table = ({
     >
       <DataGrid
         {...getPaginationObj()}
-        className={classes.root}
+        // className={classes.root}
         rows={rows}
         columns={columns}
         pagination
@@ -224,4 +226,4 @@ const Table = ({
   );
 };
 
-export default Table;
+export default DataTable;

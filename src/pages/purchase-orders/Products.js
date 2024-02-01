@@ -12,10 +12,58 @@ import { ClientConfigurationError } from "msal"
 import React, { useEffect, useState } from "react"
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import moment from "moment";
+import DatagridTable from "../../vendorComponents/table/DatagridTable";
 
 
 const Products = ({ data, total }) => {
   const rows = data
+
+  const columns = [
+    {
+      field: "display_name",
+      headerName: "Description",
+      width: 150,
+      type:'date',
+     
+    },
+    {
+      field: "date_planned",
+      headerName: "Date Req.",
+      width: 200,
+      valueGetter: (params) =>
+      moment(params.row?.date_planned).format("YYYY-MM-DD"),
+    },
+    {
+      field: "product_qty",
+      headerName: "Quantity",
+      width: 200,
+    },
+    {
+      field: "product_uom",
+      headerName: "UoM",
+      type: 'number',
+      width: 150,
+      valueGetter: (params) => params.row?.product_uom?.[1],
+    },
+    {
+      field: "price_unit",
+      headerName: "Unit Price",
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: "tax_name",
+      headerName: "Taxes",
+      type: 'number',
+      width: 150,
+    },
+    {
+      field: "price_subtotal",
+      headerName: "Subtotal",
+      width: 350,
+     
+    },
+  ];
   // let total = 0
   // data?.map((e)=>{
   //     total = total + e.price_subtotal
@@ -107,12 +155,10 @@ const Products = ({ data, total }) => {
                 className="bg-[#F8F8F8]"
 
               >
-                {/* <TableCell component="th" scope="row">
-                {row?.display_name}
-              </TableCell> */}
+                
                 <TableCell align="left">{row?.display_name}</TableCell>
                 <TableCell  >{moment(row?.date_planned).format("YYYY-MM-DD")}</TableCell>
-                {/* <TableCell  >{row.task_id}</TableCell> */}
+                
                 <TableCell  >{row?.product_qty}</TableCell>
                 <TableCell  >{row?.product_uom?.[1]}</TableCell>
                 <TableCell  >{row?.price_unit}</TableCell>
@@ -123,6 +169,9 @@ const Products = ({ data, total }) => {
           </TableBody>
         </Table>
       </TableContainer>
+
+      {/* <DatagridTable columns={columns} data={rows}></DatagridTable> */}
+
       <div
         className="mt-2 me-4 d-flex justify-content-end"
         style={{ textAlign: "end" }}

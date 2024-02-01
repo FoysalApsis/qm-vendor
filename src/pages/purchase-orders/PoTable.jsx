@@ -8,16 +8,69 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import serverAPI from "../../config/serverAPI";
 import { useNavigate } from "react-router-dom";
-// var numbro = require("numbro");
 import numbro from "numbro";
 import {
   TablePagination,
 } from "@mui/material";
-// import TablePagination from "@material-ui/core/TablePagination";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
-
+// import { DataGrid } from '@mui/x-data-grid';
+import DataTable from "../../components/layout/table/Table";
 
 const PoTable = ({ isDashboard = false }) => {
+
+  const columns = [
+    {
+      field: 'display_name',
+      headerName: 'PO Number',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'partner_id',
+      headerName: 'Vendor',
+      width: 150,
+      editable: true,
+    },
+    {
+      field: 'company_id',
+      headerName: 'Order From',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'date_order',
+      headerName: 'Order Deadline',
+      description: 'This column has a value getter and is not sortable.',
+      sortable: false,
+      width: 160,
+      // valueGetter: (params) =>
+      //   `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+    },
+    {
+      field: 'amount_total',
+      headerName: 'Total Amount',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'currency_id',
+      headerName: 'Currency',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+    {
+      field: 'state',
+      headerName: 'Status',
+      type: 'number',
+      width: 110,
+      editable: true,
+    },
+  ];
+
+
   const [purchaseOrders, setPurchaseOrders] = useState([{}]);
 
 
@@ -243,16 +296,11 @@ const PoTable = ({ isDashboard = false }) => {
                     <TableCell  >
                       {row?.date_order?.split(" ")[0]}
                     </TableCell>
-                    {/* <TableCell  >{row?.amount_total?.toFixed(2)}</TableCell> */}
                     <TableCell  >{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
                     <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
-                    {/* <TableCell  >{row.state === 'cancel' ? "Cancelled" : "Confirmed"}</TableCell> */}
                     <TableCell  >{getStatus(row.state)}</TableCell>
-                    {/* <TableCell align="right">{row.fat}</TableCell>
-           <TableCell align="right">{row.carbs}</TableCell>
-           <TableCell align="right">{row.protein}</TableCell> */}
                   </TableRow>
                 )
               )}

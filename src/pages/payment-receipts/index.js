@@ -17,13 +17,57 @@ import PageLayout from "../../components/layout/pageLayout";
 import serverAPI from "../../config/serverAPI";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import SectionHeading from "../../components/layout/SectionHeading";
+import moment from "moment";
+import DatagridTable from "../../vendorComponents/table/DatagridTable";
+import PaymentDatagridTable from "./PaymentDatagridTable";
+// import PaymentDatagrid from "./paymentDatagrid";
 
 
 const PaymentReceipts = () => {
-  const [paymentReceipt, setPaymentReceipt] = useState([]);
-  const rows = [
-    ...paymentReceipt
-  ];
+
+  // const columns = [
+  //   {
+  //     field: "date",
+  //     headerName: "Date",
+  //     width: 150,
+  //     valueGetter: (params) =>
+  //           moment(params.row?.date).format("YYYY-MM-DD"),
+  //   },
+  //   {
+  //     field: "name",
+  //     headerName: "Receipt Number",
+  //     width: 200,
+  //   },
+  //   {
+  //     field: "payment_method_line_id", 
+  //     headerName: "Payment Method",
+  //     width: 250,
+  //     valueGetter: (params) => params.row?.payment_method_line_id?.[1],
+  //   },
+  //   {
+  //     field: "amount_total",
+  //     headerName: "Total Amount",
+  //     width: 150,
+  //     valueGetter: (params) => numbro(params.row?.amount_total).format({thousandSeparated:true,mantissa:2}),
+  //   },
+  //   {
+  //     field: "currency_id", 
+  //     headerName: "Currency",
+  //     width: 100,
+  //     valueGetter: (params) => params.row?.currency_id?.[1],
+  //   },
+  //   {
+  //     field: "state",
+  //     headerName: "Status",
+  //     width: 200,
+  //     renderCell: (params) => getStatus(params?.formattedValue),
+  //   },
+  // ];
+
+  const [paymentReceipt, setPaymentReceipt] = useState();
+  // const rows = [
+  //   ...paymentReceipt
+  // ];
 
   const navigate = useNavigate()
 
@@ -61,17 +105,6 @@ const PaymentReceipts = () => {
       });
   }, []);
 
-
-  // const getStatus = (status) => {
-  //   if (status === "draft") {
-  //     return <span>Draft</span>;
-  //   } else if (status === "posted") {
-  //     return <span>Posted</span>;
-  //   } else if (status === "cancel") {
-  //     return <span>Cancelled</span>;
-  //   }
-  // };
-
   
   const getStatus = (status) => {
     if (status === "draft") {
@@ -83,6 +116,11 @@ const PaymentReceipts = () => {
     }
   };
 
+  const rowClickEvent = (params) => {
+    // navigate(`/my-purchase-order/${params.id}`);
+    navigate(`/my-payment-receipt/${params.id}`)
+  };
+
   useEffect(()=>{
     getPayments()
   },[])
@@ -91,47 +129,8 @@ const PaymentReceipts = () => {
     <MainLayout pageTitle={"My Payment Receipts"} >
          <SectionHeading title={"My Payment Receipts"} divider={false} ></SectionHeading>
 
-      <TableContainer component={Paper}>
+      {/* <TableContainer component={Paper}>
         <Table sx={{ minWidth: 650 }} aria-label="simple table">
-          {/* <TableHead
-            sx={{
-              "&.MuiTableHead-root": {
-                backgroundColor: "#323130",
-              },
-            }}
-          >
-            <TableRow
-              sx={{
-                "&.MuiTableRow-root": {
-                  color: "white",
-                },
-              }}
-            >
-              <TableCell>
-                {" "}
-                <b style={{ color: "white" }}> Date </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}>Receipt Number </b>
-              </TableCell>
-              {/* <TableCell  >
-                <b style={{ color: "white" }}> Journal </b>
-              </TableCell> 
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}> Payment Method </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}> Total Amount </b>
-              </TableCell>
-              <TableCell  >
-                {" "}
-                <b style={{ color: "white" }}> Currency </b>
-              </TableCell>
-            </TableRow>
-          </TableHead> */}
           <TableHead
             sx={{
               "&.MuiTableHead-root": {
@@ -200,12 +199,10 @@ const PaymentReceipts = () => {
                   {row?.date}
                 </TableCell>
                 <TableCell  >{row?.name}</TableCell>
-                {/* <TableCell  >{row?.journal_id?.[1]}</TableCell> */}
                 <TableCell  >
                   {row?.payment_method_line_id?.[1]}
                 </TableCell>
                 <TableCell  >{numbro(row?.amount_total).format({thousandSeparated:true,mantissa:2})}</TableCell>
-                {/* <TableCell  >{getStatus(row?.state)}</TableCell> */}
                 <TableCell  >
                         {row?.currency_id?.[1]}
                       </TableCell>
@@ -226,7 +223,12 @@ const PaymentReceipts = () => {
             onRowsPerPageChange={handleChangeRowsPerPage}
           
           />}
-      </TableContainer>
+      </TableContainer> */}
+  {/* { paymentReceipt && (
+      <DatagridTable data={paymentReceipt} columns={columns} handleEvent={rowClickEvent} ></DatagridTable>)
+      } */}
+
+      <PaymentDatagridTable></PaymentDatagridTable>
       </MainLayout >
   );
 };

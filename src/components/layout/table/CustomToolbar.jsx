@@ -130,22 +130,22 @@ const CustomToolBar = ({
                 // </span>
                 <img src={SearchIcon} alt="search" height="25" width="25" />
               ),
-              endAdornment: (
-                <>
-                  <span
-                    className="material-icons-outlined"
-                    title="Clear"
-                    aria-label="Clear"
-                    style={{
-                      visibility: value ? "visible" : "hidden",
-                      cursor: "pointer",
-                    }}
-                    onClick={clearSearch}
-                  >
-                    clear
-                  </span>
-                </>
-              ),
+              // endAdornment: (
+              //   <>
+              //     <span
+              //       className="material-icons-outlined"
+              //       title="Clear"
+              //       aria-label="Clear"
+              //       style={{
+              //         visibility: value ? "visible" : "hidden",
+              //         cursor: "pointer",
+              //       }}
+              //       onClick={clearSearch}
+              //     >
+              //       clear
+              //     </span>
+              //   </>
+              // ),
             }}
           />
         </Grid>
@@ -172,7 +172,7 @@ const CustomToolBar = ({
 export default CustomToolBar;
 
 CustomToolBar.propTypes = {
-  clearSearch: PropTypes.func.isRequired,
+  // clearSearch: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
   value: PropTypes.string.isRequired,
 };
