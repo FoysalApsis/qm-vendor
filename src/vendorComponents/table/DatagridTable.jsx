@@ -80,6 +80,7 @@ const useStyles = makeStyles((theme) => ({
 const DatagridTable = ({data,columns,handleEvent}) => {
     const [searchText, setSearchText] = useState("");
     const [rows,setRows] = useState(data)
+    const [loading,setLoading] = useState(true)
     console.log(columns,"xoxooxox")
     console.log(data,"rows")
     const requestSearch = (searchValue) => {
@@ -98,11 +99,18 @@ const DatagridTable = ({data,columns,handleEvent}) => {
   const classes = useStyles();
 
   useEffect(()=>{
-    setRows(data||[])
+    if(data.length){
+    setRows(data)
+     setLoading(false)       
+    } if(data.length === 0){
+        setLoading(false)
+    }
+
   },[data])
   return (
     <div style={{ height: "100%", width: '100%', }}>
-    {rows?.length > 0 ? (<DataGrid
+    {/* {loading && <LinearProgress></LinearProgress> } */}
+    <DataGrid
         className={classes.root}
         rows={rows}
         columns={columns}
@@ -115,9 +123,12 @@ const DatagridTable = ({data,columns,handleEvent}) => {
         }}
         pageSizeOptions={[5, 10, 25]}
         onRowClick={handleEvent}
-       
+        // slots={{
+        //     loadingOverlay: LinearProgress,
+        //   }}
+        //  loading={rows.length > 0 ? false : true }
         components={{
-            LoadingOverlay: CustomLoadingOverlay,
+            LoadingOverlay: LinearProgress,
             NoRowsOverlay: CustomGridOverlay,
             Toolbar: CustomToolBar,
           }}
@@ -130,7 +141,8 @@ const DatagridTable = ({data,columns,handleEvent}) => {
               searchText  
             },
           }}
-      />) :  <LinearProgress />}
+      />
+    {/* //   ) :  <LinearProgress />} */}
     </div>
   )
 }
