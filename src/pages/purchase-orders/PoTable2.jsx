@@ -63,6 +63,7 @@ const PoTable2 = () => {
   ];
 
   const [purchaseOrders, setPurchaseOrders] = useState();
+  const [loading,setLoading]= useState(true)
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -94,6 +95,7 @@ const PoTable2 = () => {
     await serverAPI
       .post(`get-my-po`, body)
       .then((res) => {
+        setLoading(false)
         setPurchaseOrders(
           res?.data?.response.map((elm) => {
             return {
@@ -128,6 +130,7 @@ const PoTable2 = () => {
           data={purchaseOrders || []}
           columns={columns}
           handleEvent={rowClickEvent}
+          loading={loading}
         />
       {/* )} */}
     </Box>

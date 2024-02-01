@@ -67,6 +67,7 @@ const InvoiceStatusDatagrid = () => {
  
 
 const [bills, setBills] = useState();
+const [loading,setLoading]= useState(true)
 
 useEffect(() => {
   getBills();
@@ -91,6 +92,7 @@ const getBills = useCallback(async () => {
   await serverAPI
     .post(`get-bills`, body)
     .then((res) => {
+      setLoading(false)
       setBills(
         res?.data?.response.map((elm) => {
           return {
@@ -136,7 +138,7 @@ const getPaymentStatus = (param) => {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {/* {bills && ( */}
-        <DatagridTable data={bills || []} columns={columns} />
+        <DatagridTable data={bills || []} columns={columns} loading={loading} />
       {/* )} */}
     </Box>
   );

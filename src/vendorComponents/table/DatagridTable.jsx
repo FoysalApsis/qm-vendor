@@ -77,10 +77,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));  
 
-const DatagridTable = ({data,columns,handleEvent}) => {
+const DatagridTable = ({data,columns,handleEvent,loading}) => {
     const [searchText, setSearchText] = useState("");
     const [rows,setRows] = useState(data)
-    const [loading,setLoading] = useState(true)
+    // const [loading,setLoading] = useState(true)
     console.log(columns,"xoxooxox")
     console.log(data,"rows")
     const requestSearch = (searchValue) => {
@@ -101,10 +101,11 @@ const DatagridTable = ({data,columns,handleEvent}) => {
   useEffect(()=>{
     if(data.length){
     setRows(data)
-     setLoading(false)       
-    } if(data.length === 0){
-        setLoading(false)
+    //  setLoading(false)       
     }
+    //  if(data.length === 0){
+    //     setLoading(false)
+    // }
 
   },[data])
   return (
@@ -126,7 +127,7 @@ const DatagridTable = ({data,columns,handleEvent}) => {
         // slots={{
         //     loadingOverlay: LinearProgress,
         //   }}
-        //  loading={rows.length > 0 ? false : true }
+         loading={loading}
         components={{
             LoadingOverlay: LinearProgress,
             NoRowsOverlay: CustomGridOverlay,

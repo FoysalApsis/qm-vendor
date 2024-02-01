@@ -64,6 +64,7 @@ const PaymentDatagridTable = () => {
 
 
   const [paymentReceipt, setPaymentReceipt] = useState();
+  const [loading,setLoading]= useState(true)
   
   const navigate = useNavigate()
 
@@ -73,6 +74,7 @@ const PaymentDatagridTable = () => {
     await serverAPI
       .post(`get-payment-receipt`, body)
       .then((res) => {
+        setLoading(false)
         setPaymentReceipt(
           res?.data?.response.map((elm) => {
             return {
@@ -113,6 +115,7 @@ const PaymentDatagridTable = () => {
           data={paymentReceipt || []}
           columns={columns}
           handleEvent={rowClickEvent}
+          loading={loading}
         />
       {/* )} */}
     </Box>

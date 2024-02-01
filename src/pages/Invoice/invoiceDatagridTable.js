@@ -79,8 +79,8 @@ const InvoiceDatagridTable = () => {
         },
       ];
 
-  const [purchaseOrders, setPurchaseOrders] = useState();
   const [submittedInvoice, setSubmittedInvoice] = useState();
+  const [loading,setLoading]= useState(true)
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const handleChangePage = (event, newPage) => {
@@ -128,6 +128,7 @@ const InvoiceDatagridTable = () => {
     await serverAPI
       .post(`get-submitted-invoice`, body)
       .then((res) => {
+        setLoading(false)
         setSubmittedInvoice(
           res?.data?.response.map((elm) => {
             return {
@@ -148,7 +149,7 @@ const InvoiceDatagridTable = () => {
   return (
     <Box sx={{ height: 400, width: "100%" }}>
       {/* {submittedInvoice && ( */}
-        <DatagridTable data={submittedInvoice || []} columns={columns} />
+        <DatagridTable data={submittedInvoice || []} columns={columns} loading={loading}/>
        {/* )} */}
     </Box>
   );
