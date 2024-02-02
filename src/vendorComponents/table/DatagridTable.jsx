@@ -62,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
       minHeight: "50px !important",
       maxHeight: "50px !important",
     },
+    "& .MuiDataGrid-cell": {
+      textWrap:'wrap'
+    },
     // "& .MuiDataGrid-overlay": {
     //   top: "50px !important",
     // },
@@ -80,9 +83,7 @@ const useStyles = makeStyles((theme) => ({
 const DatagridTable = ({data,columns,handleEvent,loading}) => {
     const [searchText, setSearchText] = useState("");
     const [rows,setRows] = useState(data)
-    // const [loading,setLoading] = useState(true)
-    console.log(columns,"xoxooxox")
-    console.log(data,"rows")
+
     const requestSearch = (searchValue) => {
 
         console.log(searchValue,"seachval")

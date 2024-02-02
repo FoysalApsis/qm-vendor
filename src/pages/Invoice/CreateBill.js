@@ -12,6 +12,7 @@ const CreateBill = () => {
   const [file, setFile] = useState(null);
   const [selectedPO, setSelectedPO] = useState();
   const [dateSubmission, setDateSubmission] = useState( moment().format('YYYY-MM-DD') );
+  const [dateInvoice, setDateInvoice] = useState();
   const [invoiceNumber, setInvoiceNumber] = useState();
   const [invoiceAmount, setinvoiceAmount] = useState();
 
@@ -34,8 +35,9 @@ const CreateBill = () => {
   };
 
   const sendFile = () => {
-    if(!invoiceAmount || !invoiceNumber){
-      toast.error( invoiceAmount ? "Please Enter Invoice Number" : "Please Enter Invoice Amount" , {
+    if(!invoiceAmount || !invoiceNumber || !dateInvoice){
+
+      toast.error( "Please enter all the required fields" , {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -52,11 +54,12 @@ const CreateBill = () => {
         const formData = new FormData();
         formData.append("document", file);
         formData.append("po_id", selectedPO["id"]);
-        formData.append("date_of_submission", dateSubmission);
+        formData.append("date_of_submission", moment(dateSubmission).format('YYYY-MM-DD'));
         formData.append("invoice_number", invoiceNumber);
         formData.append("invoice_amount", invoiceAmount);
         formData.append("vendor_id", user?.id);
         formData.append("pdf_name", file?.["name"]);
+        formData.append("date_of_invoice", dateInvoice);
         if (selectedPO["id"] == 999) {
           uploadCustomBill(formData);
         } else {
@@ -97,8 +100,8 @@ const CreateBill = () => {
       } else {
         setSelectedPO({ id: 999, label: "custom" });
       }
-    } else if (name === "date") {
-      setDateSubmission(value);
+    } else if (name === "invoice_date") {
+      setDateInvoice(value);
     } else if (name === "invoice_number") {
       setInvoiceNumber(value);
     }
@@ -284,9 +287,9 @@ const CreateBill = () => {
           </div>
         </div>
         <div className="row col-6 mt-3"></div>
-        <div className="row col-6 mt-2">
+        <div className="row col-3 mt-2">
           <div className="col-12 mt-2 mb-2 segoe-bold">
-            <label htmlFor="Po">Date of Submission: <span style={{color:"red"}}>*</span> </label>
+            <label htmlFor="Po">Date of Submission:  </label>
           </div>
           <div className="col-12 ">
             <TextField  
@@ -300,6 +303,25 @@ const CreateBill = () => {
               // value={"2017-05-24"}
               // sx={{ width: 220 }}
               // onChange={(e) => handleChange(e)}
+            />
+            {/* {console.log(dateSubmission,"-----------")} */}
+          </div>
+        </div>
+        <div className="row col-3 mt-2">
+          <div className="col-12 mt-2 mb-2 segoe-bold">
+            <label htmlFor="Po">Date of Invoice: <span style={{color:"red"}}>*</span> </label>
+          </div>
+          <div className="col-12 ">
+            <TextField  
+              id="date"
+              name="invoice_date"
+              type="date"
+              InputLabelProps={{ shrink: true, required: true }}
+              // label="Date of Submission"
+              defaultValue={dateInvoice}
+              // value={"2017-05-24"}
+              // sx={{ width: 220 }}
+              onChange={(e) => handleChange(e)}
             />
             {/* {console.log(dateSubmission,"-----------")} */}
           </div>

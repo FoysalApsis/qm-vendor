@@ -67,14 +67,14 @@ const InvoiceDatagridTable = () => {
         {
           field: "state",
           headerName: "Status",
-          width: 200,
+          width: 170,
       
           renderCell: (params) => getInvoiceStatus(params?.formattedValue),
         },
         {
           field: "notes",
-          headerName: "Notes",
-          width: 200,
+          headerName: "Notes From QM",
+          width: 300,
           valueGetter: (params) => params.row.notes ? params.row.notes : "-" ,
         },
       ];
