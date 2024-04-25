@@ -105,7 +105,7 @@ const SinglePR = () => {
             )
           }
         >
-         Download PO
+         Download Payment Receipt
         </Button></SectionHeading>
       <form>
         {/* <div className="row">
