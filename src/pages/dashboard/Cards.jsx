@@ -13,15 +13,16 @@ const DashboardCards = ({ children, title, icon:Icon, navigate }) => {
             <Icon/>
             <Typography
               sx={{ fontSize: 14 }}
-              className="text-secondaryColor segoe-bold me-5 ms-2"
+              className="text-secondaryColor segoe-bold me-5 ms-2 cursor-pointer"
               gutterBottom
+              onClick={navigate}
             >
               {title}
             </Typography>
           </div>
-          <ArrowForwardIcon className="cursor-pointer" onClick={navigate}></ArrowForwardIcon>
+          {/* <ArrowForwardIcon className="cursor-pointer" onClick={navigate}></ArrowForwardIcon> */}
         </Box>
-        <Box className="flex items-center justify-center py-2">{children}</Box>
+        <Box className="flex items-center justify-center py-2 cursor-pointer" onClick={navigate}>{children}</Box>
       </CardContent>
     </Card>
 

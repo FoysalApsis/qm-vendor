@@ -1,71 +1,3 @@
-// import { Box, Button, Card, CircularProgress, Typography } from "@mui/material";
-// import React, { useRef } from "react";
-// import CopyPageLayout from "./copyPageLayout";
-// import Navbar from "../navbar/Navbar";
-
-// const MainLayout = ({
-//   children,
-//   pageTitle,
-//   buttonName,
-//   onButtonClick,
-//   loading,
-// }) => {
-//   const ref = useRef(null);
-//   return (
-//     <div style={{ backgroundColor: "#CFCFCF", position: "relative" }}>
-//       <div style={{ height: "239px", backgroundColor: "#6B1D73" }}></div>
-//       {/* <div style={{ height: "100vh", backgroundColor: "#CFCFCF" }}></div> */}
-//       <div style={{ position: "absolute", top: "10px", width: "100%" }}>
-//         <div style={{ width: "95%", margin: "auto" }}>
-//           <Navbar
-//           // handleDrawerToggle={handleDrawerToggle}
-//           />
-//         </div>
-//       </div>
-//       <div style={{ position: "absolute", top: "100px", width: "100%" }}>
-//         <div style={{ width: "95%", margin: "auto" }}>
-//           <div className="main-container mb-24">
-//             <CopyPageLayout />
-//             {/* <PageHeader title={'Purchase Orders'} > </PageHeader> */}
-//             <Card className="w-full py-[24px] px-[68px]">
-//               <div className="flex justify-between items-middle">
-//                 <span className="pb-[20px] page-title segoe-bold">
-//                   {pageTitle}
-//                 </span>
-//                 <div>
-//                   {buttonName && (
-//                     <Button
-//                       type="submit"
-//                       color="secondary"
-//                       variant="contained"
-//                       onClick={onButtonClick}
-//                       className="h-8 segoe-normal capitalize"
-//                       style={{
-//                         backgroundColor: "#6B1D73",
-//                         textTransform: "capitalize",
-//                       }}
-//                       startIcon={
-//                         loading && (
-//                           <CircularProgress color="inherit" size={"16px"} />
-//                         )
-//                       }
-//                     >
-//                       {buttonName}
-//                     </Button>
-//                   )}
-//                   <span></span>
-//                 </div>
-//               </div>
-//               {children}
-//             </Card>
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default MainLayout;
 
 import * as React from 'react';
 import { styled, useTheme } from '@mui/material/styles';
@@ -77,7 +9,7 @@ import List from '@mui/material/List';
 import CssBaseline from '@mui/material/CssBaseline';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { Button, Card, Drawer } from '@mui/material';
+import { BottomNavigation, Button, Card, Drawer } from '@mui/material';
 import BackwardIcon from '../../../images/backward2.svg'
 import QmLogo from '../../../images/respond.png'
 import { CustomListItem } from '../sideBar/Modules';
@@ -85,7 +17,7 @@ import DropDown from '../navbar/DropDown';
 import PersonIcon from '@mui/icons-material/Person';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 
 const drawerWidth = 240;
 
@@ -168,7 +100,6 @@ export default function MainLayout({
       
     }
   },[])
-  // const [selectedName,setSelectedName]=React.useState('Dashboard')
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
@@ -298,58 +229,32 @@ export default function MainLayout({
           />
         </List>
       </Drawer>
-      {/* <Drawer
-        sx={{
-          width: drawerWidth,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': {
-            width: drawerWidth,
-            boxSizing: 'border-box',
-          },
-        }}
-        variant="persistent"
-        anchor="left"
-        open={open}
-      >
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-        <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          ))}
-        </List>
-      </Drawer> */}
+      {/* <div className='flex'> */}
+
       <Box component="main" sx={{ flexGrow: 1, p: 3, }}
-        style={{ background: '#F2F2F2', minHeight: '100vh' }}>
+        style={{ background: '#F2F2F2', minHeight: '100vh',marginBottom:"50px" }}>
         <DrawerHeader />
         <Card style={{ padding: '24px 36px', borderRadius: "9px", boxShadow: "0px 10px 15px -3px rgba(16, 24, 40, 0.10), 0px 4px 6px -4px rgba(16, 24, 40, 0.10)" }}>
           {children}
         </Card>
       </Box>
+      <AppBar component="footer" sx={{background:"white",top:"auto",bottom:"0px", paddingLeft:"250px",paddingTop:"10px"}}>
+      <Toolbar className='flex  justify-start !items-start gap-4 text-black'>
+          {/* <Box className="flex flex-col ">
+            <div>QM Vendor Portal: External User Guide</div>
+           <div>QM Vendor Portal: Frequently Asked Questions</div> 
+           </Box> */}
+          <Box className="flex flex-col text-blue-800 gap-2">
+             <div><a className='hover:underline' href={`${process.env.REACT_APP_API_URL}/pdf/External_User_Guide.pdf`} target='_blank'>External User Guide <OpenInNewIcon fontSize='small'/> </a></div>
+             <div><a className='hover:underline' href={`${process.env.REACT_APP_API_URL}/pdf/FAQ.pdf`} target='_blank'>Frequently Asked Questions <OpenInNewIcon fontSize='small'/></a></div>
+             </Box>
+          
+        </Toolbar>
+      </AppBar>
+          {/* </div> */}
+          {/* <footer className=' flex flex-col'>
+            abs
+          </footer> */}
     </Box>
   );
 }
