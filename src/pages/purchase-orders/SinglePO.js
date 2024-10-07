@@ -9,6 +9,7 @@ import serverAPI from "../../config/serverAPI";
 import PurchaseTabs from "./PurchaseTabs";
 import SectionHeading from "../../components/layout/SectionHeading";
 import moment from "moment";
+import errorHandle from "../../utils/errorHandle";
 
 const SinglePO = () => {
   const [singlePO, setSinglePO] = useState();
@@ -70,6 +71,8 @@ const SinglePO = () => {
         );
       })
       .catch((err) => {
+        errorHandle(err)
+
         console.log(err.message);
       });
   }, []);

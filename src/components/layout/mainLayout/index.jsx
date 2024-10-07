@@ -135,9 +135,9 @@ export default function MainLayout({
               <div>
               {user?.name}
               </div>
-              <div className='text-[#5F6D7E] text-xs'>
+              {/* <div className='text-[#5F6D7E] text-xs'>
                 {user?.email}
-              </div>
+              </div> */}
             </div>
           <DropDown>
             {/* <Avatar

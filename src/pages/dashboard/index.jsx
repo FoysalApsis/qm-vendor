@@ -17,6 +17,8 @@ import serverAPI from "../../config/serverAPI";
 import { useNavigate } from "react-router-dom";
 import InvoiceStatusTable from "../Invoice/InvoiceStatusTable";
 import SectionHeading from "../../components/layout/SectionHeading";
+import errorHandle from "../../utils/errorHandle";
+import setAuthToken from "../../utils/setAuthToken";
 
 const Dashboard = ({ isTab, isMobile }) => {
   const [dashboardData, setDashboardData] = useState();
@@ -25,12 +27,15 @@ const Dashboard = ({ isTab, isMobile }) => {
   const getDashboard = useCallback(async () => {
     const user = JSON.parse(localStorage.getItem("userObj"));
     const body = { jsonrpc: "2.0", params: { id: user.id } };
+    setAuthToken(localStorage.getItem('token'))
     await serverAPI
       .post(`get-dashboard`, body)
       .then((res) => {
         setDashboardData(res?.data?.response);
       })
       .catch((err) => {
+        errorHandle(err)
+
         console.log(err.message);
       });
   }, []);

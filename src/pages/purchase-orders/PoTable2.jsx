@@ -17,6 +17,7 @@ import { DataGrid } from "@mui/x-data-grid";
 
 import Box from "@mui/material/Box";
 import DatagridTable from "../../vendorComponents/table/DatagridTable";
+import errorHandle from "../../utils/errorHandle";
 
 
 const PoTable2 = () => {
@@ -115,6 +116,7 @@ const PoTable2 = () => {
         );
       })
       .catch((err) => {
+        errorHandle(err)
         console.log(err.message);
       });
   }, []);

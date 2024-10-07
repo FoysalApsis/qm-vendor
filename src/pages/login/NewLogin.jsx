@@ -8,12 +8,19 @@ import { ErrorMessage, Field, Formik, Form } from "formik";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../context/authContext/AuthContext";
 import serverAPI from "../../config/serverAPI";
+import errorHandle from "../../utils/errorHandle";
 
 const NewLogin = () => {
   const { Login } = useContext(AuthContext);
   const { SignInValidations, defaultState, mutate } = useLogin();
   const [authState, setAuthState] = useState(false);
   const navigate = useNavigate();
+
+  const setLoginTime = () =>  {
+    const now = new Date();
+    localStorage.setItem('loginTime', now.getTime().toString());
+  }
+
   const googleLogin = useCallback(
     async (arg) => {
       await serverAPI
@@ -24,6 +31,7 @@ const NewLogin = () => {
           localStorage.setItem('userObj',JSON.stringify(res?.data?.response[0]))
           localStorage.setItem('token',"a")
           localStorage.setItem('qual-type',arg?.params?.type)
+          setLoginTime();
           navigate('/')
           return
          }
@@ -33,6 +41,8 @@ const NewLogin = () => {
          }
         })
         .catch((err) => {
+          errorHandle(err)
+
           console.log(err.message);
         });
     },

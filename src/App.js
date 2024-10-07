@@ -25,7 +25,7 @@ import NewLogin from "./pages/login/NewLogin";
 function App() {
   const isTab = useMediaQuery("(max-width:900px)");
   const isMobile = useMediaQuery("(max-width:600px)");
-
+  
   return (
     <AuthState>
       <CommonState>
@@ -42,6 +42,7 @@ function App() {
               </PublicRoute>
             }
           />
+          
           <Route
             path="/"
             element={
@@ -73,43 +74,59 @@ function App() {
           <Route
             path="/vendor"
             element={
+              <PrivateRoute>
+
                 <SingleVendor isTab={isTab} isMobile={isMobile} />
+                </PrivateRoute>
+
             }
           />
            <Route
             path="/my-purchase-order"
             element={
+              <PrivateRoute>
                 <MyPurchaseOrder />
+              </PrivateRoute>
             }
           />
            <Route
             path="/my-purchase-order/:id"
             element={
+              <PrivateRoute>
                 <SinglePO></SinglePO>
+                </PrivateRoute>
             }
           />
           <Route
             path="/invoice"
             element={
+              <PrivateRoute>
                 <Invoices />
+              </PrivateRoute>
             }
           />
           <Route
             path="/invoice/create-bill"
             element={
+              <PrivateRoute>
               <CreateBill></CreateBill>
+              </PrivateRoute>
             }
           />
           <Route
             path="/my-payment-receipt"
             element={
+              <PrivateRoute>
               <PaymentReceipts></PaymentReceipts>
+              </PrivateRoute>
             }
           />
           <Route
             path="/my-payment-receipt/:id"
             element={
+              <PrivateRoute>
               <SinglePR></SinglePR>
+              </PrivateRoute>
             }
           />
              
