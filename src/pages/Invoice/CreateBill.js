@@ -15,6 +15,7 @@ const CreateBill = () => {
   const [dateInvoice, setDateInvoice] = useState();
   const [invoiceNumber, setInvoiceNumber] = useState();
   const [invoiceAmount, setinvoiceAmount] = useState();
+  const [isDateValid, setIsDateValid] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   const uploadPdfFile = (e) => {
@@ -38,6 +39,20 @@ const CreateBill = () => {
     if(!invoiceAmount || !invoiceNumber || !dateInvoice){
 
       toast.error( "Please enter all the required fields" , {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+    // console.log(isDateValid,"ususu",dateInvoice)
+    if(!isDateValid){
+      toast.error("Please Enter a Valid Date", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -101,6 +116,10 @@ const CreateBill = () => {
         setSelectedPO({ id: 999, label: "custom" });
       }
     } else if (name === "invoice_date") {
+      const isValidDate = moment(value, 'YYYY-MM-DD', true).isValid() && moment(value).isAfter('2000-01-01');
+      // console.log(isValidDate,"isvaliddddd")
+      setIsDateValid(isValidDate);
+      
       setDateInvoice(value);
     } else if (name === "invoice_number") {
       setInvoiceNumber(value);
