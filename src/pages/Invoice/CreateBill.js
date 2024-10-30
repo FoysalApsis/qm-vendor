@@ -16,6 +16,7 @@ const CreateBill = () => {
   const [invoiceNumber, setInvoiceNumber] = useState();
   const [invoiceAmount, setinvoiceAmount] = useState();
   const [isDateValid, setIsDateValid] = useState(null);
+  const [isBeforeDate, setIsBeforeDate] = useState(null);
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   const uploadPdfFile = (e) => {
@@ -36,6 +37,19 @@ const CreateBill = () => {
   };
 
   const sendFile = () => {
+    if(!isBeforeDate){
+      toast.error("Please do not select future date", {
+        position: "bottom-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
     if(!invoiceAmount || !invoiceNumber || !dateInvoice){
 
       toast.error( "Please enter all the required fields" , {
@@ -107,7 +121,7 @@ const CreateBill = () => {
   };
   const handleChange = (e) => {
     let { name, value, type } = e.target;
-    console.log(name,value)
+    // console.log(name,value)
     if (name === "purchase_order") {
       value = JSON.parse(value);
       if (value != 999) {
@@ -117,7 +131,9 @@ const CreateBill = () => {
       }
     } else if (name === "invoice_date") {
       const isValidDate = moment(value, 'YYYY-MM-DD', true).isValid() && moment(value).isAfter('2000-01-01');
+      const isBefore = moment(value).isSameOrBefore(moment());
       // console.log(isValidDate,"isvaliddddd")
+      setIsBeforeDate(isBefore)
       setIsDateValid(isValidDate);
       
       setDateInvoice(value);
