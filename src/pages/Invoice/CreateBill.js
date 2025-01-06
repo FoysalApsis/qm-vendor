@@ -20,10 +20,10 @@ const CreateBill = () => {
 
   const user = JSON.parse(localStorage.getItem("userObj"));
   const uploadPdfFile = (e) => {
-    if (e.target.files[0].size < 2000000) {
+    if (e.target.files[0].size < 4000000) {
       setFile(e.target.files[0]);
     } else {
-      toast.error("Cannot Upload File of size more than 2 MB", {
+      toast.error("Cannot Upload File of size more than 4 MB", {
         position: "bottom-center",
         autoClose: 5000,
         hideProgressBar: false,
@@ -386,7 +386,7 @@ const CreateBill = () => {
               </Button>
             </div>
             <div style={{ fontSize: "12px" }}>
-              (Only PDF is accepted; max size 2 MB)
+              (Only PDF is accepted; max size 4 MB.)
             </div>
           </div>
         </div>
