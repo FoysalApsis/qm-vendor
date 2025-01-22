@@ -28,6 +28,11 @@ const PoTable2 = () => {
       width: 150,
     },
     {
+      field:"partner_ref",
+      headerName: "Vendor Reference",
+      width: 220,
+    },
+    {
       field: "partner_id",
       headerName: "Vendor",
       width: 200,
@@ -101,7 +106,8 @@ const PoTable2 = () => {
           res?.data?.response.map((elm) => {
             return {
               id: elm[0].id,
-              display_name: elm[0].display_name,
+              display_name: elm[0].name,
+              partner_ref:elm[0].partner_ref,
               company_id: elm[0].company_id[1],
               partner_id: elm[0].partner_id[1],
               date_order: elm[0].date_order.split(" ")[0],
