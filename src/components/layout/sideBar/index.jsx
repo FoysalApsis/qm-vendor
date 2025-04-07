@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { CustomListItem } from "./Modules";
 // import "./SideBar.scss";
 import qmlogo from "../../../images/respond.png";
+import logo from "../../../images/logo-img.jpeg"
 
 import "./newSideBar.scss";
 import {
@@ -86,7 +87,7 @@ const SideBar = ({ handleClick, open, selectedName, setSelectedName }) => {
     <div className="sidebar">
       <div className="grid place-content-center mt-6">
         <img
-          src={qmlogo}
+          src={logo}
           className="d-inline-block align-top w-32 h-14 mb-4 "
           alt="Logo"
         />

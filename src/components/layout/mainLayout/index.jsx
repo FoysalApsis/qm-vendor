@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import { BottomNavigation, Button, Card, Drawer } from '@mui/material';
 import BackwardIcon from '../../../images/backward2.svg'
 import QmLogo from '../../../images/respond.png'
+import Logo from '../../../images/logo-img.png'
 import { CustomListItem } from '../sideBar/Modules';
 import DropDown from '../navbar/DropDown';
 import PersonIcon from '@mui/icons-material/Person';
@@ -173,7 +174,7 @@ export default function MainLayout({
         ...(!open && { display:'none' }),
       }} variant="persistent" anchor="left" open={open}>
         <DrawerHeader style={{ padding: '22px 60px' }}>
-          <img src={QmLogo} style={{ width: '166px' }} />
+          <img src={Logo} style={{ width: '166px' }} />
         </DrawerHeader>
         <Divider />
         <List className=" pt-4">

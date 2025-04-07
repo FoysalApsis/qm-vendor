@@ -3,6 +3,7 @@ import { Grid,Button } from "@mui/material";
 import useLogin from "./useLogin";
 import MedelaLogo from "../../images/MedelaLogo.png";
 import QmLogo from "../../images/respond.png";
+import Logo from "../../images/logo-img.jpeg"
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import "./Login.scss";
 
@@ -12,7 +13,7 @@ const Login = ({ isTab }) => {
     <Grid container className="login">
       <Grid container className="login-head">
         <img
-          src={QmLogo}
+          src={Logo}
           className="mb-4 "
           height="100px"
           alt="medela logo"
