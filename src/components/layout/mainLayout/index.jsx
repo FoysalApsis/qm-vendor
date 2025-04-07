@@ -12,7 +12,7 @@ import Divider from '@mui/material/Divider';
 import { BottomNavigation, Button, Card, Drawer } from '@mui/material';
 import BackwardIcon from '../../../images/backward2.svg'
 import QmLogo from '../../../images/respond.png'
-import Logo from '../../../images/logo-img.png'
+import Logo from '../../../images/logo-img.jpeg'
 import { CustomListItem } from '../sideBar/Modules';
 import DropDown from '../navbar/DropDown';
 import PersonIcon from '@mui/icons-material/Person';
