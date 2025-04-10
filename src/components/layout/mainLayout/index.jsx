@@ -246,7 +246,7 @@ export default function MainLayout({
            <div>QM Vendor Portal: Frequently Asked Questions</div> 
            </Box> */}
           <Box className="flex flex-col text-blue-800 gap-2">
-             <div><a className='hover:underline' href={`${process.env.REACT_APP_API_URL}/pdf/External_User_Guide.pdf`} target='_blank'>External User Guide <OpenInNewIcon fontSize='small'/> </a></div>
+             <div><a className='hover:underline' href={`${process.env.REACT_APP_API_URL}/pdf/External_User_Guide.pdf`} target='_blank'>User Guide <OpenInNewIcon fontSize='small'/> </a></div>
              <div><a className='hover:underline' href={`${process.env.REACT_APP_API_URL}/pdf/FAQ.pdf`} target='_blank'>Frequently Asked Questions <OpenInNewIcon fontSize='small'/></a></div>
              </Box>
           
