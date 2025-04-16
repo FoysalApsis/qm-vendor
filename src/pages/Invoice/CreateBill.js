@@ -147,7 +147,18 @@ const CreateBill = () => {
       setinvoiceAmount(value);
     }
   };
-
+  const handleChangePo = (e) => {
+    console.log("e",e);
+    let { value, } = e;
+    // console.log(name,value)
+      value = JSON.parse(value);
+      if (value != 999) {
+        setSelectedPO({ id: value?.id, label: value?.display_name });
+      } else {
+        setSelectedPO({ id: 999, label: "custom" });
+      }
+  
+};
   const uploadFile = useCallback(async (args) => {
     const body = args;
     await serverAPI
@@ -266,7 +277,7 @@ const CreateBill = () => {
             name="purchase_order"
             options={ [{value:"jjfowf",label:'1212'}] ||options}
             placeholder="Select a purchase order"
-            onChange={(selectedOption) => handleChange(selectedOption)}
+            onChange={(selectedOption) => handleChangePo(selectedOption)}
             isSearchable
           />
           </div>
