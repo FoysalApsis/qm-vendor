@@ -275,7 +275,7 @@ const CreateBill = () => {
           <Select
             id="purchase_order"
             name="purchase_order"
-            options={ [{value:"jjfowf",label:'1212'}] ||options}
+            options={options}
             placeholder="Select a purchase order"
             onChange={(selectedOption) => handleChangePo(selectedOption)}
             isSearchable
