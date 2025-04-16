@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 import MainLayout from "../../components/layout/mainLayout";
 import serverAPI from "../../config/serverAPI";
 import moment from "moment";
+import Select from 'react-select';
+
 
 
 const CreateBill = () => {
@@ -120,6 +122,7 @@ const CreateBill = () => {
     }
   };
   const handleChange = (e) => {
+    console.log("e",e);
     let { name, value, type } = e.target;
     // console.log(name,value)
     if (name === "purchase_order") {
@@ -144,7 +147,18 @@ const CreateBill = () => {
       setinvoiceAmount(value);
     }
   };
-
+  const handleChangePo = (e) => {
+    console.log("e",e);
+    let { value, } = e;
+    // console.log(name,value)
+      value = JSON.parse(value);
+      if (value != 999) {
+        setSelectedPO({ id: value?.id, label: value?.display_name });
+      } else {
+        setSelectedPO({ id: 999, label: "custom" });
+      }
+  
+};
   const uploadFile = useCallback(async (args) => {
     const body = args;
     await serverAPI
@@ -246,6 +260,10 @@ const CreateBill = () => {
     setDateSubmission(`${year}/${month}/${day}`);
   }, []);
 
+  const options = purchaseOrders?.map((item) => ({
+    value: JSON.stringify(item),
+    label: item.display_name,
+  }));
   return (
     <MainLayout pageTitle={"Submit Invoice"}>
       <div className="row mt-2" style={{ maxWidth: "900px" }}>
@@ -254,32 +272,14 @@ const CreateBill = () => {
             <label htmlFor="Po">PO Number: <span style={{color:"red"}}>*</span> </label>
           </div>
           <div className="col-12">
-            <select
-              id="purchase_order"
-              name="purchase_order"
-              className="form-control"
-              placeholder="Select a purchase order"
-              // onChange={(e) => setSelectedPO(e.target.value)}
-              onChange={(e) => handleChange(e)}
-
-              // value={
-              //   Array.isArray(data?.country_id)
-              //     ? data?.country_id[0]
-              //     : data?.country_id
-              // }
-            >
-              <option value="1">Select Purchase Order</option>
-              {/* <option value="999">Invoice without PO</option> */}
-              {purchaseOrders?.map((item, index) => (
-                <option
-                  value={JSON.stringify(item)}
-                  // value={item?.id}
-                  key={index}
-                >
-                  {item?.display_name}
-                </option>
-              ))}
-            </select>
+          <Select
+            id="purchase_order"
+            name="purchase_order"
+            options={options}
+            placeholder="Select a purchase order"
+            onChange={(selectedOption) => handleChangePo(selectedOption)}
+            isSearchable
+          />
           </div>
         </div>
         <div className="row col-6 mt-3"></div>
